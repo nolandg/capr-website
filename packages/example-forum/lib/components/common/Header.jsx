@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { withCurrentUser, getSetting, registerSetting, Components, registerComponent } from 'meteor/vulcan:core';
 
 const Header = (props, context) => {
-  
+
   const logoUrl = getSetting('logoUrl');
-  const siteTitle = getSetting('title', 'My App');
+  const siteTitle = getSetting('title');
   const tagline = getSetting('tagline');
 
   return (
@@ -17,9 +17,9 @@ const Header = (props, context) => {
           <Components.Logo logoUrl={logoUrl} siteTitle={siteTitle} />
           {tagline ? <h2 className="tagline">{tagline}</h2> : "" }
         </div>
-        
+
         <div className="nav">
-          
+
           <div className="nav-user">
             {!!props.currentUser ? <Components.UsersMenu/> : <Components.UsersAccountMenu/>}
           </div>
