@@ -5,7 +5,7 @@
     "npm": "^3.0"
   },
   "scripts": {
-    "start": "METEOR_PACKAGE_DIRS=\"../meteor-packages/vulcan/packages\" meteor --settings settings.json",
+    "start": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" meteor --settings settings.json",
     "lint": "eslint --cache --ext .jsx,js packages"
   },
   "dependencies": {
@@ -47,6 +47,7 @@
     "juice": "^1.11.0",
     "mailchimp": "^1.1.6",
     "marked": "^0.3.5",
+    "material-ui": "^1.0.0-beta.26",
     "metascraper": "^1.0.6",
     "meteor-node-stubs": "^0.2.3",
     "mingo": "^0.8.1",
@@ -56,7 +57,7 @@
     "react": "^15.6.1",
     "react-addons-pure-render-mixin": "^15.4.1",
     "react-apollo": "^1.1.1",
-    "react-bootstrap": "^0.31.3",
+    "react-bootstrap": "0.32.0",
     "react-bootstrap-datetimepicker": "0.0.22",
     "react-cookie": "^0.4.6",
     "react-datetime": "^2.3.2",
@@ -75,6 +76,7 @@
     "redux": "^3.6.0",
     "rss": "^1.2.1",
     "sanitize-html": "^1.11.4",
+    "semantic-ui-react": "^0.77.2",
     "sendy-api": "^0.1.0",
     "simpl-schema": "^0.3.2",
     "speakingurl": "^9.0.0",
@@ -88,6 +90,7 @@
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-eslint": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "eslint": "^3.10.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-config-meteor": "0.0.9",

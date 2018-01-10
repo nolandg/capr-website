@@ -51,11 +51,10 @@ Package.onUse(function (api) {
     'lib/server/email/templates/newsletter/newsletter.handlebars',
     'lib/server/email/templates/newsletter/newsletterConfirmation.handlebars',
     'lib/server/email/templates/newsletter/postItem.handlebars',
-    
+
   ], ['server']);
 
   api.addFiles([
-    // 'lib/stylesheets/bootstrap.css',
     'lib/stylesheets/main.scss'
   ], ['client']);
 

@@ -1,27 +1,6 @@
-# see http://docs.vulcanjs.org/packages
-
 vulcan:core
-
-############ Language Packages ############
-
 vulcan:i18n-en-us
-
-############ Accounts Packages ############
-
 accounts-password
-# accounts-twitter
-# accounts-facebook
-
-############ Your Packages ############
-
-# example-simple
-# example-movies
-# example-instagram
-example-forum
-# example-customization
-# example-permissions
-# example-membership
-# example-interfaces
-# example-reactions
-
 vulcan:debug
+
+core
