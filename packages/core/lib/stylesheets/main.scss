@@ -1,3 +1,4 @@
+@import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 // @import "breakpoints";
 
 .site-wrapper{
@@ -13,4 +14,45 @@
 }
 .site-footer{
 
+}
+.site-menu.ui.secondary.pointing.menu .active.item{
+    border-color: #888 !important;
+}
+.site-sidebar{
+  .site-menu{
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    border-left: 0 !important;
+
+    > .item{
+      border-radius: 0 !important;
+    }
+  }
+
+  > .segment{
+    padding: 0;
+    min-height: 100%;
+  }
+}
+
+/***** Image Gallery *****/
+// .image-gallery{
+//   .video-wrapper{
+//     display: flex;
+//     align-items: center;
+//     flex-wrap: wrap;
+//
+//     > iframe{
+//       flex: 1 1 auto;
+//     }
+//     > div{
+//       margin: 0 50px 0 10px;
+//       min-width: 200px;
+//       flex: 1 1 auto;
+//     }
+//   }
+// }
+.wrapper-home
+.image-gallery-image{
+  height: 400px;
 }

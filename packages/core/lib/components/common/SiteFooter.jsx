@@ -8,7 +8,8 @@ class SiteFooter extends PureComponent {
       <footer className="site-footer">
         <Segment inverted basic size="small" textAlign="center">
           <Container>
-            &copy;&nbsp;Copyright 2017: Climate Action Powell River
+            &copy;&nbsp;Copyright 2017: Climate Action Powell River<br />
+            Developed by <a href="mailto:noland.germain@gmail.com">Noland</a>
           </Container>
         </Segment>
       </footer>

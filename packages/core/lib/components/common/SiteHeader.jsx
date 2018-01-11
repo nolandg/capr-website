@@ -10,9 +10,7 @@ class SiteHeader extends PureComponent {
         <Grid>
           <Grid.Row columns={1} only="tablet computer">
             <Grid.Column>
-              <Button icon onClick={this.props.toggleSidebar} basic>
-                Menu Here
-              </Button>
+                <Components.SiteMenu />
             </Grid.Column>
           </Grid.Row>
 

@@ -27,7 +27,7 @@ Package.onUse(function (api) {
   ], ['server']);
 
   api.addFiles([
-    'lib/stylesheets/main.scss'
+    'lib/stylesheets/main.scss',
   ], ['client']);
 
   api.mainModule("lib/server/main.js", "server");

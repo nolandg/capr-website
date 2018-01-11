@@ -1,5 +1,5 @@
 import { Components, registerComponent, withCurrentUser } from 'meteor/vulcan:core';
-import { Sidebar, Menu, Icon } from 'semantic-ui-react'
+import { Sidebar, Menu, Segment } from 'semantic-ui-react'
 import React, { PropTypes, PureComponent } from 'react';
 import classNames from 'classnames';
 import Helmet from 'react-helmet';
@@ -26,19 +26,10 @@ class Layout extends PureComponent {
 
         <Sidebar.Pushable>
 
-          <Sidebar className="site-menu" as={Menu} animation='overlay' width='thin' visible={this.props.ui.showSidebar} icon='labeled' vertical inverted>
-            <Menu.Item name='home'>
-              <Icon name='home' />
-              Home
-            </Menu.Item>
-            <Menu.Item name='gamepad'>
-              <Icon name='gamepad' />
-              Games
-            </Menu.Item>
-            <Menu.Item name='camera'>
-              <Icon name='camera' />
-              Channels
-            </Menu.Item>
+          <Sidebar className="site-sidebar" animation='overlay' width='wide' visible={this.props.ui.showSidebar} icon='labeled'>
+            <Segment basic inverted>
+              <Components.SiteMenu isSidebar />
+            </Segment>
           </Sidebar>
 
           <Sidebar.Pusher className={classes} onClick={this.clickSite}>
