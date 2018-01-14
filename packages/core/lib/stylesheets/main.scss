@@ -1,13 +1,29 @@
 @import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
-// @import "breakpoints";
+@import "homepage.scss";
 
+/***** Structure and Layout *****/
 .site-wrapper{
   min-height: 100vh !important;
   display: flex;
   flex-direction: column;
 }
 .site-header{
+  box-shadow: 0 1px 2px rgba(0,0,0, .25);
+  z-index: 100;
 
+  .site-title-mobile{
+    margin-top: -60px;
+    h1{
+      margin-top: 0;
+    }
+    .site-logo{
+      width: auto !important;
+      height: 100px !important;
+      display: inline-block;
+      float: left;
+      margin: 0 10px 0 40px;
+    }
+  }
 }
 .site-content{
   flex-grow: 1;
@@ -15,8 +31,15 @@
 .site-footer{
 
 }
-.site-menu.ui.secondary.pointing.menu .active.item{
-    border-color: #888 !important;
+.site-menu{
+  border-bottom: none;
+
+  .site-logo{
+    width: auto !important;
+    height: 120px !important;
+    margin: -60px 5px -10px 20px;
+    display: inline-block;
+  }
 }
 .site-sidebar{
   .site-menu{
@@ -34,25 +57,64 @@
     min-height: 100%;
   }
 }
+.site-title-computer{
+  margin-bottom: -30px;
+  margin-top: 5px;
+}
+.site-title-mobile{
+  margin-bottom: -30px;
+  margin-top: 5px;
+
+  .site-logo{
+
+  }
+}
+
+/***** Header and Menu *****/
+.toggle-sidebar{
+  border: none !important;
+  box-shadow: none !important;
+}
 
 /***** Image Gallery *****/
-// .image-gallery{
-//   .video-wrapper{
-//     display: flex;
-//     align-items: center;
-//     flex-wrap: wrap;
-//
-//     > iframe{
-//       flex: 1 1 auto;
-//     }
-//     > div{
-//       margin: 0 50px 0 10px;
-//       min-width: 200px;
-//       flex: 1 1 auto;
-//     }
-//   }
-// }
-.wrapper-home
-.image-gallery-image{
-  height: 400px;
+.image-gallery{
+  .embed-wrapper{
+    max-width: 711px; // 16:9 height of 400
+    @media only screen and (max-width: 767px){
+      max-width: none;
+    }
+  }
+  .image-gallery-image:not(.manually-rendered-slide){
+    height: 400px;
+  }
+  .manually-rendered-slide{
+    white-space: normal;
+    line-height: normal;
+  }
+  .image-slide .left-col{
+    .image{
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 400px;
+      background-position: 50% 50%;
+    }
+  }
+  .two-col-slide{
+    .ui.grid>.row>.column.left-col, .ui.grid>.row>.column.right-col{
+
+    }
+    .ui.grid>.row>.column.left-col{
+      @media only screen and (max-width: 767px){
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
+    .ui.grid>.row>.column.right-col{
+      padding-right: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+  }
 }

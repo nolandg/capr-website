@@ -1,6 +1,7 @@
 import { Components, registerComponent, withCurrentUser } from 'meteor/vulcan:core';
 import { Sidebar, Menu, Segment } from 'semantic-ui-react'
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Helmet from 'react-helmet';
 import withUI from './withUI.js';
@@ -22,6 +23,7 @@ class Layout extends PureComponent {
 
         <Helmet>
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
+          <link rel="shortcut icon" type="image/png" href="/logo.png"/>
         </Helmet>
 
         <Sidebar.Pushable>

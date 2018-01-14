@@ -1,6 +1,7 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router';
-import { Button, Icon, Menu } from 'semantic-ui-react'
+import { Button, Icon, Menu, Image } from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 import withUI from './withUI.js';
 
@@ -26,10 +27,11 @@ class SiteMenu extends PureComponent {
     return (
       <Menu
         className="site-menu"
-        fluid pointing
+        fluid
         secondary={!isSidebar} inverted={isSidebar} vertical={isSidebar} size={isSidebar?'large':'large'}
         onClick={this.props.hideSidebar}
         >
+        <Image src='/logo.png' size='small' inline className="site-logo"/>
         <Menu.Item as={Link} to="/" name="home" active={path==='/'}>
           Home
         </Menu.Item>
