@@ -13,11 +13,11 @@ Package.onUse(function (api) {
     'fourseven:scss@4.5.0',
 
     // vulcan core
-    'vulcan:core@1.8.2',
+    'vulcan:core@1.8.3',
 
     // vulcan packages
-    'vulcan:accounts@1.8.2',
-    'vulcan:forms@1.8.2',
+    'vulcan:accounts@1.8.3',
+    'vulcan:forms@1.8.3',
   ]);
 
   api.addAssets([
