@@ -144,5 +144,10 @@
 
 /***** Under Construction *****/
 .under-construction{
-  
+  width: 100%;
+  min-height: 50vh;
+
+  background-image: url(/construction.png);
+  background-size: contain;
+  background-repeat: no-repeat;
 }
