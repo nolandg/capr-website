@@ -5,7 +5,8 @@ import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:co
 class UnderConstruction extends PureComponent {
   render (){
     return (
-      <div className="under-construction">
+      <div className="under-construction-wrapper">
+        <div />
       </div>
     )
   }

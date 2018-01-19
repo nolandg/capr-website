@@ -5,3 +5,11 @@ METEOR_PACKAGE_DIRS=/var/www/development/capr/vulcan/packages meteor build --dir
 cd /var/www/development/builds/bundle/programs/server
 /home/noland/.nvm/versions/node/v8.9.3/bin/npm install
 sudo pm2 restart all
+
+# To fix shit?
+# yum install g++ build-essential
+# npm install -g node-gyp
+# cd /opt/Rocket.Chat/programs/server/node_modules/fibers/
+# node-gyp rebuild
+# cp build/Release/fibers.node bin/linux-x64-57/fibers.node
+# systemctl start rocketchat.service

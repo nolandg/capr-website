@@ -17,20 +17,27 @@
   }
 
   .site-title-mobile{
-    margin-bottom: -0px;
+    margin-bottom: 10px;
+
+    > .column{
+      display: flex !important;
+      align-items: center !important;
+    }
 
     .site-logo{
       height: 80px !important;
-      margin: -40px 10px 0 -10px;
     }
 
-    h1{
+    h1.header{
       display: inline-block;
-      margin-top: 5px !important;
+      margin: 5px 10px 0 10px !important;
     }
 
-    button.toggle-sidebar{
-      margin-top: -70px;
+    .menu{
+      align-self: flex-start;
+      button.toggle-sidebar{
+        // margin-top: -70px;
+      }
     }
   }
 
@@ -143,11 +150,19 @@
 }
 
 /***** Under Construction *****/
-.under-construction{
+.under-construction-wrapper{
   width: 100%;
-  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 
-  background-image: url(/construction.png);
-  background-size: contain;
-  background-repeat: no-repeat;
+  > div{
+    width: 100%;
+    min-height: 50vh;
+
+    background-image: url(/construction.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+  }
 }

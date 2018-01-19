@@ -23,7 +23,6 @@ class SiteHeader extends PureComponent {
 
             </Grid.Column>
           </Grid.Row>
-
           <Grid.Row columns={1} only="tablet computer">
             <Grid.Column>
               <Components.SiteMenu />
