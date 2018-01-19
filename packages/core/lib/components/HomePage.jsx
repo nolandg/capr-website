@@ -1,7 +1,8 @@
 import { Components, registerComponent, withCurrentUser } from 'meteor/vulcan:core';
-import { Embed, Grid, Item, Segment, Button, Icon, Header } from 'semantic-ui-react'
+import { Embed, Grid, Item, Segment, Button, Icon, Header, Container, Divider } from 'semantic-ui-react'
 import ImageGallery from 'react-image-gallery';
 import React, { PropTypes, PureComponent } from 'react';
+import { Link } from 'react-router';
 
 class HomePage extends PureComponent {
   renderSong = () => {
@@ -121,14 +122,150 @@ class HomePage extends PureComponent {
         renderItem: this.renderCalc,
       },
     ];
+
     return (
       <div>
         <ImageGallery
           className="homepage-"
           items={slides}
-          showPlayButton={false}
+          showPlayButton={true}
           showFullscreenButton={false}
+          autoPlay={true}
         />
+        <Divider section hidden />
+
+        <Grid centered doubling stackable padded='horizontally'>
+
+          <Grid.Column width={8}>
+            <Header as="h1" textAlign="center">CAPR</Header>
+
+            <Segment color="orange" size="large" compact>
+              <Item.Group>
+                <Item>
+                  <Item.Image src="/logo.png" />
+                  <Item.Content>
+                    <Item.Header>Who We Are</Item.Header>
+                    <Item.Description>
+                      Climate Action Powell River Society (CAPR) is a non-profi t society
+                      committed to helping the residents and businesses of Powell River to
+                      reduce their greenhouse gas (GHG) emissions and also to support the
+                      vision and goals of the Paris Agreement and the Powell River
+                      Integrated Community Sustainability Plan (ICSP).
+                    </Item.Description>
+                    <Item.Extra>
+                      <Button as={Link} to="/about-us" floated="right" color="orange">
+                        Read more...
+                      </Button>
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            </Segment>
+
+            <Segment color="green" size="large" compact>
+              <Item.Group>
+                <Item>
+                  <Item.Image src="/roadmap.png" as="a" href="/CAPR-Roadmap.pdf"/>
+                  <Item.Content>
+                    <Item.Header>The Roadmap</Item.Header>
+                    <Item.Meta>Reduce Offset Adapt Drawdown</Item.Meta>
+                    <Item.Description>
+                      CAPR’s ROAD Map is fi rst of all a “road” or “course” that has
+                      a starting point and a destination. Second, it is a map that helps
+                      us navigate and reach our goals of reduced total GHG emissions,
+                      environmental health and sustainability.
+                      <br /><br />
+                      CAPR has identifi ed four distinct strategies that will facilitate our
+                      emission reduction and environmental health and
+                      sustainability: Reduction, Offsetting, Adaptation, and Drawdown.
+                    </Item.Description>
+                    <Item.Extra>
+                      <Button as={Link} to="/about-us" floated="right" color="green">
+                        Read more...
+                      </Button>
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            </Segment>
+
+          </Grid.Column>
+
+          <Grid.Column width={8}>
+            <Header as="h1" textAlign="center">Recent Articles</Header>
+            <Segment color="blue" compact>
+              <Item.Group>
+                <Item>
+                  <Item.Image src="/carstops.jpg" />
+                  <Item.Content>
+                    <Item.Header>An Article Title Here</Item.Header>
+                    <Item.Meta>One line summary/pull-quote here</Item.Meta>
+                    <Item.Description>
+                      The first few sentences of the article go here.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </Item.Description>
+                    <Item.Extra>
+                      <Link to="/" style={{float: 'right'}}>Read more...</Link>
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+
+              <Item.Group>
+                <Item>
+                  <Item.Image src="/carstops.jpg" />
+                  <Item.Content>
+                    <Item.Header>An Article Title Here</Item.Header>
+                    <Item.Meta>One line summary/pull-quote here</Item.Meta>
+                    <Item.Description>
+                      The first few sentences of the article go here.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </Item.Description>
+                    <Item.Extra>
+                      <Link to="/" style={{float: 'right'}}>Read more...</Link>
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+
+              <Item.Group>
+                <Item>
+                  <Item.Image src="/carstops.jpg" />
+                  <Item.Content>
+                    <Item.Header>An Article Title Here</Item.Header>
+                    <Item.Meta>One line summary/pull-quote here</Item.Meta>
+                    <Item.Description>
+                      The first few sentences of the article go here.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </Item.Description>
+                    <Item.Extra>
+                      <Link to="/" style={{float: 'right'}}>Read more...</Link>
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+
+              <Item.Group>
+                <Item>
+                  <Item.Image src="/carstops.jpg" />
+                  <Item.Content>
+                    <Item.Header>An Article Title Here</Item.Header>
+                    <Item.Meta>One line summary/pull-quote here</Item.Meta>
+                    <Item.Description>
+                      The first few sentences of the article go here.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </Item.Description>
+                    <Item.Extra>
+                      <Link to="/" style={{float: 'right'}}>Read more...</Link>
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            </Segment>
+          </Grid.Column>
+
+        </Grid>
+        <Divider section hidden />
 
       </div>
     )

@@ -6,12 +6,6 @@ import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:co
 import withUI from './withUI.js';
 
 class SiteMenu extends PureComponent {
-  renderUserMenuItem = (path) => {
-    return (
-      <Menu.Item><Icon name="user" />Login</Menu.Item>
-    )
-  }
-
   renderCalculatorItem = (path) => {
     return (
       <Menu.Item as={Link} to="/carbon-footprint-calculator" name="calculator" active={path==='/carbon-footprint-calculator'}>
@@ -44,12 +38,13 @@ class SiteMenu extends PureComponent {
         <Menu.Item as={Link} to="/about-us" name="about-us" active={path==='/about-us'}>
           About Us
         </Menu.Item>
+        {isSidebar?<Components.UserMenuItems />:null}
+        {isSidebar?this.renderCalculatorItem(path):null}
         {!isSidebar?(
-          <Menu.Menu position="right">
-            {this.renderUserMenuItem(path)}
-          </Menu.Menu>
-        ):this.renderUserMenuItem(path)}
-        {this.renderCalculatorItem(path)}
+          <Menu secondary floated="right">
+            {this.renderCalculatorItem(path)}
+          </Menu>
+        ):null}
       </Menu>
     )
   }
@@ -59,6 +54,7 @@ SiteMenu.propTypes = {
   isSidebar: PropTypes.bool,
   router: PropTypes.object,
   hideSidebar: PropTypes.func,
+  hideUserMenu: PropTypes.bool,
 };
 
 registerComponent('SiteMenu', SiteMenu, withRouter, withUI, withCurrentUser);
