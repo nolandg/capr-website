@@ -20,7 +20,7 @@ class Layout extends PureComponent {
 
     return (
       <div id="app">
-
+{/* 
         <Helmet>
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
           <link rel="shortcut icon" type="image/png" href="/logo.png"/>
@@ -40,7 +40,7 @@ class Layout extends PureComponent {
             <Components.SiteFooter />
           </Sidebar.Pusher>
 
-        </Sidebar.Pushable>
+        </Sidebar.Pushable> */}
 
       </div>
     )
