@@ -130,7 +130,7 @@ class HomePage extends PureComponent {
           items={slides}
           showPlayButton={true}
           showFullscreenButton={false}
-          autoPlay={true}
+          autoPlay={false}
         />
         <Divider section hidden />
 

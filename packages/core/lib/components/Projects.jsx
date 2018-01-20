@@ -1,18 +1,21 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Header, Divider } from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 
-class AboutUs extends PureComponent {
+class Projects extends PureComponent {
   render (){
     return (
       <div>
+        <Divider hidden />
+        <Header as="h1" textAlign="center">Projects</Header>
         <Components.UnderConstruction />
       </div>
     )
   }
 }
 
-AboutUs.propTypes = {
+Projects.propTypes = {
 };
 
-registerComponent('AboutUs', AboutUs, withCurrentUser);
+registerComponent('Projects', Projects, withCurrentUser);

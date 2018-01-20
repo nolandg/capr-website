@@ -8,7 +8,7 @@ import withUI from './withUI.js';
 class SiteMenu extends PureComponent {
   renderCalculatorItem = (path) => {
     return (
-      <Menu.Item as={Link} to="/carbon-footprint-calculator" name="calculator" active={path==='/carbon-footprint-calculator'}>
+      <Menu.Item as={Link} to="/carbon-wise-footprint-calculator" name="calculator" active={path==='/carbon-footprint-calculator'}>
         <Button color="green"><Icon name="calculator" />Carbon Wise</Button>
       </Menu.Item>
     )
@@ -32,7 +32,7 @@ class SiteMenu extends PureComponent {
         <Menu.Item as={Link} to="/projects" name="projects" active={path==='/projects'}>
           Projects
         </Menu.Item>
-        <Menu.Item as={Link} to="/resource" name="resource" active={path==='/resource'}>
+        <Menu.Item as={Link} to="/posts" name="resource" active={path==='/resource'}>
           Resources
         </Menu.Item>
         <Menu.Item as={Link} to="/about-us" name="about-us" active={path==='/about-us'}>

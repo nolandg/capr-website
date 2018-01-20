@@ -8,4 +8,7 @@ import '../components/common/UnderConstruction.jsx';
 
 // pages
 import '../components/HomePage.jsx';
+import '../components/Calculator.jsx';
 import '../components/AboutUs.jsx';
+import '../components/Posts.jsx';
+import '../components/Projects.jsx';
