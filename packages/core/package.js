@@ -10,14 +10,20 @@ Package.onUse(function (api) {
 
   api.use([
 
+    'promise',
     'fourseven:scss@4.5.0',
 
     // vulcan core
-    'vulcan:core@1.8.3',
+    'vulcan:core@1.8.7',
 
     // vulcan packages
-    'vulcan:accounts@1.8.3',
-    'vulcan:forms@1.8.3',
+    'vulcan:voting@1.8.7',
+    'vulcan:accounts@1.8.7',
+    'vulcan:email@1.8.7',
+    'vulcan:forms@1.8.7',
+    'vulcan:newsletter@1.8.7',
+    'vulcan:events@1.8.7',
+    'vulcan:embed@1.8.7',
   ]);
 
   api.addAssets([
