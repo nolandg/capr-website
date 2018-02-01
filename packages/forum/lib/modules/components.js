@@ -1,6 +1,8 @@
 
 // common
 
+import '../components/common/EditModal.jsx';
+import '../components/common/RichTextEditor.jsx';
 import '../components/common/Newsletter.jsx';
 import '../components/common/NewsletterButton.jsx';
 import '../components/common/SearchForm.jsx';

@@ -1,66 +1,52 @@
-import React, { PureComponent } from 'react';
+import { Components, registerComponent, withEdit, withDocument, withCurrentUser } from 'meteor/vulcan:core';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Components, registerComponent, withMessages, withCurrentUser } from 'meteor/vulcan:core';
-import { intlShape } from 'meteor/vulcan:i18n';
 import { Posts } from '../../modules/posts/index.js';
-import Users from "meteor/vulcan:users";
-import { withRouter } from 'react-router'
+import { Form } from 'semantic-ui-react'
 
 class PostsEditForm extends PureComponent {
+  state = {
+    title: this.props.document.title,
+    body: this.props.document.body,
+  };
+  handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value });
+  }
 
-  renderAdminArea() {
+  submit = () => {
+    this.props.editMutation({documentId: this.props.document._id, set: this.state}).then(this.props.closeModal).catch(this.handleError);
+    console.log(this.state.body);
+  }
+
+  handleError = (error) => {
+    console.error(error);
+  }
+
+  componentDidMount() {
+    if(this.props.registerActions) this.props.registerActions({
+      submit: this.submit,
+      delete: this.delete,
+    });
+  }
+
+  render(){
     return (
-      <Components.ShowIf check={Posts.options.mutations.edit.check} document={this.props.post}>
-        <div className="posts-edit-form-admin">
-          <div className="posts-edit-form-id">ID: {this.props.post._id}</div>
-          <Components.PostsStats post={this.props.post} />
-        </div>
-      </Components.ShowIf>
+      <Form>
+        <h1>{this.props.document.title}</h1>
+        <Form.Input label="Title" placeholder="Title" name="title" value={this.state.title} onChange={this.handleChange} />
+        <Components.RichTextEditor placeholder='Type your post content here' name="body" value={this.state.body} onChange={this.handleChange} />
+      </Form>
     )
   }
 
-  render() {
-
-    return (
-      <div className="posts-edit-form">
-        {Users.isAdmin(this.props.currentUser) ? this.renderAdminArea() : null}
-        <Components.SmartForm
-          formClassName="ui form"
-          registerActions={this.props.registerActions}
-          collection={Posts}
-          documentId={this.props.post._id}
-          successCallback={post => {
-            this.props.closeModal();
-            this.props.flash(this.context.intl.formatMessage({ id: 'posts.edit_success' }, { title: post.title }), 'success');
-          }}
-          removeSuccessCallback={({ documentId, documentTitle }) => {
-            // post edit form is being included from a single post, redirect to index
-            // note: this.props.params is in the worst case an empty obj (from react-router)
-            if (this.props.params._id) {
-              this.props.router.push('/');
-            }
-
-            const deleteDocumentSuccess = this.context.intl.formatMessage({ id: 'posts.delete_success' }, { title: documentTitle });
-            this.props.flash(deleteDocumentSuccess, 'success');
-            // todo: handle events in collection callbacks
-            // this.context.events.track("post deleted", {_id: documentId});
-          }}
-          showRemove={true}
-        />
-      </div>
-    );
-
-  }
 }
-
-PostsEditForm.propTypes = {
-  closeModal: PropTypes.func,
-  flash: PropTypes.func,
-  post: PropTypes.object.isRequired,
-}
-
-PostsEditForm.contextTypes = {
-  intl: intlShape
-}
-
-registerComponent('PostsEditForm', PostsEditForm, withMessages, withRouter, withCurrentUser);
+// options for withDocument HoC
+const queryOptions = {
+  queryName: 'MyPostsQuery',
+  collection: Posts,
+  fragmentName: 'PostsPage',
+  fetchPolicy: 'network-only',
+  enableCache: false,
+  pollInterval: 0,
+};
+registerComponent('PostsEditForm', PostsEditForm, [withDocument, queryOptions], [withEdit, {collection: Posts, fragmentName: 'PostsPage'}],  withCurrentUser);

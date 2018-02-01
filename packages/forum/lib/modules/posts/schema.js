@@ -8,6 +8,9 @@ import Users from 'meteor/vulcan:users';
 import { Utils, getSetting, registerSetting, getCollection } from 'meteor/vulcan:core';
 import moment from 'moment';
 import marked from 'marked';
+import { stateToHTML } from 'draft-js-export-html';
+import { convertFromRaw } from 'draft-js';
+
 
 registerSetting('forum.postExcerptLength', 30, 'Length of posts excerpts in words');
 
@@ -138,12 +141,12 @@ const schema = {
     viewableBy: ['guests'],
     onInsert: (post) => {
       if (post.body) {
-        return Utils.sanitize(marked(post.body));
+        return (stateToHTML(convertFromRaw(JSON.parse(post.body))));
       }
     },
     onEdit: (modifier, post) => {
       if (modifier.$set.body) {
-        return Utils.sanitize(marked(modifier.$set.body));
+        return (stateToHTML(convertFromRaw(JSON.parse(modifier.$set.body))));
       }
     }
   },
@@ -158,13 +161,13 @@ const schema = {
     onInsert: (post) => {
       if (post.body) {
         // excerpt length is configurable via the settings (30 words by default, ~255 characters)
-        const excerptLength = getSetting('forum.postExcerptLength', 30); 
+        const excerptLength = getSetting('forum.postExcerptLength', 30);
         return Utils.trimHTML(Utils.sanitize(marked(post.body)), excerptLength);
       }
     },
     onEdit: (modifier, post) => {
       if (modifier.$set.body) {
-        const excerptLength = getSetting('forum.postExcerptLength', 30); 
+        const excerptLength = getSetting('forum.postExcerptLength', 30);
         return Utils.trimHTML(Utils.sanitize(marked(modifier.$set.body)), excerptLength);
       }
     }

@@ -1,4 +1,4 @@
-import { Components, registerComponent, ModalTrigger } from 'meteor/vulcan:core';
+import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
@@ -6,50 +6,6 @@ import { Link } from 'react-router';
 import { Posts } from '../../modules/posts/index.js';
 import moment from 'moment';
 import { Modal, Button, Icon } from 'semantic-ui-react'
-
-class PostsEditModal extends Component {
-  state = { modalOpen: false }
-
-  handleOpen = () => this.setState({ modalOpen: true })
-
-  handleClose = () => this.setState({ modalOpen: false })
-
-  registerActions = (actions) => {
-    this.formActions = actions;
-  }
-
-  handleSave = () => {
-    this.formActions.submit();
-  }
-
-  handleDelete = () => {
-    console.log('delete')
-    this.formActions.delete();
-  }
-
-  render() {
-    return (
-      <Modal
-        trigger={<Button onClick={this.handleOpen}><Icon name='write' />Edit</Button>}
-        open={this.state.modalOpen}
-        onClose={this.handleClose}
-        dimmer="blurring"
-      >
-        <Modal.Header>Edit Post</Modal.Header>
-        <Modal.Content>
-          <Modal.Description>
-            <Components.PostsEditForm post={this.props.post} closeModal={this.handleClose} registerActions={this.registerActions} />
-          </Modal.Description>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button color='grey' onClick={this.handleClose}><Icon name='cancel' />Cancel</Button>
-          <Button color='red' onClick={this.handleDelete}><Icon name='trash' />Delete</Button>
-          <Button color='green' onClick={this.handleSave}><Icon name='save' />Save</Button>
-        </Modal.Actions>
-      </Modal>
-    )
-  }
-}
 
 class PostsItem extends PureComponent {
 
@@ -64,10 +20,7 @@ class PostsItem extends PureComponent {
   renderActions() {
     return (
       <div className="posts-actions">
-        <PostsEditModal post={this.props.post} />
-        <ModalTrigger title="Edit Post" component={<a className="posts-action-edit"><FormattedMessage id="posts.edit"/></a>}>
-          <Components.PostsEditForm post={this.props.post} />
-        </ModalTrigger>
+        <Components.EditModal document={this.props.post} title="Edit Post" component={Components.PostsEditForm} />
       </div>
     )
   }
