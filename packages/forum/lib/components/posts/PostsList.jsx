@@ -35,13 +35,13 @@ class PostsList extends PureComponent{
 
       return (
         <div>
-          <Item.Group>
+          <Item.Group divided>
             {results.map(post => this.renderPostItem(post))}
           </Item.Group>
           {showLoadMore ?
             hasMore ?
               <Components.PostsLoadMore loading={loadingMore} loadMore={loadMore} count={count} totalCount={totalCount} /> :
-              <Components.PostsNoMore/> :
+              <div></div> :
             null
           }
         </div>

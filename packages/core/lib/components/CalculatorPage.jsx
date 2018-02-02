@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Header, Divider } from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 
-class Calculator extends PureComponent {
+class CalculatorPage extends PureComponent {
   render (){
     return (
       <div>
@@ -15,7 +15,7 @@ class Calculator extends PureComponent {
   }
 }
 
-Calculator.propTypes = {
+CalculatorPage.propTypes = {
 };
 
-registerComponent('Calculator', Calculator, withCurrentUser);
+registerComponent('CalculatorPage', CalculatorPage, withCurrentUser);

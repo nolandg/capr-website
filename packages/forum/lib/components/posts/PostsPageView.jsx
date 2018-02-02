@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 import { Divider, Container, Segment, Item, Header } from 'semantic-ui-react';
 import moment from 'moment';
 
-class PostsPage extends PureComponent {
+class PostsPageView extends PureComponent {
 
   render() {
+    console.log('hi');
     if (this.props.loading) return <div className="posts-page"><Components.Loading/></div>
 
     const post = this.props.document;
@@ -47,4 +48,4 @@ const queryOptions = {
   queryName: 'postsSingleQuery',
   fragmentName: 'PostsPage',
 };
-registerComponent('PostsPage', PostsPage, withCurrentUser, [withDocument, queryOptions]);
+registerComponent('PostsPageView', PostsPageView, withCurrentUser, [withDocument, queryOptions]);

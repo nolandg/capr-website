@@ -26,10 +26,14 @@ class RichTextEditor extends Component {
     super(props);
 
     let editorState;
-    try{
-      editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.value)));
-    }catch(err){
-      editorState = EditorState.createWithContent(ContentState.createFromText(this.props.value));
+    if(this.props.value === null){
+      editorState = EditorState.createEmpty();
+    }else{
+      try{
+        editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.value)));
+      }catch(err){
+        editorState = EditorState.createWithContent(ContentState.createFromText(this.props.value));
+      }
     }
 
     this.state = {

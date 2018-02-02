@@ -15,7 +15,7 @@ class SiteHeader extends PureComponent {
             <Grid.Column>
               <Header as="h1" textAlign="center">
                 Climate Action Powell River
-                <Menu secondary floated="right" className="user-menu">
+                <Menu secondary floated="right" className="user-menu" size="tiny">
                   <Components.UserMenuItems />
                 </Menu>
                 <Header.Subheader>A clever statement here</Header.Subheader>

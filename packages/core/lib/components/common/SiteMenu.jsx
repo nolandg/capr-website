@@ -33,12 +33,12 @@ class SiteMenu extends PureComponent {
           Projects
         </Menu.Item>
         <Menu.Item as={Link} to="/posts" name="resource" active={path==='/resource'}>
-          Resources
+          Articles
         </Menu.Item>
         <Menu.Item as={Link} to="/about-us" name="about-us" active={path==='/about-us'}>
           About Us
         </Menu.Item>
-        {isSidebar?<Components.UserMenuItems />:null}
+        {isSidebar?<Components.UserMenuItems inverted/>:null}
         {isSidebar?this.renderCalculatorItem(path):null}
         {!isSidebar?(
           <Menu secondary floated="right">
