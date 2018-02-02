@@ -16,6 +16,7 @@ registerFragment(`
     clickCount
     # users
     userId
+    author
     user {
       ...UsersMinimumInfo
     }
@@ -46,4 +47,3 @@ registerFragment(`
     htmlBody
   }
 `);
-

@@ -8,9 +8,7 @@ import Users from 'meteor/vulcan:users';
 import { Utils, getSetting, registerSetting, getCollection } from 'meteor/vulcan:core';
 import moment from 'moment';
 import marked from 'marked';
-import { stateToHTML } from 'draft-js-export-html';
-import { convertFromRaw } from 'draft-js';
-
+import { stringToHtml } from '../../components/common/RichTextEditor';
 
 registerSetting('forum.postExcerptLength', 30, 'Length of posts excerpts in words');
 
@@ -61,10 +59,7 @@ const schema = {
     control: 'datetime',
     group: formGroups.admin,
     onInsert: (post, currentUser) => {
-      // Set the post's postedAt if it's going to be approved
-      if (!post.postedAt && getCollection('Posts').getDefaultStatus(currentUser) === getCollection('Posts').config.STATUS_APPROVED) {
-        return new Date();
-      }
+      return new Date();
     }
   },
   /**
@@ -141,12 +136,12 @@ const schema = {
     viewableBy: ['guests'],
     onInsert: (post) => {
       if (post.body) {
-        return (stateToHTML(convertFromRaw(JSON.parse(post.body))));
+        return stringToHtml(post.body);
       }
     },
     onEdit: (modifier, post) => {
       if (modifier.$set.body) {
-        return (stateToHTML(convertFromRaw(JSON.parse(modifier.$set.body))));
+        return stringToHtml(modifier.$set.body);
       }
     }
   },
@@ -162,13 +157,13 @@ const schema = {
       if (post.body) {
         // excerpt length is configurable via the settings (30 words by default, ~255 characters)
         const excerptLength = getSetting('forum.postExcerptLength', 30);
-        return Utils.trimHTML(Utils.sanitize(marked(post.body)), excerptLength);
+        return Utils.trimHTML(post.htmlBody, excerptLength);
       }
     },
     onEdit: (modifier, post) => {
       if (modifier.$set.body) {
         const excerptLength = getSetting('forum.postExcerptLength', 30);
-        return Utils.trimHTML(Utils.sanitize(marked(modifier.$set.body)), excerptLength);
+        return Utils.trimHTML(modifier.$set.htmlBody, excerptLength);
       }
     }
   },

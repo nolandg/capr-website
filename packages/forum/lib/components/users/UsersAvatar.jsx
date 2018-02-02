@@ -3,26 +3,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Users from 'meteor/vulcan:users';
 import { Link } from 'react-router';
-import classNames from 'classnames';
+import { Image } from 'semantic-ui-react'
 
-const UsersAvatar = ({className, user, link}) => {
+const UsersAvatar = ({className, user}) => {
 
-  const avatarUrl = user.avatarUrl || Users.avatar.getUrl(user);
-
-  const img = <img alt={Users.getDisplayName(user)} className="avatar-image" src={avatarUrl} title={user.username}/>;
-  const initials = <span className="avatar-initials"><span>{Users.avatar.getInitials(user)}</span></span>;
-
-  const avatar = avatarUrl ? img : initials;
+  const avatarUrl = user.avatarUrl || Users.avatar.getUrl(user) || 'http://keywordsuggest.org/gallery/249825.html';
+  const avatar = <Image avatar alt={Users.getDisplayName(user)} src={avatarUrl} title={user.username}/>;
 
   return (
-    <div className={classNames('avatar', className)}>
-      {link ? 
-        <Link to={Users.getProfileUrl(user)}>
-          <span>{avatar}</span>
-        </Link> 
-        : <span>{avatar}</span>
-      }
-    </div>
+    <span className='user-avatar'>
+      <Link to={Users.getProfileUrl(user)}>
+        {avatar}{Users.getDisplayName(user)}
+      </Link>
+    </span>
   );
 
 }
@@ -30,14 +23,11 @@ const UsersAvatar = ({className, user, link}) => {
 UsersAvatar.propTypes = {
   user: PropTypes.object.isRequired,
   size: PropTypes.string,
-  link: PropTypes.bool
 }
 
 UsersAvatar.defaultProps = {
   size: 'medium',
   link: true
 }
-
-UsersAvatar.displayName = 'UsersAvatar';
 
 registerComponent('UsersAvatar', UsersAvatar);

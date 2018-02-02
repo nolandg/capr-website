@@ -1,4 +1,4 @@
-import { Components, registerComponent, withEdit, withDocument, withCurrentUser } from 'meteor/vulcan:core';
+import { Components, registerComponent, withEdit, withDocument, withRemove, withCurrentUser } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Posts } from '../../modules/posts/index.js';
@@ -15,7 +15,10 @@ class PostsEditForm extends PureComponent {
 
   submit = () => {
     this.props.editMutation({documentId: this.props.document._id, set: this.state}).then(this.props.closeModal).catch(this.handleError);
-    console.log(this.state.body);
+  }
+
+  delete = () => {
+    this.props.removeMutation({documentId: this.props.document._id}).then(this.props.documentRemoved).catch(this.handleError);
   }
 
   handleError = (error) => {
@@ -49,4 +52,9 @@ const queryOptions = {
   enableCache: false,
   pollInterval: 0,
 };
-registerComponent('PostsEditForm', PostsEditForm, [withDocument, queryOptions], [withEdit, {collection: Posts, fragmentName: 'PostsPage'}],  withCurrentUser);
+registerComponent('PostsEditForm', PostsEditForm,
+  [withDocument, queryOptions],
+  [withEdit, {collection: Posts, fragmentName: 'PostsPage'}],
+  [withRemove, {collection: Posts}],
+  withCurrentUser
+);

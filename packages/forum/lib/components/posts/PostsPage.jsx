@@ -1,97 +1,45 @@
-import { Components, registerComponent, withDocument, withCurrentUser, getActions, withMutation } from 'meteor/vulcan:core';
+import { Components, registerComponent, withDocument, withCurrentUser } from 'meteor/vulcan:core';
+import Users from 'meteor/vulcan:users';
 import { Posts } from '../../modules/posts/index.js';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { FormattedMessage } from 'meteor/vulcan:i18n';
-import { stateToHTML } from 'draft-js-export-html';
-import { convertFromRaw } from 'draft-js';
+import { Divider, Container, Segment, Item, Header } from 'semantic-ui-react';
+import moment from 'moment';
 
 class PostsPage extends PureComponent {
 
   render() {
-    if (this.props.loading) {
+    if (this.props.loading) return <div className="posts-page"><Components.Loading/></div>
 
-      return <div className="posts-page"><Components.Loading/></div>
+    const post = this.props.document;
 
-    } else if (!this.props.document) {
+    return (
+      <div className="posts-page">
+        <Components.HeadTags url={Posts.getPageUrl(post, true)} title={post.title} image={post.thumbnailUrl} description={post.excerpt} />
 
-      // console.log(`// missing post (_id: ${this.props.documentId})`);
-      return <div className="posts-page"><FormattedMessage id="app.404"/></div>
+        <Divider hidden />
+        <Container text>
 
-    } else {
-      const post = this.props.document;
+          <Header as="h1">{post.title}</Header>
+          <div className="posts-page-body" dangerouslySetInnerHTML={{__html: post.htmlBody}} />
 
-      // const htmlBody = {__html: post.htmlBody};
-      const options = {
-        blockStyleFn: (block) => {
-          if (block.getData().get('text-align')) {
-            return {
-              style: {
-                textAlign: block.getData().get('text-align'),
-              }
-            }
-          }
-        }
-      };
-      const htmlBody = {__html: stateToHTML(convertFromRaw(JSON.parse(post.body)), options)};
+          <Item.Group><Item>
+            <Item.Image size="tiny" src={post.user.avatarUrl} />
+            <Item.Content>
+              <Item.Meta>Posted {moment(new Date(post.postedAt)).fromNow()} by</Item.Meta>
+              <Item.Header>{Users.getDisplayName(post.user)}</Item.Header>
+              <Item.Extra>
+                <Components.EditModal document={post} title="Edit Post" component={Components.PostsEditForm}
+                  buttonAttrs={{floated: 'right', size: 'tiny', content: 'Edit Post'}} />
+              </Item.Extra>
+            </Item.Content>
+          </Item></Item.Group>
+        </Container>
 
-      return (
-        <div className="posts-page">
+      </div>
+    );
 
-          <Components.HeadTags url={Posts.getPageUrl(post, true)} title={post.title} image={post.thumbnailUrl} description={post.excerpt} />
-
-          <Components.PostsItem post={post} currentUser={this.props.currentUser} />
-          <div className="posts-page-body" dangerouslySetInnerHTML={htmlBody} />
-
-          <Components.PostsCommentsThread terms={{postId: post._id, view: 'postComments'}} />
-
-        </div>
-      );
-
-    }
   }
-
-  // triggered after the component did mount on the client
-  async componentDidMount() {
-    try {
-
-      // destructure the relevant props
-      const {
-        // from the parent component, used in withDocument, GraphQL HOC
-        documentId,
-        // from connect, Redux HOC
-        setViewed,
-        postsViewed,
-        // from withMutation, GraphQL HOC
-        increasePostViewCount,
-      } = this.props;
-
-      // a post id has been found & it's has not been seen yet on this client session
-      if (documentId && !postsViewed.includes(documentId)) {
-
-        // trigger the asynchronous mutation with postId as an argument
-        await increasePostViewCount({postId: documentId});
-
-        // once the mutation is done, update the redux store
-        setViewed(documentId);
-      }
-
-    } catch(error) {
-      console.log(error); // eslint-disable-line
-    }
-  }
-}
-
-PostsPage.displayName = "PostsPage";
-
-PostsPage.propTypes = {
-  documentId: PropTypes.string,
-  document: PropTypes.object,
-  postsViewed: PropTypes.array,
-  setViewed: PropTypes.func,
-  increasePostViewCount: PropTypes.func,
 }
 
 const queryOptions = {
@@ -99,26 +47,4 @@ const queryOptions = {
   queryName: 'postsSingleQuery',
   fragmentName: 'PostsPage',
 };
-
-const mutationOptions = {
-  name: 'increasePostViewCount',
-  args: {postId: 'String'},
-};
-
-const mapStateToProps = state => ({ postsViewed: state.postsViewed });
-const mapDispatchToProps = dispatch => bindActionCreators(getActions().postsViewed, dispatch);
-
-registerComponent(
-  // component name used by Vulcan
-  'PostsPage',
-  // React component
-  PostsPage,
-  // HOC to give access to the current user
-  withCurrentUser,
-  // HOC to load the data of the document, based on queryOptions & a documentId props
-  [withDocument, queryOptions],
-  // HOC to provide a single mutation, based on mutationOptions
-  withMutation(mutationOptions),
-  // HOC to give access to the redux store & related actions
-  connect(mapStateToProps, mapDispatchToProps)
-);
+registerComponent('PostsPage', PostsPage, withCurrentUser, [withDocument, queryOptions]);

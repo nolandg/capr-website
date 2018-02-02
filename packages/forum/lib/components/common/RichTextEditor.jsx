@@ -3,6 +3,23 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component } from 'react';
 import { EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import { stateToHTML } from 'draft-js-export-html';
+
+export const stateToHTMLOptions = {
+  blockStyleFn: (block) => {
+    if (block.getData().get('text-align')) {
+      return {
+        style: {
+          textAlign: block.getData().get('text-align'),
+        }
+      }
+    }
+  }
+}
+
+export function stringToHtml(string){
+  return stateToHTML(convertFromRaw(JSON.parse(string)), stateToHTMLOptions);
+}
 
 class RichTextEditor extends Component {
   constructor(props) {
@@ -46,8 +63,8 @@ class RichTextEditor extends Component {
     return (
       <Editor
         editorState={editorState}
-        wrapperClassName="demo-wrapper"
-        editorClassName="demo-editor"
+        wrapperClassName="rte-wrapper"
+        editorClassName="rte-editor"
         onEditorStateChange={this.onEditorStateChange}
         toolbar={toolbar}
       />

@@ -1,7 +1,9 @@
 import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Icon } from 'semantic-ui-react'
+import { Modal, Button, Icon } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
+
 
 class EditModal extends Component {
   state = { modalOpen: false }
@@ -19,14 +21,17 @@ class EditModal extends Component {
   }
 
   handleDelete = () => {
-    console.log('delete')
     this.formActions.delete();
+  }
+
+  handleDocumentRemoved = () => {
+    this.props.router.transitionTo(this.props.router.createLocation('/'));
   }
 
   render() {
     return (
       <Modal
-        trigger={<Button onClick={this.handleOpen}><Icon name='write' />Edit</Button>}
+        trigger={<Button onClick={this.handleOpen} {...this.props.buttonAttrs} color="blue" />}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         dimmer="blurring"
@@ -35,7 +40,11 @@ class EditModal extends Component {
         <Modal.Header>{this.props.title}</Modal.Header>
         <Modal.Content>
           <Modal.Description>
-            <this.props.component documentId={this.props.document._id} registerActions={this.registerActions} closeModal={this.handleClose} />
+            <this.props.component
+              documentId={this.props.document._id}
+              registerActions={this.registerActions}
+              closeModal={this.handleClose}
+              documentRemoved={this.handleDocumentRemoved}/>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
@@ -48,4 +57,4 @@ class EditModal extends Component {
   }
 }
 
-registerComponent('EditModal', EditModal);
+registerComponent('EditModal', EditModal, withRouter);
