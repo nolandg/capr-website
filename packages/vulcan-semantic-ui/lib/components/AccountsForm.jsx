@@ -21,8 +21,6 @@ export class AccountsForm extends Component {
     } = this.props;
     const _className = classnames('accounts-ui', { ready }, className);
 
-    console.log(fields);
-
     return (
       <Form
         onSubmit={this.handleSubmit}
@@ -34,7 +32,6 @@ export class AccountsForm extends Component {
         <Components.AccountsButtons buttons={ buttons } />
         <Components.AccountsPasswordOrService oauthServices={ oauthServices } />
         <Components.AccountsSocialButtons oauthServices={ oauthServices } />
-        <br />
         <Components.AccountsFormMessages messages={messages} />
       </Form>
     );

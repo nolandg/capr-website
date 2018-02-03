@@ -7,6 +7,7 @@ import '../components/common/SiteFooter.jsx';
 import '../components/common/UnderConstruction.jsx';
 
 // pages
+import '../components/LoginPage.jsx';
 import '../components/HomePage.jsx';
 import '../components/CalculatorPage.jsx';
 import '../components/AboutUsPage.jsx';

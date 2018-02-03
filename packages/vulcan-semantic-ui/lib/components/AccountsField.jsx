@@ -15,15 +15,15 @@ export class AccountsField extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mount: true
+      mount: true,
+      value: this.props.defaultValue || '',
     };
   }
 
   triggerUpdate() {
     // Trigger an onChange on inital load, to support browser prefilled values.
-    const { onChange } = this.props;
-    if (this.input && onChange) {
-      onChange({ target: { value: this.input.value } });
+    if (this.props.onChange) {
+      this.props.onChange({ target: { value: this.state.value } });
     }
   }
 
@@ -43,21 +43,18 @@ export class AccountsField extends Component {
     }
   }
 
+  handleChange = (e, { value }) => {
+    this.setState({value: value });
+    if (this.props.onChange) {
+      this.props.onChange({ target: { value: value } });
+    }
+  }
+
   render() {
-    const {
-      id,
-      hint,
-      label,
-      type = 'text',
-      onChange,
-      // required = false,
-      className = "field",
-      defaultValue = "",
-      message,
-    } = this.props;
+    const {id, hint, label, type = 'text', message } = this.props;
     const { mount = true } = this.state;
     if (type == 'notice') {
-      return <div className={ className }>{ label }</div>;
+      return <div>{ label }</div>;
     }
 
     const autoComplete = autocompleteValues[id];
@@ -65,8 +62,8 @@ export class AccountsField extends Component {
     return mount ? (
       <Form.Field error={!!message}>
         <label>{label}</label>
-        <Input fluid id={ id } type={type} ref={ref => { this.input = ref; }} onChange={onChange}
-          placeholder={hint} defaultValue={defaultValue} autoComplete={autoComplete} />
+        <Input fluid id={ id } type={type} onChange={this.handleChange} value={this.state.value}
+          placeholder={hint} autoComplete={autoComplete} />
       </Form.Field>
     ) : null;
   }

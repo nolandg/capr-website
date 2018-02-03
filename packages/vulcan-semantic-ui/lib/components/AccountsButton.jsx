@@ -31,8 +31,9 @@ export class AccountsButton extends PureComponent {
         disabled={disabled}
         onClick={onClick}
         icon={icon}
+        content={label}
+        style={{marginRight: '10px'}}
         >
-        {label}
       </Button>;
   }
 }

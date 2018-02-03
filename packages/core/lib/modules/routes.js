@@ -2,6 +2,7 @@ import { addRoute } from 'meteor/vulcan:core';
 
 addRoute([
   {name:'home', path: '/', componentName: 'HomePage'},
+  {name:'login', path: '/login', componentName: 'LoginPage'},
   {name:'aboutUs', path: '/about-us', componentName: 'AboutUsPage'},
   {name:'posts', path: '/posts', componentName: 'PostsPage'},
   {name:'projects', path: '/projects', componentName: 'ProjectsPage'},

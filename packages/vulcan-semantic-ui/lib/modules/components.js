@@ -1,4 +1,5 @@
-import '../components/Input.jsx';
+import '../components/AccountsPasswordOrService.jsx';
+import '../components/AccountsSocialButtons.jsx';
 import '../components/AccountsButton.jsx';
 import '../components/AccountsForm.jsx';
 import '../components/AccountsFormMessage.jsx';
