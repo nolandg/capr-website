@@ -34,14 +34,13 @@ class EditModal extends Component {
         trigger={<Button onClick={this.handleOpen} {...this.props.buttonAttrs} color="blue" />}
         open={this.state.modalOpen}
         onClose={this.handleClose}
-        dimmer="blurring"
         closeOnDimmerClick={false}
       >
         <Modal.Header>{this.props.title}</Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <this.props.component
-              documentId={this.props.document._id}
+              documentId={this.props.document?this.props.docmentId._id:undefined}
               registerActions={this.registerActions}
               closeModal={this.handleClose}
               documentRemoved={this.handleDocumentRemoved}/>
@@ -49,7 +48,7 @@ class EditModal extends Component {
         </Modal.Content>
         <Modal.Actions>
           <Button color='grey' onClick={this.handleClose}><Icon name='cancel' />Cancel</Button>
-          <Button color='red' onClick={this.handleDelete}><Icon name='trash' />Delete</Button>
+          {this.props.document?<Button color='red' onClick={this.handleDelete}><Icon name='trash' />Delete</Button>:null}
           <Button color='green' onClick={this.handleSave}><Icon name='save' />Save</Button>
         </Modal.Actions>
       </Modal>

@@ -5,9 +5,7 @@ Posts schema
 */
 
 import Users from 'meteor/vulcan:users';
-import { Utils, getSetting, registerSetting, getCollection } from 'meteor/vulcan:core';
-import moment from 'moment';
-import marked from 'marked';
+import { Utils, getSetting, registerSetting } from 'meteor/vulcan:core';
 import { stringToHtml } from '../../components/common/RichTextEditor';
 
 registerSetting('forum.postExcerptLength', 30, 'Length of posts excerpts in words');
@@ -167,111 +165,7 @@ const schema = {
       }
     }
   },
-  /**
-    Count of how many times the post's page was viewed
-  */
-  viewCount: {
-    type: Number,
-    optional: true,
-    viewableBy: ['admins'],
-    defaultValue: 0
-  },
-  /**
-    Timestamp of the last comment
-  */
-  lastCommentedAt: {
-    type: Date,
-    optional: true,
-    viewableBy: ['guests'],
-  },
-  /**
-    Count of how many times the post's link was clicked
-  */
-  clickCount: {
-    type: Number,
-    optional: true,
-    viewableBy: ['admins'],
-    defaultValue: 0
-  },
-  /**
-    The post's status. One of pending (`1`), approved (`2`), or deleted (`3`)
-  */
-  status: {
-    type: Number,
-    optional: true,
-    viewableBy: ['guests'],
-    insertableBy: ['admins'],
-    editableBy: ['admins'],
-    control: 'select',
-    onInsert: (document, currentUser) => {
-      if (!document.status) {
-        return getCollection('Posts').getDefaultStatus(currentUser);
-      }
-    },
-    onEdit: (modifier, document, currentUser) => {
-      // if for some reason post status has been removed, give it default status
-      if (modifier.$unset && modifier.$unset.status) {
-        return getCollection('Posts').getDefaultStatus(currentUser);
-      }
-    },
-    form: {
-      options: () => getCollection('Posts').statuses,
-    },
-    group: formGroups.admin
-  },
-  /**
-    Whether a post is scheduled in the future or not
-  */
-  isFuture: {
-    type: Boolean,
-    optional: true,
-    viewableBy: ['guests'],
-    onInsert: (post) => {
-      // Set the post's isFuture to true if necessary
-      if (post.postedAt) {
-        const postTime = new Date(post.postedAt).getTime();
-        const currentTime = new Date().getTime() + 1000;
-        return postTime > currentTime; // round up to the second
-      }
-    },
-    onEdit: (modifier, post) => {
-      // Set the post's isFuture to true if necessary
-      if (modifier.$set.postedAt) {
-        const postTime = new Date(modifier.$set.postedAt).getTime();
-        const currentTime = new Date().getTime() + 1000;
-        if (postTime > currentTime) {
-          // if a post's postedAt date is in the future, set isFuture to true
-          return true;
-        } else if (post.isFuture) {
-          // else if a post has isFuture to true but its date is in the past, set isFuture to false
-          return false;
-        }
-      }
-    }
-  },
-  /**
-    Whether the post is sticky (pinned to the top of posts lists)
-  */
-  sticky: {
-    type: Boolean,
-    optional: true,
-    defaultValue: false,
-    viewableBy: ['guests'],
-    insertableBy: ['admins'],
-    editableBy: ['admins'],
-    control: 'checkbox',
-    group: formGroups.admin,
-    onInsert: (post) => {
-      if(!post.sticky) {
-        return false;
-      }
-    },
-    onEdit: (modifier, post) => {
-      if (!modifier.$set.sticky) {
-        return false;
-      }
-    }
-  },
+
   /**
     Save info for later spam checking on a post. We will use this for the akismet package
   */
@@ -326,15 +220,6 @@ const schema = {
     },
   },
 
-  /**
-    Used to keep track of when a post has been included in a newsletter
-  */
-  scheduledAt: {
-    type: Date,
-    optional: true,
-    viewableBy: ['admins'],
-  },
-
   // GraphQL-only fields
 
   domain: {
@@ -370,50 +255,6 @@ const schema = {
       resolver: (post, args, { Posts }) => {
         return post.url ? Utils.getOutgoingUrl(post.url) : Posts.getPageUrl(post, true);
       },
-    }
-  },
-
-  postedAtFormatted: {
-    type: String,
-    optional: true,
-    viewableBy: ['guests'],
-    resolveAs: {
-      type: 'String',
-      resolver: (post, args, context) => {
-        return moment(post.postedAt).format('dddd, MMMM Do YYYY');
-      }
-    }
-  },
-
-  commentsCount: {
-    type: Number,
-    optional: true,
-    viewableBy: ['guests'],
-    resolveAs: {
-      type: 'Int',
-      resolver: (post, args, { Comments }) => {
-        const commentsCount = Comments.find({ postId: post._id }).count();
-        return commentsCount;
-      },
-    }
-  },
-
-  comments: {
-    type: Array,
-    optional: true,
-    viewableBy: ['guests'],
-    resolveAs: {
-      arguments: 'limit: Int = 5',
-      type: '[Comment]',
-      resolver: (post, { limit }, { currentUser, Users, Comments }) => {
-        const comments = Comments.find({ postId: post._id }, { limit }).fetch();
-
-        // restrict documents fields
-        const viewableComments = _.filter(comments, comments => Comments.checkAccess(currentUser, comments));
-        const restrictedComments = Users.restrictViewableFields(currentUser, Comments, viewableComments);
-
-        return restrictedComments;
-      }
     }
   },
 

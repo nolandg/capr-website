@@ -14,10 +14,10 @@ class SiteHeader extends PureComponent {
           <Grid.Row columns={1} only="tablet computer" className="site-title-computer">
             <Grid.Column>
               <Header as="h1" textAlign="center">
-                Climate Action Powell River
                 <Menu secondary floated="right" className="user-menu" size="tiny">
                   <Components.UserMenuItems />
                 </Menu>
+                Climate Action Powell River
                 <Header.Subheader>A clever statement here</Header.Subheader>
               </Header>
 

@@ -39,23 +39,32 @@ class RichTextEditor extends Component {
     this.state = {
       editorState,
     };
+
+    this.callParentOnChange();
   }
 
-  onEditorStateChange: Function = (editorState) => {
+  callParentOnChange = () => {
+    if(this.props.onChange){
+      this.props.onChange(null, {name: this.props.name, value: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))});
+    }
+  }
+
+  onEditorStateChange = (editorState) => {
     this.setState({
       editorState,
     });
 
-    if(this.props.onChange){
-      this.props.onChange(null, {name: this.props.name, value: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))});
-    }
+    this.callParentOnChange();
   };
 
   render() {
     const { editorState } = this.state;
 
     const toolbar = {
-      options:   ['blockType', 'list', 'textAlign', 'link', 'history'],
+      options:   ['inline', 'blockType', 'list', 'textAlign', 'link', 'history'],
+      inline: {
+        options: ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript'],
+      },
       textAlign: {
         options: ['left', 'center', 'right'],
       },

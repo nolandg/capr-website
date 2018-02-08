@@ -148,13 +148,7 @@
     "FlowRouter": false,
 
     // Telescope collections
-    "Categories": true,
-    "Comments": true,
-    "Feeds": true,
-    "Invites": true,
-    "Migrations": true,
     "Posts": true,
-    "Releases": true,
     "Searches": true,
     "Users": true,
 
@@ -170,7 +164,6 @@
     "fetchFeeds": true,
     "getCategoryUrl": true,
     "getEmailTemplate": true,
-    "getPostCategories": true,
     "getTemplate": true,
     "getVotePower": true,
     "i18n": true,

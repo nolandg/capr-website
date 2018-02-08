@@ -1,5 +1,4 @@
 import { Posts } from '../modules/posts/index.js';
-import { Comments } from '../modules/comments/index.js';
 import Users from 'meteor/vulcan:users';
 import { Utils } from 'meteor/vulcan:core';
 import { Picker } from 'meteor/meteorhacks:picker';
@@ -10,7 +9,7 @@ export const servePostsApi = (terms) => {
   if (!terms.limit) {
     terms.limit = 50;
   }
-  
+
   var parameters = Posts.getParameters(terms);
 
   const postsCursor = Posts.find(parameters.selector, parameters.options);

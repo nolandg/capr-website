@@ -70,45 +70,6 @@ Posts.getAuthorName = function (post) {
 };
 
 /**
- * @summary Get default status for new posts.
- * @param {Object} user
- */
-Posts.getDefaultStatus = function (user) {
-  const canPostApproved = typeof user === 'undefined' ? false : Users.canDo(user, 'posts.new.approved');
-  if (!getSetting('forum.requirePostsApproval', false) || canPostApproved) {
-    // if user can post straight to 'approved', or else post approval is not required
-    return Posts.config.STATUS_APPROVED;
-  } else {
-    return Posts.config.STATUS_PENDING;
-  }
-};
-
-/**
- * @summary Get status name
- * @param {Object} user
- */
-Posts.getStatusName = function (post) {
-  return Utils.findWhere(Posts.statuses, {value: post.status}).label;
-};
-
-/**
- * @summary Check if a post is approved
- * @param {Object} post
- */
-Posts.isApproved = function (post) {
-  return post.status === Posts.config.STATUS_APPROVED;
-};
-
-/**
- * @summary Check if a post is pending
- * @param {Object} post
- */
-Posts.isPending = function (post) {
-  return post.status === Posts.config.STATUS_PENDING;
-};
-
-
-/**
  * @summary Check to see if post URL is unique.
  * We need the current user so we know who to upvote the existing post as.
  * @param {String} url

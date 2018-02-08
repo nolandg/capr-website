@@ -58,9 +58,6 @@ PostsNewForm.contextTypes = {
 PostsNewForm.displayName = "PostsNewForm";
 
 const options = {
-  collectionName: 'Categories',
-  queryName: 'categoriesListQuery',
-  fragmentName: 'CategoriesList',
   limit: 0,
   pollInterval: 0,
 };

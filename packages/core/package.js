@@ -17,12 +17,8 @@ Package.onUse(function (api) {
     'vulcan:core@1.8.7',
 
     // vulcan packages
-    'vulcan:voting@1.8.7',
     'vulcan:accounts@1.8.7',
-    'vulcan:email@1.8.7',
     'vulcan:forms@1.8.7',
-    'vulcan:newsletter@1.8.7',
-    'vulcan:events@1.8.7',
     'vulcan:embed@1.8.7',
   ]);
 

@@ -1,20 +1,6 @@
 import { registerFragment } from 'meteor/vulcan:core';
 
-// ------------------------------ Vote ------------------------------ //
-
-// note: fragment used by default on the UsersProfile fragment
-registerFragment(`
-  fragment VotedItem on Vote {
-    # vulcan:voting
-    documentId
-    power
-    votedAt
-  }
-`);
-
 // ------------------------------ Users ------------------------------ //
-
-// note: fragment used by default on UsersProfile, PostsList & CommentsList fragments
 registerFragment(`
   fragment UsersMinimumInfo on User {
     # vulcan:users
@@ -41,8 +27,5 @@ registerFragment(`
     karma
     # vulcan:posts
     postCount
-    # vulcan:comments
-    commentCount
   }
 `);
-

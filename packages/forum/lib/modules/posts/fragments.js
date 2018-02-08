@@ -9,11 +9,7 @@ registerFragment(`
     slug
     postedAt
     createdAt
-    sticky
-    status
     excerpt
-    viewCount
-    clickCount
     # users
     userId
     author
@@ -22,21 +18,6 @@ registerFragment(`
     }
     # embedly
     thumbnailUrl
-    # categories
-    categories {
-      ...CategoriesMinimumInfo
-    }
-    # comments
-    commentCount
-    commenters {
-      ...UsersMinimumInfo
-    }
-    # voting
-    currentUserVotes{
-      ...VoteFragment
-    }
-    baseScore
-    score
   }
 `);
 

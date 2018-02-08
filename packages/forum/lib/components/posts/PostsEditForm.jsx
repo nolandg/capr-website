@@ -1,20 +1,35 @@
-import { Components, registerComponent, withEdit, withDocument, withRemove, withCurrentUser } from 'meteor/vulcan:core';
+import { Components, registerComponent, withEdit, withDocument, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Posts } from '../../modules/posts/index.js';
 import { Form } from 'semantic-ui-react'
 
 class PostsEditForm extends PureComponent {
-  state = {
-    title: this.props.document.title,
-    body: this.props.document.body,
-  };
+  constructor(props) {
+    super(props);
+    const defaultNewPost = {
+      title: 'Article Title',
+      body: 'Type the body of the article here',
+    };
+
+    if(this.props.documentId) this.state = (({ title, body }) => ({ title, body }))(this.props.document);
+    else this.state = defaultNewPost;
+  }
+
   handleChange = (e, { name, value }) => {
     this.setState({ [name]: value });
   }
 
   submit = () => {
-    this.props.editMutation({documentId: this.props.document._id, set: this.state}).then(this.props.closeModal).catch(this.handleError);
+    if(this.props.documentId){
+      this.props.editMutation({documentId: this.props.documentId, set: this.state})
+        .then(this.props.closeModal)
+        .catch(this.handleError);
+    }else{
+      this.props.newMutation({document: this.state})
+        .then(this.props.closeModal)
+        .catch(this.handleError);
+    }
   }
 
   delete = () => {
@@ -35,9 +50,8 @@ class PostsEditForm extends PureComponent {
   render(){
     return (
       <Form>
-        <h1>{this.props.document.title}</h1>
-        <Form.Input label="Title" placeholder="Title" name="title" value={this.state.title} onChange={this.handleChange} />
-        <Components.RichTextEditor placeholder='Type your post content here' name="body" value={this.state.body} onChange={this.handleChange} />
+        <Form.Input label="Title" name="title" value={this.state.title} onChange={this.handleChange} />
+        <Components.RichTextEditor name="body" value={this.state.body} onChange={this.handleChange} />
       </Form>
     )
   }
@@ -56,5 +70,6 @@ registerComponent('PostsEditForm', PostsEditForm,
   [withDocument, queryOptions],
   [withEdit, {collection: Posts, fragmentName: 'PostsPage'}],
   [withRemove, {collection: Posts}],
+  [withNew, {collection: Posts, fragmentName: 'PostsPage'}],
   withCurrentUser
 );

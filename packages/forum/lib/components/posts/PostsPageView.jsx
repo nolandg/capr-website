@@ -9,7 +9,6 @@ import moment from 'moment';
 class PostsPageView extends PureComponent {
 
   render() {
-    console.log('hi');
     if (this.props.loading) return <div className="posts-page"><Components.Loading/></div>
 
     const post = this.props.document;
@@ -30,8 +29,8 @@ class PostsPageView extends PureComponent {
               <Item.Meta>Posted {moment(new Date(post.postedAt)).fromNow()} by</Item.Meta>
               <Item.Header>{Users.getDisplayName(post.user)}</Item.Header>
               <Item.Extra>
-                <Components.EditModal document={post} title="Edit Post" component={Components.PostsEditForm}
-                  buttonAttrs={{floated: 'right', size: 'tiny', content: 'Edit Post'}} />
+                <Components.EditModal document={post} title="Edit Article" component={Components.PostsEditForm}
+                  buttonAttrs={{floated: 'right', size: 'tiny', content: 'Edit Article'}} />
               </Item.Extra>
             </Item.Content>
           </Item></Item.Group>

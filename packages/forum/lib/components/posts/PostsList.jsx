@@ -25,7 +25,7 @@ class PostsList extends PureComponent{
   }
 
   render() {
-    let {className, results, loading, count, totalCount, loadMore, showLoadMore = true, networkStatus} = this.props;
+    let {className, results, loading, count, totalCount, loadMore, networkStatus} = this.props;
 
     const loadingMore = networkStatus === 2;
 
@@ -38,11 +38,9 @@ class PostsList extends PureComponent{
           <Item.Group divided>
             {results.map(post => this.renderPostItem(post))}
           </Item.Group>
-          {showLoadMore ?
-            hasMore ?
-              <Components.PostsLoadMore loading={loadingMore} loadMore={loadMore} count={count} totalCount={totalCount} /> :
-              <div></div> :
-            null
+          {hasMore ?
+            <Components.PostsLoadMore loading={loadingMore} loadMore={loadMore} count={count} totalCount={totalCount} /> :
+            <div></div>
           }
         </div>
       )

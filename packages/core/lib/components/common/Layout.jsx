@@ -22,8 +22,6 @@ class Layout extends PureComponent {
       <div id="app">
 
         <Helmet>
-          <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
-          <link rel="shortcut icon" type="image/png" href="/logo.png"/>
         </Helmet>
 
         <Sidebar.Pushable>
@@ -42,6 +40,7 @@ class Layout extends PureComponent {
 
         </Sidebar.Pushable>
 
+        <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css" rel="stylesheet" type="text/css"/>
       </div>
     )
   }
