@@ -14,6 +14,8 @@ export class AccountsButton extends PureComponent {
       onClick
     } = this.props;
 
+    console.log('Accounts button props: ', this.props);
+
     if(className) className = className.replace('active', '');
 
     let icon = null;
