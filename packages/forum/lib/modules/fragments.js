@@ -18,6 +18,8 @@ registerFragment(`
     # vulcan:users
     ...UsersMinimumInfo
     createdAt
+    displayName
+    email
     isAdmin
     bio
     htmlBio

@@ -1,6 +1,12 @@
 @import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 @import "homepage.scss";
 
+/***** Typography *****/
+h1.ui.header{
+  font-weight: 100;
+  font-size: 2.5rem;
+}
+
 /***** Structure and Layout *****/
 .site-wrapper{
   min-height: 100vh !important;

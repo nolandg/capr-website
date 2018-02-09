@@ -16,7 +16,7 @@ class PostsList extends PureComponent{
         <Item.Image />
         <Item.Content>
           <Item.Header>{post.title}</Item.Header>
-          <Item.Meta>by {Users.getDisplayName(post.user)} {moment(new Date(post.postedAt)).fromNow()}</Item.Meta>
+          <Item.Meta>by <Components.UsersName user={post.user} /> {moment(new Date(post.postedAt)).fromNow()}</Item.Meta>
           <Item.Description>{post.excerpt}</Item.Description>
           <Item.Extra><Link to={Posts.getLink(post)} style={{}}>Read More</Link></Item.Extra>
         </Item.Content>

@@ -3,48 +3,17 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Posts } from '../../modules/posts/index.js';
 import { Form } from 'semantic-ui-react'
+import EditForm from '../common/EditForm';
 
-class PostsEditForm extends PureComponent {
+class PostsEditForm extends Component {
   constructor(props) {
-    super(props);
-    const defaultNewPost = {
+    const fields = ['title', 'body'];
+    const defaultNewDocument = {
       title: 'Article Title',
-      body: 'Type the body of the article here',
-    };
-
-    if(this.props.documentId) this.state = (({ title, body }) => ({ title, body }))(this.props.document);
-    else this.state = defaultNewPost;
-  }
-
-  handleChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
-  }
-
-  submit = () => {
-    if(this.props.documentId){
-      this.props.editMutation({documentId: this.props.documentId, set: this.state})
-        .then(this.props.closeModal)
-        .catch(this.handleError);
-    }else{
-      this.props.newMutation({document: this.state})
-        .then(this.props.closeModal)
-        .catch(this.handleError);
+      body: 'Type your article body here',
     }
-  }
 
-  delete = () => {
-    this.props.removeMutation({documentId: this.props.document._id}).then(this.props.documentRemoved).catch(this.handleError);
-  }
-
-  handleError = (error) => {
-    console.error(error);
-  }
-
-  componentDidMount() {
-    if(this.props.registerActions) this.props.registerActions({
-      submit: this.submit,
-      delete: this.delete,
-    });
+    super(props, fields, defaultNewDocument);
   }
 
   render(){

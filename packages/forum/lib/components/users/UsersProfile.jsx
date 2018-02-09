@@ -1,42 +1,39 @@
 import { Components, registerComponent, withDocument, withCurrentUser } from 'meteor/vulcan:core';
 import React from 'react';
-import { FormattedMessage } from 'meteor/vulcan:i18n';
 import Users from 'meteor/vulcan:users';
 import { Link } from 'react-router';
+import { Loader, Header, Container, Button, Icon } from 'semantic-ui-react';
 
 const UsersProfile = (props) => {
-  if (props.loading) {
+  if (props.loading) return <Loader />
+  if (!props.document) return (
+    <Container>
+      Sorry, we couldn't find that user.<br />
+      We have filed a missing persons report.
+    </Container>
+  )
 
-    return <div className="page users-profile"><Components.Loading/></div>
+  const user = props.document;
 
-  } else if (!props.document) {
+  return (
+    <Container text className="page users-profile">
+      <Components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)} />
+      <Header as="h2" className="page-title" textAlign="center">
+        {Users.getDisplayName(user)}
+        <Header.Subheader><Icon name="vcard outline" />User Profile</Header.Subheader>
+      </Header>
 
-    // console.log(`// missing user (_id/slug: ${props.documentId || props.slug})`);
-    return <div className="page users-profile"><FormattedMessage id="app.404"/></div> 
-  
-  } else {
+      {user.htmlBio ? <div dangerouslySetInnerHTML={{__html: user.htmlBio}}></div> : null }
+      {/* <Components.UsersEditForm documentId={user._id} /> */}
 
-    const user = props.document;
+      <Components.ShowIf check={Users.options.mutations.edit.check} document={user}>
+        <Components.EditModal documentId={user._id} title="Edit Profile" component={Components.UsersEditForm}
+          showDelete={false} buttonAttrs={{content: 'Edit Profile', icon: 'pencil'}} />
+      </Components.ShowIf>
 
-    const terms = {view: "userPosts", userId: user._id};
+    </Container>
+  )
 
-    return (
-      <div className="page users-profile">
-        <Components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)} />
-        <h2 className="page-title">{Users.getDisplayName(user)}</h2>
-        {user.htmlBio ? <div dangerouslySetInnerHTML={{__html: user.htmlBio}}></div> : null }
-        <ul>
-          {user.twitterUsername ? <li><a href={"http://twitter.com/" + user.twitterUsername}>@{user.twitterUsername}</a></li> : null }
-          {user.website ? <li><a href={user.website}>{user.website}</a></li> : null }
-          <Components.ShowIf check={Users.options.mutations.edit.check} document={user}>
-            <li><Link to={Users.getEditUrl(user)}><FormattedMessage id="users.edit_account"/></Link></li>
-          </Components.ShowIf>
-        </ul>
-        <h3><FormattedMessage id="users.posts"/></h3>
-        <Components.PostsList terms={terms} showHeader={false} />
-      </div>
-    )
-  }
 }
 
 UsersProfile.propTypes = {

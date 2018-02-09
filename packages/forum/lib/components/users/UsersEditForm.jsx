@@ -1,48 +1,42 @@
-import { Components, registerComponent, withCurrentUser, withMessages } from 'meteor/vulcan:core';
-import React from 'react';
+import { Components, registerComponent, withEdit, withDocument, withRemove, withCurrentUser, withNew, withMessages } from 'meteor/vulcan:core';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape } from 'meteor/vulcan:i18n';
 import Users from 'meteor/vulcan:users';
+import { Container, Form, Divider, Segment, Loader} from 'semantic-ui-react';
 import { STATES } from 'meteor/vulcan:accounts';
 
-const UsersEditForm = (props, context) => {
-  return (
-    <Components.ShowIf
-      check={Users.options.mutations.edit.check}
-      document={props.terms.documentId ? {_id: props.terms.documentId} : {slug: props.terms.slug}}
-      failureComponent={<FormattedMessage id="app.noPermission"/>}
-    >
-      <div className="page users-edit-form">
-        <h2 className="page-title users-edit-form-title"><FormattedMessage id="users.edit_account"/></h2>
-        
-        <div className="change-password-link">
-          <Components.ModalTrigger size="small" title={context.intl.formatMessage({id: "accounts.change_password"})} component={<a href="#"><FormattedMessage id="accounts.change_password" /></a>}>
-            <Components.AccountsLoginForm formState={STATES.PASSWORD_CHANGE} />
-          </Components.ModalTrigger>
-        </div>
+class UsersEditForm extends Component {
+  render(){
+    const fields = ['displayName', 'bio'];
+    const defaultNewDocument = {
+      displayName: 'your name',
+      bio: 'Describe yourself to the world!',
+    }
 
-        <Components.SmartForm 
-          collection={Users} 
-          {...props.terms}
-          successCallback={user => {
-            props.flash(context.intl.formatMessage({ id: 'users.edit_success' }, {name: Users.getDisplayName(user)}), 'success')
-          }}
-          showRemove={true}
-        />
-      </div>
-    </Components.ShowIf>
-  );
-};
+    if(this.props.loading) return <Loader />
 
+    return (
+      <Components.EditForm {...this.props} fields={fields} defaultNewDocument={defaultNewDocument} document={this.props.document}>
+        {/* <Components.AccountsLoginForm formState={STATES.PASSWORD_CHANGE} /> */}
+        <Form.Input label="Display Name" name="displayName" value={this.state.displayName} onChange={this.handleChange} />
+      </Components.EditForm>
+    );
+  }
+}
 
 UsersEditForm.propTypes = {
-  terms: PropTypes.object, // a user is defined by its unique _id or its unique slug
 };
 
-UsersEditForm.contextTypes = {
-  intl: intlShape
+const queryOptions = {
+  collection: Users,
+  queryName: 'usersSingleQuery',
+  fragmentName: 'UsersProfile',
 };
-
-UsersEditForm.displayName = 'UsersEditForm';
-
-registerComponent('UsersEditForm', UsersEditForm, withMessages, withCurrentUser);
+registerComponent('UsersEditForm', UsersEditForm,
+  withMessages,
+  [withDocument, queryOptions],
+  [withEdit, {collection: Users, fragmentName: 'UsersProfile'}],
+  [withRemove, {collection: Users}],
+  [withNew, {collection: Users, fragmentName: 'UsersProfile'}],
+  withCurrentUser
+);

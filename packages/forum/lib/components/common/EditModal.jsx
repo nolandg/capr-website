@@ -29,6 +29,8 @@ class EditModal extends Component {
   }
 
   render() {
+    const showDelete = this.props.document && this.props.showDelete;
+
     return (
       <Modal
         trigger={<Button onClick={this.handleOpen} {...this.props.buttonAttrs} color="blue" />}
@@ -40,20 +42,25 @@ class EditModal extends Component {
         <Modal.Content>
           <Modal.Description>
             <this.props.component
-              documentId={this.props.document?this.props.docmentId._id:undefined}
+              documentId={this.props.document ? this.props.document._id : (this.props.documentId || undefined)}
               registerActions={this.registerActions}
               closeModal={this.handleClose}
-              documentRemoved={this.handleDocumentRemoved}/>
+              documentRemoved={this.handleDocumentRemoved}
+            />
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
           <Button color='grey' onClick={this.handleClose}><Icon name='cancel' />Cancel</Button>
-          {this.props.document?<Button color='red' onClick={this.handleDelete}><Icon name='trash' />Delete</Button>:null}
+          {showDelete?<Button color='red' onClick={this.handleDelete}><Icon name='trash' />Delete</Button>:null}
           <Button color='green' onClick={this.handleSave}><Icon name='save' />Save</Button>
         </Modal.Actions>
       </Modal>
     )
   }
 }
+
+EditModal.defaultProps = {
+  showDelete: true,
+};
 
 registerComponent('EditModal', EditModal, withRouter);
