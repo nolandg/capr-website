@@ -27,7 +27,7 @@ class UsersEditForm extends EditForm {
           <Components.RichTextEditor name="bio" value={state.bio} onChange={this.handleChange} />
         </Form.Field>
         {Users.canEditField(this.props.currentUser, Users.options.schema.isAdmin, this.props.document)?
-          <Form.Checkbox label="Is an Administrator" name="isAdmin" checked={state.isAdmin} onChange={this.handleChange} />
+          <Form.Checkbox label="Is an Administrator" name="isAdmin" checked={!!state.isAdmin} onChange={this.handleChange} />
         :null}
       </Form>
     );

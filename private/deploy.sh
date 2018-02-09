@@ -4,8 +4,10 @@ source /home/noland/.nvm/nvm.sh
 nvm use 8.9.4
 
 cd /var/www/development/capr/vulcan/
+git pull
 npm install
 cd /var/www/development/capr/capr-website/
+git pull
 npm install
 
 METEOR_PACKAGE_DIRS=/var/www/development/capr/vulcan/packages meteor build --directory /var/www/development/capr/builds

@@ -6,6 +6,7 @@
   },
   "scripts": {
     "start": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" meteor --settings settings.json",
+    "start-prod": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" meteor --settings settings.json --production",
     "update-meteor": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" meteor update",
     "lint": "eslint --cache --ext .jsx,js packages"
   },
