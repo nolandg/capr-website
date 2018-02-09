@@ -6,14 +6,12 @@ import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:co
 class LoginPage extends PureComponent {
   render (){
     return (
-      <div>
+      <Container>
         <Divider hidden />
-        <Container>
-          <Header as="h1">Login or Sign Up</Header>
-          <Components.AccountsLoginForm />
-        </Container>
-      </div>
-    )
+        <Header as="h2">Login/Signup</Header>
+        <Components.AccountsLoginForm />
+      </Container>
+    );
   }
 }
 

@@ -3,7 +3,6 @@
 
 import '../components/common/EditModal.jsx';
 import '../components/common/RichTextEditor.jsx';
-import '../components/common/EditForm.jsx';
 
 // posts
 

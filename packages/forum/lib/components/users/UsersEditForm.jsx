@@ -1,25 +1,35 @@
-import { Components, registerComponent, withEdit, withDocument, withRemove, withCurrentUser, withNew, withMessages } from 'meteor/vulcan:core';
+import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew, withMessages } from 'meteor/vulcan:core';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Users from 'meteor/vulcan:users';
-import { Container, Form, Divider, Segment, Loader} from 'semantic-ui-react';
-import { STATES } from 'meteor/vulcan:accounts';
+import { Form } from 'semantic-ui-react';
+import EditForm from '../common/EditForm';
 
-class UsersEditForm extends Component {
-  render(){
-    const fields = ['displayName', 'bio'];
+class UsersEditForm extends EditForm {
+  constructor(props){
     const defaultNewDocument = {
       displayName: 'your name',
       bio: 'Describe yourself to the world!',
-    }
+      isAdmin: false,
+    };
 
-    if(this.props.loading) return <Loader />
+    super(props, defaultNewDocument);
+  }
+
+  render(){
+    const state = this.state;
 
     return (
-      <Components.EditForm {...this.props} fields={fields} defaultNewDocument={defaultNewDocument} document={this.props.document}>
-        {/* <Components.AccountsLoginForm formState={STATES.PASSWORD_CHANGE} /> */}
-        <Form.Input label="Display Name" name="displayName" value={this.state.displayName} onChange={this.handleChange} />
-      </Components.EditForm>
+      <Form>
+        <Form.Input label="Display Name" name="displayName" value={state.displayName} onChange={this.handleChange} />
+        <Form.Field>
+          <label>Bio</label>
+          <Components.RichTextEditor name="bio" value={state.bio} onChange={this.handleChange} />
+        </Form.Field>
+        {Users.canEditField(this.props.currentUser, Users.options.schema.isAdmin, this.props.document)?
+          <Form.Checkbox label="Is an Administrator" name="isAdmin" checked={state.isAdmin} onChange={this.handleChange} />
+        :null}
+      </Form>
     );
   }
 }
@@ -27,14 +37,8 @@ class UsersEditForm extends Component {
 UsersEditForm.propTypes = {
 };
 
-const queryOptions = {
-  collection: Users,
-  queryName: 'usersSingleQuery',
-  fragmentName: 'UsersProfile',
-};
 registerComponent('UsersEditForm', UsersEditForm,
   withMessages,
-  [withDocument, queryOptions],
   [withEdit, {collection: Users, fragmentName: 'UsersProfile'}],
   [withRemove, {collection: Users}],
   [withNew, {collection: Users, fragmentName: 'UsersProfile'}],

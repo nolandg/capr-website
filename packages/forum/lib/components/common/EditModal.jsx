@@ -42,7 +42,7 @@ class EditModal extends Component {
         <Modal.Content>
           <Modal.Description>
             <this.props.component
-              documentId={this.props.document ? this.props.document._id : (this.props.documentId || undefined)}
+              document={this.props.document}
               registerActions={this.registerActions}
               closeModal={this.handleClose}
               documentRemoved={this.handleDocumentRemoved}

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router';
-import { Menu, Popup, Icon} from 'semantic-ui-react'
+import { Menu, Popup, Icon, Divider} from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 import withUI from './withUI.js';
 import Users from 'meteor/vulcan:users';
@@ -12,13 +12,17 @@ class UserMenuItems extends PureComponent {
     let greeting;
     if(this.props.currentUser){
       if(this.props.sidebar) greeting = 'My Account';
-      else greeting = `Hi ${Users.getDisplayName(this.props.currentUser)}`;
+      else greeting = `${Users.getDisplayName(this.props.currentUser)}`;
     }else{
       greeting = 'Login/Sign Up';
     }
 
     if(this.props.sidebar){
-      return (
+      if(this.props.currentUser) return (
+        <Menu.Item as={Link} to={'/users/' + this.props.currentUser.slug} name="my-account" active={path==='/users'}>
+          <Icon name="user" />{greeting}
+        </Menu.Item>
+      ); else return (
         <Menu.Item as={Link} to="/login" name="login" active={path==='/login'}>
           <Icon name="user" />{greeting}
         </Menu.Item>
@@ -40,6 +44,12 @@ class UserMenuItems extends PureComponent {
       <Popup trigger={trigger} flowing on="click">
         <Popup.Content>
           <Components.AccountsLoginForm />
+          {this.props.currentUser?(
+            <div>
+              <Divider />
+              <Link to={'/users/' + this.props.currentUser.slug}><Icon name="vcard outline" />&nbsp;My Profile</Link>
+            </div>
+          ):null}
         </Popup.Content>
       </Popup>
     );

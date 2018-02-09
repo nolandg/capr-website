@@ -3,28 +3,33 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react';
 
-
 class EditForm extends Component {
-  constructor(props, fields, defaultNewDocument) {
+  constructor(props, defaultNewDocument) {
     super(props);
 
     if(this.isNew()){
       this.state = defaultNewDocument;
     }else{
       const state = {};
-      fields.forEach((field) => {
+      for (const field in defaultNewDocument){
         state[field] = props.document[field];
-      });
+      }
       this.state = state;
     }
   }
 
   isNew = () => {
-    return !(this.props.documentId || this.props.slug);
+    return !this.props.document;
   }
 
-  handleChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
+  handleChange = (e, { name, value, type, checked }) => {
+    switch (type) {
+      case 'checkbox':
+        this.setState({ [name]: checked });
+        break;
+      default:
+        this.setState({ [name]: value });
+    }
   }
 
   submit = () => {
@@ -63,4 +68,4 @@ class EditForm extends Component {
   }
 }
 
-registerComponent(EditForm, 'EditForm');
+export default EditForm;

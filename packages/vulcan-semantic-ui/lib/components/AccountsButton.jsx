@@ -17,15 +17,21 @@ export class AccountsButton extends PureComponent {
     if(className) className = className.replace('active', '');
 
     let icon = null;
+    let color = null;
     if(className){
       if(!!~(className.indexOf('facebook'))) icon = 'facebook';
       else if(!!~(className.indexOf('google'))) icon = 'google';
       else if(!!~(className.indexOf('twitter'))) icon = 'twitter';
     }
+    if(label === 'Sign out'){
+      color = 'red';
+      icon = 'log out';
+    }
 
     return type === 'link' ?
       <a href="#" className={className} onClick={onClick} style={{marginRight: '10px'}}>{label}</a> :
       <Button
+        color={color}
         className={className}
         type={type}
         disabled={disabled}

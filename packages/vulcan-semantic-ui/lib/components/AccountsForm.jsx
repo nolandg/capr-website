@@ -26,9 +26,10 @@ export class AccountsForm extends Component {
         onSubmit={this.handleSubmit}
         className={_className}
         noValidate
-        error={!!messages.length}
+        error
+        success
       >
-        <Components.AccountsFields fields={ fields } />
+        {Object.keys(fields).length?<Components.AccountsFields fields={ fields } />:null}
         <Components.AccountsButtons buttons={ buttons } />
         <Components.AccountsPasswordOrService oauthServices={ oauthServices } />
         <Components.AccountsSocialButtons oauthServices={ oauthServices } />
