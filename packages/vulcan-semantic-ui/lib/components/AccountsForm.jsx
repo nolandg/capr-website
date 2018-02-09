@@ -11,7 +11,6 @@ export class AccountsForm extends Component {
 
   render() {
     const {
-      // hasPasswordService,
       oauthServices,
       fields,
       buttons,
