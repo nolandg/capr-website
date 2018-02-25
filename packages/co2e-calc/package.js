@@ -1,6 +1,6 @@
 Package.describe({
-  name: "vulcan-semantic-ui",
-  summary: "Brings Semantic UI React to Vulcan",
+  name: "co2e-calc",
+  summary: "CO2e Calculator",
   version: '0.0.1',
 });
 
@@ -15,6 +15,13 @@ Package.onUse(function (api) {
 
     // vulcan core
     'vulcan:core@1.8.7',
+
+    // vulcan packages
+    'vulcan:accounts@1.8.7',
+    'vulcan:email@1.8.7',
+    'vulcan:forms@1.8.7',
+    'vulcan:embed@1.8.7',
+
   ]);
 
   api.addAssets([
@@ -24,7 +31,7 @@ Package.onUse(function (api) {
   ], ['server']);
 
   api.addFiles([
-    'lib/stylesheets/main.scss',
+    'lib/stylesheets/main.scss'
   ], ['client']);
 
   api.mainModule("lib/server/main.js", "server");

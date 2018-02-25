@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Users from 'meteor/vulcan:users';
 import { Form } from 'semantic-ui-react';
-import EditForm from '../common/EditForm';
+import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 
 class UsersEditForm extends EditForm {
   constructor(props){

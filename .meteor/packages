@@ -7,5 +7,6 @@ accounts-google
 vulcan:debug
 
 forum
+co2e-calc
 core
-vulcan-semantic-ui
+noland:vulcan-semantic-ui

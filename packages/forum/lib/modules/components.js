@@ -1,9 +1,3 @@
-
-// common
-
-import '../components/common/EditModal.jsx';
-import '../components/common/RichTextEditor.jsx';
-
 // posts
 
 import '../components/posts/PostsSingle.jsx';

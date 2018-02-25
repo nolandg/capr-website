@@ -1,11 +1,11 @@
 import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Posts } from '../../modules/posts/index.js';
+import { ActivityRecords } from '../../modules/activitys/index.js';
 import { Form } from 'semantic-ui-react'
-import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
+import EditForm from '../common/EditForm';
 
-class PostsEditForm extends EditForm {
+class ActivityRecordsEditForm extends EditForm {
   constructor(props) {
     const defaultNewDocument = {
       title: 'Article Title',
@@ -28,9 +28,9 @@ class PostsEditForm extends EditForm {
   }
 }
 
-registerComponent('PostsEditForm', PostsEditForm,
-  [withEdit, {collection: Posts, fragmentName: 'PostsPage'}],
-  [withRemove, {collection: Posts}],
-  [withNew, {collection: Posts, fragmentName: 'PostsPage'}],
+registerComponent('ActivityRecordsEditForm', ActivityRecordsEditForm,
+  [withEdit, {collection: ActivityRecords, fragmentName: 'ActivityRecordsPage'}],
+  [withRemove, {collection: ActivityRecords}],
+  [withNew, {collection: ActivityRecords, fragmentName: 'ActivityRecordsPage'}],
   withCurrentUser
 );

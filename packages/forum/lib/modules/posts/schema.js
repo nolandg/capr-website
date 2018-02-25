@@ -1,19 +1,9 @@
-/*
-
-Posts schema
-
-*/
-
 import Users from 'meteor/vulcan:users';
 import { Utils, getSetting, registerSetting } from 'meteor/vulcan:core';
-import { stringToHtml } from '../../components/common/RichTextEditor';
+import { RichTextEditor } from 'meteor/noland:vulcan-semantic-ui';
 
 registerSetting('forum.postExcerptLength', 30, 'Length of posts excerpts in words');
 
-/**
- * @summary Posts config namespace
- * @type {Object}
- */
 const formGroups = {
   admin: {
     name: 'admin',
@@ -134,12 +124,12 @@ const schema = {
     viewableBy: ['guests'],
     onInsert: (post) => {
       if (post.body) {
-        return stringToHtml(post.body);
+        return RichTextEditor.stringToHtml(post.body);
       }
     },
     onEdit: (modifier, post) => {
       if (modifier.$set.body) {
-        return stringToHtml(modifier.$set.body);
+        return RichTextEditor.stringToHtml(modifier.$set.body);
       }
     }
   },

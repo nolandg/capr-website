@@ -22,6 +22,9 @@ Package.onUse(function (api) {
     'vulcan:forms@1.8.7',
     'vulcan:embed@1.8.7',
 
+    // Semantic stuff
+    'noland:vulcan-semantic-ui',
+
   ]);
 
   api.addAssets([
