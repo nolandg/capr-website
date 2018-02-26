@@ -1,11 +1,11 @@
 import { Components, registerComponent, withList, withRemove, withCurrentUser } from 'meteor/vulcan:core';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import classNames from 'classnames';
 import { Loader, Table, Button, Confirm} from 'semantic-ui-react';
 
-class ActivityRecordsList extends PureComponent{
+class ActivityRecordsList extends Component{
   state = { deleteConfirmOpen: false }
 
   handleEdit = (record) => {
@@ -13,11 +13,17 @@ class ActivityRecordsList extends PureComponent{
   }
 
   handleDelete = (record) => {
-    this.setState({deleteConfirmOpen: true});
+    this.setState({
+      deleteConfirmRecord: record,
+      deleteConfirmOpen: true,
+      deleteConfirmContent: 'Are you sure you want to delete this activity record?',
+    });
   }
 
-  handleDeleteConfirm = (record) => {
-    const p = this.props.removeMutation({documentId: record._id})
+  handleDeleteConfirm = () => {
+    const record = this.state.deleteConfirmRecord;
+
+    this.props.removeMutation({documentId: record._id})
       .then(()=>{
 
       }).catch((error) => {
@@ -26,7 +32,6 @@ class ActivityRecordsList extends PureComponent{
       .done(()=>{
         this.setState({deleteConfirmOpen: false});
       });
-    console.log(record.activity);
   }
 
   handleDeleteCancel = (record) => {
@@ -49,8 +54,10 @@ class ActivityRecordsList extends PureComponent{
           {record.end}
         </Table.Cell>
         <Table.Cell className="actions">
-          <Button icon="pencil" size="mini" color="blue" onClick={()=>{this.handleEdit(record._id)}} />
-          <Button icon="delete" size="mini" color="red" onClick={()=>{this.handleDelete(record._id)}} />
+          <Components.EditModal component={Components.ActivityRecordsEditForm} document={record}
+            title="Edit Activity Record"
+            buttonAttrs={{icon: 'pencil', color: 'blue', size: 'mini'}} />
+          <Button icon="delete" size="mini" color="red" onClick={()=>{this.handleDelete(record)}} />
         </Table.Cell>
       </Table.Row>
     );
@@ -71,6 +78,10 @@ class ActivityRecordsList extends PureComponent{
             open={this.state.deleteConfirmOpen}
             onCancel={this.handleDeleteCancel}
             onConfirm={this.handleDeleteConfirm}
+            content={this.state.deleteConfirmContent}
+            header="Delete Activity Record?"
+            confirmButton="Delete"
+            cancelButton="Cancel"
           />
 
           <Table celled>
