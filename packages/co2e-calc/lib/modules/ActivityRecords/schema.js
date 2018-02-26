@@ -1,17 +1,16 @@
-import Users from 'meteor/vulcan:users';
 
 const schema = {
 
   _id: {
     type: String,
     optional: true,
-    viewableBy: ['guests'],
+    viewableBy: ['members'],
   },
 
   createdAt: {
     type: Date,
     optional: true,
-    viewableBy: ['admins'],
+    viewableBy: ['members'],
     onInsert: () => {
       return new Date();
     }
@@ -19,21 +18,31 @@ const schema = {
 
   activity: {
     type: String,
-    optional: false,
-    max: 500,
-    viewableBy: ['guests'],
+    allowedValues: ['electricity', 'natural-gas'],
+    viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
-    control: 'text',
-    order: 20,
-    searchable: true
+  },
+
+  startDate: {
+    type: Date,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+  },
+
+  endDate: {
+    type: Date,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
   },
 
   userId: {
     type: String,
     optional: true,
     control: 'select',
-    viewableBy: ['guests'],
+    viewableBy: ['members'],
     insertableBy: ['members'],
     hidden: true,
     resolveAs: {

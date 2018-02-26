@@ -4,6 +4,8 @@ registerFragment(`
   fragment AcivityRecordsList on ActivityRecord {
     _id
     activity
+    startDate
+    endDate
     # users
     userId
     user {

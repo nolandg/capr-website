@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import classNames from 'classnames';
 import { Loader, Table, Button, Confirm} from 'semantic-ui-react';
+import moment from 'moment';
 
 class ActivityRecordsList extends Component{
   state = { deleteConfirmOpen: false }
@@ -48,10 +49,10 @@ class ActivityRecordsList extends Component{
           {record.activity}
         </Table.Cell>
         <Table.Cell className="start">
-          {record.start}
+          {moment(record.startDate).format('MMM DD, YYYY')}
         </Table.Cell>
         <Table.Cell className="end">
-          {record.end}
+          {moment(record.endDate).format('MMM DD, YYYY')}
         </Table.Cell>
         <Table.Cell className="actions">
           <Components.EditModal component={Components.ActivityRecordsEditForm} document={record}

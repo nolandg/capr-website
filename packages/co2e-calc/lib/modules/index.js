@@ -1,3 +1,5 @@
+import 'react-dates/initialize';
+
 import './fragments.js';
 import './components.js';
 import './config.js';
