@@ -3,6 +3,7 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Segment} from 'semantic-ui-react';
 import { Utils } from 'meteor/vulcan:lib';
+import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 
 class CO2eCalcAdmin extends PureComponent {
   state = { activeItem: 'records' }
@@ -12,7 +13,7 @@ class CO2eCalcAdmin extends PureComponent {
   renderActions = () => {
     return (
       <div>
-        <Components.EditModal title="New Activity Record" component={Components.ActivityRecordsEditForm}
+        <Components.EditModal title="New Activity Record" component={Components.ActivityRecordsEditForm} collection={ActivityRecords}
           buttonAttrs={{content: 'Add new activity record', icon: 'plus'}} />
       </div>
     )

@@ -1,1 +1,11 @@
 @import '../../../node_modules/react-dates/lib/css/_datepicker.css';
+
+.DateRangePicker{
+  .DateRangePickerInput_clearDates{
+    margin-right: -5px;
+  }
+  .DateRangePickerInput_arrow{
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}

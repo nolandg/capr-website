@@ -55,7 +55,7 @@ class ActivityRecordsList extends Component{
           {moment(record.endDate).format('MMM DD, YYYY')}
         </Table.Cell>
         <Table.Cell className="actions">
-          <Components.EditModal component={Components.ActivityRecordsEditForm} document={record}
+          <Components.EditModal component={Components.ActivityRecordsEditForm} document={record} collection={ActivityRecords}
             title="Edit Activity Record"
             buttonAttrs={{icon: 'pencil', color: 'blue', size: 'mini'}} />
           <Button icon="delete" size="mini" color="red" onClick={()=>{this.handleDelete(record)}} />

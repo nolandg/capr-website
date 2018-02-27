@@ -4,37 +4,35 @@ import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 
 class ActivityRecordsEditForm extends EditForm {
   constructor(props) {
-    const defaultNewDocument = {
-      activity: 'blah blah',
-      startDate: moment(),
-      endDate: moment(),
-    }
-
-    super(props, defaultNewDocument);
+    const fields = ['activity', 'startDate', 'endDate'];
+    super(props, fields);
   }
 
   render(){
-    const {activity, start} = this.state;
+    const {activity, startDate, endDate} = this.state.values;
 
     return (
-      <Form>
-        <Form.Input label="Activity" name="activity" value={activity} onChange={this.handleChange} />
+      <Form error={!!this.state.errors}>
+        {this.renderMessages()}
+        <Form.Input label="Activity" name="activity" value={activity} onChange={this.handleChange} error={!!this.state.errors.fields.activity}/>
         <Form.Field>
           <label>Dates</label>
           <DateRangePicker
-            startDate={moment(this.state.startDate)} // momentPropTypes.momentObj or null,
-            startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-            endDate={moment(this.state.endDate)} // momentPropTypes.momentObj or null,
-            endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-            onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })}
+            startDate={startDate?moment(startDate):null} // momentPropTypes.momentObj or null,
+            startDateId="startDateId" // PropTypes.string.isRequired,
+            endDate={endDate?moment(endDate):null} // momentPropTypes.momentObj or null,
+            endDateId="endDateId" // PropTypes.string.isRequired,
+            onDatesChange={(values) => this.handleChange(null, {type: 'airbnb-date-range-picker', names: ['startDate', 'endDate'], values})}
             focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
             onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
             noBorder={true}
+            showClearDates={true}
+            transitionDuration={500}
           />
         </Form.Field>
       </Form>
