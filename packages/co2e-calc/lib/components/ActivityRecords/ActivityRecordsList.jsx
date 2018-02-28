@@ -45,8 +45,11 @@ class ActivityRecordsList extends Component{
         <Table.Cell className="user">
           {record.user.displayName}
         </Table.Cell>
+        <Table.Cell className="created-at">
+          {moment(record.createdAt).format('MMM DD, YYYY')}
+        </Table.Cell>
         <Table.Cell className="activity">
-          {record.activity}
+          {ActivityRecords.activityValueToText(record.activity)}
         </Table.Cell>
         <Table.Cell className="start">
           {moment(record.startDate).format('MMM DD, YYYY')}
@@ -56,7 +59,7 @@ class ActivityRecordsList extends Component{
         </Table.Cell>
         <Table.Cell className="actions">
           <Components.EditModal component={Components.ActivityRecordsEditForm} document={record} collection={ActivityRecords}
-            title="Edit Activity Record"
+            title="Edit Activity Record" showDelete={false}
             buttonAttrs={{icon: 'pencil', color: 'blue', size: 'mini'}} />
           <Button icon="delete" size="mini" color="red" onClick={()=>{this.handleDelete(record)}} />
         </Table.Cell>
@@ -89,6 +92,7 @@ class ActivityRecordsList extends Component{
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>User</Table.HeaderCell>
+                <Table.HeaderCell>Entered</Table.HeaderCell>
                 <Table.HeaderCell>Activity</Table.HeaderCell>
                 <Table.HeaderCell>Start</Table.HeaderCell>
                 <Table.HeaderCell>End</Table.HeaderCell>

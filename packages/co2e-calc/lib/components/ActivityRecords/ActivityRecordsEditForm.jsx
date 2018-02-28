@@ -1,7 +1,7 @@
 import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'semantic-ui-react'
+import { Form, Select } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import { DateRangePicker } from 'react-dates';
@@ -19,7 +19,10 @@ class ActivityRecordsEditForm extends EditForm {
     return (
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
-        <Form.Input label="Activity" name="activity" value={activity} onChange={this.handleChange} error={!!this.state.errors.fields.activity}/>
+        {/* <Form.Input label="Activity" name="activity" value={activity} onChange={this.handleChange} error={!!this.state.errors.fields.activity}/> */}
+        <Form.Field control={Select} label='Activity' name="activity" value={activity} options={ActivityRecords.getAllowedActivities()} 
+          placeholder='Activity' onChange={this.handleChange} error={!!this.state.errors.fields.activity} />
+
         <Form.Field>
           <label>Dates</label>
           <DateRangePicker

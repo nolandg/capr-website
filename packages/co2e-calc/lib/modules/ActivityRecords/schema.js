@@ -1,3 +1,4 @@
+import { getAllowedActivityValues } from './enumerations';
 
 const schema = {
 
@@ -17,14 +18,16 @@ const schema = {
   },
 
   activity: {
+    label: 'Activity',
     type: String,
-    allowedValues: ['electricity', 'natural-gas'],
+    allowedValues: getAllowedActivityValues(),
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
   },
 
   startDate: {
+    label: 'Start Date',
     type: Date,
     viewableBy: ['members'],
     insertableBy: ['members'],
@@ -32,6 +35,7 @@ const schema = {
   },
 
   endDate: {
+    label: 'End Date',
     type: Date,
     viewableBy: ['members'],
     insertableBy: ['members'],
