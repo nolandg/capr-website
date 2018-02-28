@@ -19,7 +19,6 @@ class ActivityRecordsEditForm extends EditForm {
     return (
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
-        {/* <Form.Input label="Activity" name="activity" value={activity} onChange={this.handleChange} error={!!this.state.errors.fields.activity}/> */}
         <Form.Field control={Select} label='Activity' name="activity" value={activity} options={ActivityRecords.getAllowedActivities()} 
           placeholder='Activity' onChange={this.handleChange} error={!!this.state.errors.fields.activity} />
 

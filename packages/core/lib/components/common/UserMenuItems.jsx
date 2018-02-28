@@ -32,11 +32,11 @@ class UserMenuItems extends PureComponent {
     let trigger;
     if(this.props.currentUser){
       trigger = (
-        <Menu.Item><Icon name="user" />{greeting}<Icon name="caret down" /></Menu.Item>
+        <Menu.Item position={this.props.position}><Icon name="user" />{greeting}<Icon name="caret down" /></Menu.Item>
       );
     }else{
       trigger = (
-        <Menu.Item><Icon name="user" />{greeting}</Menu.Item>
+        <Menu.Item floated={this.props.floated}><Icon name="user" />{greeting}</Menu.Item>
       );
     }
 

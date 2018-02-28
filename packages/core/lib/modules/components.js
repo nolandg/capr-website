@@ -1,5 +1,6 @@
 // common
 import '../components/common/Layout.jsx';
+import '../components/common/CalculatorLayout.jsx';
 import '../components/common/SiteHeader.jsx';
 import '../components/common/SiteMenu.jsx';
 import '../components/common/UserMenuItems.jsx';
