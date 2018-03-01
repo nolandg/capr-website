@@ -1,4 +1,4 @@
-import { getAllowedActivityValues } from './enumerations';
+import { getAllowedActivityValues, getAllowedUnitsValues } from './enumerations';
 
 const schema = {
 
@@ -40,6 +40,40 @@ const schema = {
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
+  },
+
+  group: {
+    label: 'Group',
+    type: Object,
+    optional: true,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+  },
+  'group.id': {
+    type: String,
+  },
+  'group.label': {
+    type: String,
+  },
+
+  emissionData: {
+    label: 'Emission Data',
+    type: Object,
+    optional: true,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+  },
+  'emissionData.value': {
+    type: Number,
+  },
+  'emissionData.units': {
+    type: String,
+    allowedValues: getAllowedUnitsValues(),
+  },
+  'emissionData.data': {
+    type: Object
   },
 
   userId: {
