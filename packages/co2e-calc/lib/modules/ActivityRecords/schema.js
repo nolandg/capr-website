@@ -52,9 +52,11 @@ const schema = {
   },
   'group.id': {
     type: String,
+    optional: true,
   },
   'group.label': {
     type: String,
+    optional: true,
   },
 
   emissionData: {
@@ -67,13 +69,16 @@ const schema = {
   },
   'emissionData.value': {
     type: Number,
+    optional: true,
   },
   'emissionData.units': {
     type: String,
     allowedValues: getAllowedUnitsValues(),
+    optional: true,
   },
   'emissionData.data': {
-    type: Object
+    type: Object,
+    optional: true,
   },
 
   userId: {

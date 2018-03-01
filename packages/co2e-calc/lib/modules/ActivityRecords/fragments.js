@@ -6,6 +6,7 @@ registerFragment(`
     activity
     startDate
     endDate
+    emissionData
     # users
     userId
     user {

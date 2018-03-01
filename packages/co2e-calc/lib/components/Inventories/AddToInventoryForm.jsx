@@ -9,12 +9,17 @@ class AddToInventoryForm extends Component {
 
   handleMenuItemClick = (e, { name }) => this.setState({ activeMenuItem: name })
 
-  renderElectricity = () => {
-    return 'electricity'
+  tabNameToComponentName = (tabName) => {
+    return ('inventory-' + tabName).replace(/(-.)/g,(x)=>{return x[1].toUpperCase()}).replace(/^./,(x)=>{return x.toUpperCase()});
   }
 
   render(){
     const { activeMenuItem } = this.state;
+    let Component;
+
+    if(activeMenuItem){
+      Component = Components[this.tabNameToComponentName(activeMenuItem)];
+    }
 
     return (
       <div>
@@ -42,7 +47,7 @@ class AddToInventoryForm extends Component {
         </Menu>
 
         <Segment attached="bottom">
-          {activeMenuItem?this[Utils.dashToCamel('render-' + activeMenuItem)]():null}
+          {Component?<Component activityRecords={this.props.activityRecords}/>:null}
         </Segment>
       </div>
     )
