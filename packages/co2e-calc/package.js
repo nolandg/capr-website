@@ -25,6 +25,9 @@ Package.onUse(function (api) {
   ]);
 
   api.addAssets([
+    'lib/assets/images/bc-hydro-bill.png',
+    'lib/assets/images/bc-hydro-bill-kwh.png',
+    'lib/assets/images/bc-hydro-bill-dates.png',
   ], ['client']);
 
   api.addAssets([

@@ -6,6 +6,7 @@ import '../components/ActivityRecords/ActivityRecordsEditForm.jsx';
 import '../components/ActivityRecords/ElectricityActivityRecordEditForm.jsx';
 import '../components/ActivityRecords/ActivityRecordsTable.jsx';
 import '../components/ActivityRecords/DateRangePicker.jsx';
+import '../components/ActivityRecords/HelpAccordion.jsx';
 
 // Inventories
 import '../components/Inventories/MyInventories.jsx';

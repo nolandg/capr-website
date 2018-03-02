@@ -1,10 +1,9 @@
 import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Select } from 'semantic-ui-react'
+import { Form, Image, Segment, Header } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
-import moment from 'moment';
 
 class ElectricityActivityRecordEditForm extends EditForm {
   constructor(props) {
@@ -27,6 +26,31 @@ class ElectricityActivityRecordEditForm extends EditForm {
     const {startDate, endDate} = this.state.values;
     const kwh = this.state.values.emissionData?this.state.values.emissionData.value:0;
 
+    const helpItems = [
+      {
+        title: 'How do I find kilowatt hours on my bill?',
+        content:
+          <div>
+            See the image below.<br/><br />
+            On the right-hand side of your bill in the "Meter Reading Information" section,
+            the total kilowatt hours for this bill are shown below the meter readings for each date.
+            In this example, the kilowatt hours is 5448.
+          </div>,
+        image: '/packages/co2e-calc/lib/assets/images/bc-hydro-bill-kwh.png',
+      },
+      {
+        title: 'How do I find the dates on my bill?',
+        content:
+          <div>
+            See the image below.<br/><br />
+            On the right-hand side of your bill in the "Meter Reading Information" section,
+            the start and end date for this billing period are shown.
+            In this example, the dates are Dec 6 to Feb 5.<br /><br />
+          </div>,
+        image: '/packages/co2e-calc/lib/assets/images/bc-hydro-bill-dates.png',
+      }
+    ];
+
     return (
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
@@ -40,12 +64,7 @@ class ElectricityActivityRecordEditForm extends EditForm {
         <Form.Input label="How many kilowatt-hours are on this bill?" width={6}
           onChange={this.handleKwhChange} value={kwh}/>
 
-          <Popup
-      trigger={<Button icon>Click me or Hover me</Button>}
-      header='Movie Search'
-      content='Multiple events can trigger a popup'
-      on={['hover', 'click']}
-    />
+        <Components.HelpAccordion items={helpItems} title="Help" subtitle="How to find this information on your bill" />
       </Form>
     )
   }
