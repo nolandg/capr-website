@@ -10,7 +10,7 @@ cd /var/www/development/capr/capr-website/
 git pull
 npm install
 
-METEOR_PACKAGE_DIRS=/var/www/development/capr/vulcan/packages meteor build --directory /var/www/development/capr/builds
+METEOR_PACKAGE_DIRS=../:/var/www/development/capr/vulcan/packages meteor build --directory /var/www/development/capr/builds
 cd /var/www/development/capr/builds/bundle/programs/server
 /home/noland/.nvm/versions/node/v8.9.3/bin/npm install
 

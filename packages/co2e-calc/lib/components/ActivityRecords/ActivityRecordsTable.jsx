@@ -61,7 +61,7 @@ class ActivityRecordsTable extends Component {
           {moment(record.startDate).format('MMM DD')} to {moment(record.endDate).format('MMM DD, YYYY')}
         </Table.Cell>
         {renderActivitySpecificCells?renderActivitySpecificCells(record):null}
-        <Table.Cell>
+        <Table.Cell textAlign="center">
           <Components.EditModal document={record} component={editFormComponent} collection={ActivityRecords}
             title={editTitle}
             showDelete={true} deleteHeader={deleteTitle} deleteQuestion={deleteQuestion}
@@ -88,7 +88,7 @@ class ActivityRecordsTable extends Component {
             }
             <Table.HeaderCell><Icon name="calendar" />Dates</Table.HeaderCell>
             {renderActivitySpecificHeaderCells?renderActivitySpecificHeaderCells():null}
-            <Table.HeaderCell><Icon name="pencil" />Edit</Table.HeaderCell>
+            <Table.HeaderCell textAlign="center"><Icon name="pencil" />Edit</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

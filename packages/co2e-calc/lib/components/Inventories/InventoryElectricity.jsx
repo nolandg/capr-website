@@ -9,7 +9,7 @@ class InventoryElectricity extends Component {
 
     return (
       <div>
-
+        <Components.ActivityCompletion activityRecords={this.props.activityRecords} filterActivity="electricity" />
         <Components.EditModal component={Components.ElectricityActivityRecordEditForm} collection={ActivityRecords}
           title="Add a BC Hydro bill"
           buttonAttrs={{content: 'Add another BC Hydro bill', icon: 'plus', color: 'green'}} />
