@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Form, Select } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
-import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 
 class ElectricityActivityRecordEditForm extends EditForm {
@@ -34,24 +33,19 @@ class ElectricityActivityRecordEditForm extends EditForm {
 
         <Form.Field>
           <label>For what period is this bill for?</label>
-          <DateRangePicker
-            startDate={startDate?moment(startDate):null} // momentPropTypes.momentObj or null,
-            startDateId="startDateId" // PropTypes.string.isRequired,
-            endDate={endDate?moment(endDate):null} // momentPropTypes.momentObj or null,
-            endDateId="endDateId" // PropTypes.string.isRequired,
-            onDatesChange={(values) => this.handleChange(null, {type: 'airbnb-date-range-picker', names: ['startDate', 'endDate'], values})}
-            focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-            onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-            noBorder={true}
-            showClearDates={true}
-            transitionDuration={500}
-            isOutsideRange={() => false}
-          />
+          <Components.DateRangePicker startDate={startDate} endDate={endDate} handleChange={this.handleChange} />
         </Form.Field>
 
 
         <Form.Input label="How many kilowatt-hours are on this bill?" width={6}
           onChange={this.handleKwhChange} value={kwh}/>
+
+          <Popup
+      trigger={<Button icon>Click me or Hover me</Button>}
+      header='Movie Search'
+      content='Multiple events can trigger a popup'
+      on={['hover', 'click']}
+    />
       </Form>
     )
   }

@@ -7,123 +7,35 @@ import { Loader, Table, Button, Confirm} from 'semantic-ui-react';
 import moment from 'moment';
 
 class ActivityRecordsList extends Component{
-  state = { deleteConfirmOpen: false }
-
-  handleEdit = (record) => {
-
-  }
-
-  handleDelete = (record) => {
-    this.setState({
-      deleteConfirmRecord: record,
-      deleteConfirmOpen: true,
-      deleteConfirmContent: 'Are you sure you want to delete this activity record?',
-    });
-  }
-
-  handleDeleteConfirm = () => {
-    const record = this.state.deleteConfirmRecord;
-
-    this.props.removeMutation({documentId: record._id})
-      .then(()=>{
-
-      }).catch((error) => {
-        console.error(error);
-      })
-      .done(()=>{
-        this.setState({deleteConfirmOpen: false});
-      });
-  }
-
-  handleDeleteCancel = (record) => {
-    this.setState({deleteConfirmOpen: false});
-  }
-
-  renderActivityRecordRow = (record) => {
-    return (
-      <Table.Row key={record._id}>
-        <Table.Cell className="user">
-          {record.user.displayName}
-        </Table.Cell>
-        <Table.Cell className="created-at">
-          {moment(record.createdAt).format('MMM DD, YYYY')}
-        </Table.Cell>
-        <Table.Cell className="activity">
-          {ActivityRecords.activityValueToText(record.activity)}
-        </Table.Cell>
-        <Table.Cell className="start">
-          {moment(record.startDate).format('MMM DD, YYYY')}
-        </Table.Cell>
-        <Table.Cell className="end">
-          {moment(record.endDate).format('MMM DD, YYYY')}
-        </Table.Cell>
-        <Table.Cell className="actions">
-          <Components.EditModal component={Components.ActivityRecordsEditForm} document={record} collection={ActivityRecords}
-            title="Edit Activity Record" showDelete={false}
-            buttonAttrs={{icon: 'pencil', color: 'blue', size: 'mini'}} />
-          <Button icon="delete" size="mini" color="red" onClick={()=>{this.handleDelete(record)}} />
-        </Table.Cell>
-      </Table.Row>
-    );
-  }
 
   render() {
-    let {className, results, loading, count, totalCount, loadMore, networkStatus} = this.props;
-
+    let { results, loading, count, totalCount, loadMore, networkStatus} = this.props;
     const loadingMore = networkStatus === 2;
 
-    if (results && results.length) {
+    if(loading) return <Loader />
 
-      const hasMore = totalCount > results.length;
+    if(!results || !results.length) return (
+      <div>Nothing to show :-(</div>
+    )
 
-      return (
-        <div>
-          <Confirm
-            open={this.state.deleteConfirmOpen}
-            onCancel={this.handleDeleteCancel}
-            onConfirm={this.handleDeleteConfirm}
-            content={this.state.deleteConfirmContent}
-            header="Delete Activity Record?"
-            confirmButton="Delete"
-            cancelButton="Cancel"
-          />
+    const hasMore = totalCount > results.length;
 
-          <Table celled>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>User</Table.HeaderCell>
-                <Table.HeaderCell>Entered</Table.HeaderCell>
-                <Table.HeaderCell>Activity</Table.HeaderCell>
-                <Table.HeaderCell>Start</Table.HeaderCell>
-                <Table.HeaderCell>End</Table.HeaderCell>
-                <Table.HeaderCell>Actions</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
+    return (
+      <div>
+        <Components.ActivityRecordsTable records={this.props.results}
+          editTitle="Edit Activity Record"
+          editFormComponent={Components.ActivityRecordsEditForm}
+          deleteTitle="Confirm Delete Record"
+          deleteQuestion="Are you sure you want to delete this activity record?"
+          showActivityColumn={true}
+        />
 
-            <Table.Body>
-              {results.map(record => this.renderActivityRecordRow(record))}
-            </Table.Body>
-          </Table>
-
-          {hasMore ?
-            <Components.ActivityRecordsLoadMore loading={loadingMore} loadMore={loadMore} count={count} totalCount={totalCount} /> :
-            <div></div>
-          }
-        </div>
-      )
-    } else if (loading) {
-      return (
-        <div className={classNames(className, 'records-list')}>
-          <Loader />
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          Nothing to show :-(
-        </div>
-      )
-    }
+        {hasMore ?
+          <Components.ActivityRecordsLoadMore loading={loadingMore} loadMore={loadMore} count={count} totalCount={totalCount} />
+          : null
+        }
+      </div>
+    );
 
   }
 }

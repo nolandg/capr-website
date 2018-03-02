@@ -19,23 +19,12 @@ class ActivityRecordsEditForm extends EditForm {
     return (
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
-        <Form.Field control={Select} label='Activity' name="activity" value={activity} options={ActivityRecords.getAllowedActivities()} 
+        <Form.Field control={Select} label='Activity' name="activity" value={activity} options={ActivityRecords.getAllowedActivities()}
           placeholder='Activity' onChange={this.handleChange} error={!!this.state.errors.fields.activity} />
 
         <Form.Field>
           <label>Dates</label>
-          <DateRangePicker
-            startDate={startDate?moment(startDate):null} // momentPropTypes.momentObj or null,
-            startDateId="startDateId" // PropTypes.string.isRequired,
-            endDate={endDate?moment(endDate):null} // momentPropTypes.momentObj or null,
-            endDateId="endDateId" // PropTypes.string.isRequired,
-            onDatesChange={(values) => this.handleChange(null, {type: 'airbnb-date-range-picker', names: ['startDate', 'endDate'], values})}
-            focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-            onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-            noBorder={true}
-            showClearDates={true}
-            transitionDuration={500}
-          />
+          <Components.DateRangePicker startDate={startDate} endDate={endDate} handleChange={this.handleChange} />
         </Form.Field>
       </Form>
     )
