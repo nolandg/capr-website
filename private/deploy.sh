@@ -6,6 +6,11 @@ nvm use 8.9.4
 cd /var/www/development/capr/vulcan/
 git pull
 npm install
+
+cd /var/www/development/capr/noland-vulcan-semantic-ui/
+git pull
+npm install
+
 cd /var/www/development/capr/capr-website/
 git pull
 npm install
