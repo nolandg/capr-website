@@ -23,7 +23,7 @@ class AddToInventoryForm extends Component {
 
     return (
       <div>
-        <Menu icon="labeled" size="massive" fluid widths={5} tabular attached="top">
+        <Menu icon="labeled" size="massive" fluid widths={5} tabular attached="top" stackable>
           <Menu.Item name="vehicle" active={activeMenuItem === 'vehicle'} onClick={this.handleMenuItemClick}>
             <Icon name="car" />
             Vehicles

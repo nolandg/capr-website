@@ -5,6 +5,34 @@ import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import { ResponsiveContainer, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Line } from 'recharts';
 import moment from 'moment';
 
+const colors = {
+  red: '#db2828',
+  orange: '#f2711c',
+  yellow: '#fbbd08',
+  olive: '#b5cc18',
+  green: '#21ba45',
+  teal: '#00b5ad',
+  blue: '#2185d0',
+  violet: '#6435c9',
+  purple: '#a333c8',
+  pink: '#e03997',
+  brown: '#a5673f',
+  grey: '#767676',
+  black: '#1b1c1d',
+};
+
+const seriesColors = [
+  colors.orange,
+  colors.pink,
+  colors.blue,
+  colors.yellow,
+  colors.green,
+  colors.violet,
+  colors.teal,
+  colors.olive,
+  colors.brown,
+]
+
 class InventoryTimeline extends Component {
   getMassagedData = (records) => {
     const data = [];
@@ -28,13 +56,16 @@ class InventoryTimeline extends Component {
     const lines = [];
     const dot = {strokeWidth: 4, r: 8};
     const strokeWidth = 20;
+    let activityIndex = 0;
 
     for(let activity in series){
       series[activity].forEach((seriesName) => {
-        const stroke = "#8884d8";
+        const stroke = seriesColors[activityIndex];
 
         lines.push(<Line dot={dot} dataKey={seriesName} key={seriesName + '__lines'} stroke={stroke} strokeWidth={strokeWidth} />);
       });
+
+      activityIndex++;
     }
 
     return lines;

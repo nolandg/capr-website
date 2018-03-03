@@ -61,7 +61,7 @@ class ElectricityActivityRecordEditForm extends EditForm {
         </Form.Field>
 
 
-        <Form.Input label="How many kilowatt-hours are on this bill?" width={6}
+        <Form.Input label="How many kilowatt-hours are on this bill?" width={7}
           onChange={this.handleKwhChange} value={kwh}/>
 
         <Components.HelpAccordion items={helpItems} title="Help" subtitle="How to find this information on your bill" />

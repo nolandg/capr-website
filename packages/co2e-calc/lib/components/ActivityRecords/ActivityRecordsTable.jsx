@@ -64,7 +64,7 @@ class ActivityRecordsTable extends Component {
         <Table.Cell textAlign="center">
           <Components.EditModal document={record} component={editFormComponent} collection={ActivityRecords}
             title={editTitle}
-            showDelete={true} deleteHeader={deleteTitle} deleteQuestion={deleteQuestion}
+            showDelete={true} deleteTitle={deleteTitle} deleteQuestion={deleteQuestion}
             buttonAttrs={{content: 'Edit', icon: 'pencil', color: 'blue', size: 'mini', basic: true, compact: true, }} />
         </Table.Cell>
       </Table.Row>
