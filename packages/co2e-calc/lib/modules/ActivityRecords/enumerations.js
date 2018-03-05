@@ -1,3 +1,5 @@
+const colors = require('color');
+
 export const getAllowedActivities = () => {
   return [
     {value: 'electricity', text: 'Electricity'},
@@ -22,6 +24,47 @@ export const getAllowedUnits = () => {
     {value: 'kg', label: 'Killograms', dimension: 'mass' },
     {value: 'lbs', label: 'Pounds', dimension: 'mass' },
   ];
+}
+
+const palet = { red: '#db2828', orange: '#f2711c', yellow: '#fbbd08', olive: '#b5cc18', green: '#21ba45', teal: '#00b5ad', blue: '#2185d0', violet: '#6435c9', purple: '#a333c8', pink: '#e03997', brown: '#a5673f', grey: '#767676', black: '#1b1c1d',};
+
+const orderedPalet= [
+  palet.orange,
+  palet.pink,
+  palet.blue,
+  palet.yellow,
+  palet.green,
+  palet.violet,
+  palet.teal,
+  palet.olive,
+  palet.brown,
+  palet.grey,
+];
+const defaultColor = '#767676';
+
+export const activityToColor = (activity, active = false) => {
+  const index = getAllowedActivityValues().indexOf(activity);
+
+  if(index === -1 || index >= orderedPalet.length){
+    console.error('Could not find color for unknown activity "' + activity + '"');
+    return defaultColor;
+  }
+
+  const color = orderedPalet[index];
+
+  if(active) return colors(color).lighten(.2).rgb().string();
+  return color;
+}
+
+export const activityToIcon = (activity) => {
+  switch (activity) {
+    case 'electricity': return 'bc-hydro';
+    case 'vehicle': return 'car';
+    case 'natural-gas': return 'fortis';
+    case 'flight': return 'plane';
+    case 'propane': return 'propane';
+    default: return '';
+  }
 }
 
 export const getAllowedUnitsValues = () => {

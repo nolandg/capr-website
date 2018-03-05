@@ -2,90 +2,140 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
-import { ResponsiveContainer, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Line } from 'recharts';
+import { ResponsiveContainer, LineChart, XAxis, YAxis, Tooltip, Line, ReferenceLine } from 'recharts';
+import { Item, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 
-const colors = {
-  red: '#db2828',
-  orange: '#f2711c',
-  yellow: '#fbbd08',
-  olive: '#b5cc18',
-  green: '#21ba45',
-  teal: '#00b5ad',
-  blue: '#2185d0',
-  violet: '#6435c9',
-  purple: '#a333c8',
-  pink: '#e03997',
-  brown: '#a5673f',
-  grey: '#767676',
-  black: '#1b1c1d',
-};
+/**********************************************************************************/
+/* CustomTooltip
+/**********************************************************************************/
+function CustomTooltip({active, record}){
+  if(!active) return null;
 
-const seriesColors = [
-  colors.orange,
-  colors.pink,
-  colors.blue,
-  colors.yellow,
-  colors.green,
-  colors.violet,
-  colors.teal,
-  colors.olive,
-  colors.brown,
-]
+  if(!record) return null;
 
+  const activityText =  ActivityRecords.Utils.activityValueToText(record.activity);
+  const color = ActivityRecords.Utils.activityToColor(record.activity);
+  const startDate = moment(record.startDate).format('MMM D');
+  const endDate = moment(record.endDate).format('MMM D');
+
+  return (
+    <div className="timeline-tooltip">
+      <Item.Group>
+        <Item>
+          <Item.Content>
+            <Item.Header>
+              <Icon className={ActivityRecords.Utils.activityToIcon(record.activity)} size="large" style={{color: color}}/>
+              {activityText}
+            </Item.Header>
+            <Item.Meta>for {startDate} to {endDate}</Item.Meta>
+            <Item.Description>
+              More info here
+            </Item.Description>
+          </Item.Content>
+        </Item>
+      </Item.Group>
+    </div>
+  );
+}
+
+/**********************************************************************************/
+/* InventoryTimeline
+/**********************************************************************************/
 class InventoryTimeline extends Component {
-  getMassagedData = (records) => {
-    const data = [];
-    const series = {};
-
-    records.forEach((record) => {
-      if(!series[record.activity]) series[record.activity] = [];
-      const seriesName = record.activity + '.' + series[record.activity].length;
-      const seriesText = ActivityRecords.activityValueToText(record.activity);
-
-      series[record.activity].push(seriesName);
-
-      data.push({[seriesName]: seriesText, date: new Date(record.startDate).valueOf()});
-      data.push({[seriesName]: seriesText, date: new Date(record.endDate).valueOf()});
-    });
-
-    return {series, data};
+  state = {
+    activeRecord: null,
   }
 
-  renderLines = (series) => {
-    const lines = [];
-    const dot = {strokeWidth: 4, r: 8};
-    const strokeWidth = 20;
-    let activityIndex = 0;
+  getMassagedData = (records) => {
+    const data = [];
+    const activities = {};
+    const categories = [];
 
-    for(let activity in series){
-      series[activity].forEach((seriesName) => {
-        const stroke = seriesColors[activityIndex];
+    records.forEach((record) => {
+      if(!activities[record.activity]) activities[record.activity] = [];
+      const seriesName = record.activity + '.' + activities[record.activity].length;
 
-        lines.push(<Line dot={dot} dataKey={seriesName} key={seriesName + '__lines'} stroke={stroke} strokeWidth={strokeWidth} />);
+      const seriesText =  ActivityRecords.Utils.activityValueToText(record.activity);
+
+      if(categories.indexOf(seriesText) === -1) categories.push(seriesText);
+
+      const startOfSeriesDataPoint = {[seriesName]: seriesText, date: new Date(record.startDate).valueOf()};4
+      const endOfSeriesDataPoint = {[seriesName]: seriesText, date: new Date(record.endDate).valueOf()};4
+
+      data.push(startOfSeriesDataPoint);
+      data.push(endOfSeriesDataPoint);
+
+      activities[record.activity].push({
+        seriesName,
+        record,
       });
+    });
 
-      activityIndex++;
+    return {activities, data, categories};
+  }
+
+  getTickXValues = () => {
+    const year = this.props.startDate.year();
+
+    return [1,2,3,4,5,6,7,8,9,10,11,12].map((m)=>{1
+      return moment(year + '-' + m + '-01', 'YYYY-M-DD').valueOf();
+    });
+  }
+
+  renderReferenceLines = (categories) => {
+    const tickXValues = this.getTickXValues();
+
+    // const horizontalLines = categories.map((category) => { return (
+    //   <ReferenceLine key={category} y={category} stroke="#DDD" strokeWidth="1" strokeDasharray="3 0"/>
+    // )});
+
+    const verticalLines = tickXValues.map((x) => { return (
+      <ReferenceLine key={x} x={x} stroke="#DDD" strokeWidth="1" strokeDasharray="3 3"/>
+    )});
+
+    return [
+      // ...horizontalLines,
+      ...verticalLines,
+    ];
+  }
+
+  renderLines = (activities, data) => {
+    const lines = [];
+    const dot = {strokeWidth: 4, r: 8, fill: '#FFF'};
+    const strokeWidth = 20;
+
+    for(let activity in activities){
+      activities[activity].forEach(({seriesName, record}) => {
+        const isActive = this.state.activeRecord && this.state.activeRecord._id === record._id;
+        const stroke =  ActivityRecords.Utils.activityToColor(activity, isActive);
+
+        lines.push(
+          <Line dataKey={seriesName} key={seriesName + '__lines'}
+            dot={dot} activeDot={false}  stroke={stroke} strokeWidth={strokeWidth}
+            onMouseEnter={() => { this.setState({activeRecord: record}) }}
+            onMouseLeave={() => { this.setState({activeRecord: null}) }}
+          />
+        );
+      });
     }
 
     return lines;
   }
 
   render(){
-    const { width = '100%', height = 200 } = this.props;
+    const { width = '100%', height = 200, startDate, endDate } = this.props;
+    const {data, activities, categories} = this.getMassagedData(this.props.activityRecords);
 
     const domain = [
-      moment('2018-01-01').valueOf(),
-      moment('2018-12-01').valueOf(),
+      moment(startDate).valueOf(),
+      moment(endDate).valueOf(),
     ];
     const tickFormatter = (tick) => {
       return moment(tick).format('MMM');
     };
-    const ticks = [1,2,3,4,5,6,7,8,9,10,11,12].map((m)=>{
-      return moment('2018-' + m + '-01', 'YYYY-M-DD');
-    });
+    const tickXValues = this.getTickXValues();
 
-    const {data, series} = this.getMassagedData(this.props.activityRecords);
 
     return (
       <ResponsiveContainer width={width} height={height}>
@@ -95,12 +145,13 @@ class InventoryTimeline extends Component {
           <XAxis dataKey="date"
             type="number"
             scale="time"
-            ticks={ticks}
+            ticks={tickXValues}
             domain={domain}
             tickFormatter={tickFormatter}
-            padding={{ left: 0, right: 20 }}
+            padding={{ left: 10, right: 20 }}
             axisLine={false}
             tickLine={false}
+            allowDataOverflow={true}
           />
           <YAxis
             type="category"
@@ -108,10 +159,9 @@ class InventoryTimeline extends Component {
             axisLine={false}
             tickLine={false}
           />
-          <CartesianGrid strokeDasharray="3 5"  horizontal={false}/>
-          <Tooltip />
-
-          {this.renderLines(series)}
+          {this.renderReferenceLines(categories)}
+          <Tooltip cursor={false} active={!!this.state.activeRecord} content={<CustomTooltip record={this.state.activeRecord}/>}/>
+          {this.renderLines(activities, data)}
         </LineChart>
       </ResponsiveContainer>
     )

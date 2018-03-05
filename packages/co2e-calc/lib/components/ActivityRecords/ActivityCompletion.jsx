@@ -1,8 +1,6 @@
 import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'semantic-ui-react';
-import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import { ResponsiveContainer, PieChart, Pie, Cell, Label } from 'recharts';
 import moment from 'moment';
 

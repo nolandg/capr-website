@@ -1,9 +1,9 @@
 import schema from './schema.js';
 import { createCollection, getDefaultResolvers, getDefaultMutations } from 'meteor/vulcan:core';
 import Users from 'meteor/vulcan:users';
-import { getAllowedActivities, getAllowedActivityValues, activityValueToText } from './enumerations';
+import enumerationUtils from './enumerations';
 
-export const ActivityRecords = createCollection({
+export let ActivityRecords = createCollection({
   collectionName: 'ActivityRecords',
   typeName: 'ActivityRecord',
   schema,
@@ -22,6 +22,6 @@ ActivityRecords.checkAccess = (currentUser, activity) => {
   }
 }
 
-ActivityRecords.getAllowedActivities = getAllowedActivities;
-ActivityRecords.getAllowedActivityValues = getAllowedActivityValues;
-ActivityRecords.activityValueToText = activityValueToText;
+ActivityRecords.Utils = {
+  ...enumerationUtils,
+};
