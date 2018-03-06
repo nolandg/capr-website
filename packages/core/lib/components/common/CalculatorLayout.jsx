@@ -23,12 +23,12 @@ class CalculatorLayout extends PureComponent {
           <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css" rel="stylesheet" type="text/css"/>
         </Helmet>
 
-        <header className="calculator-header">
+        {/* <header className="calculator-header">
           <Menu secondary className="user-menu" size="tiny">
             <Menu.Item header>Carbon Wise Footprint Calculator</Menu.Item>
             <Components.UserMenuItems position="right" />
           </Menu>
-        </header>
+        </header> */}
 
         <div className="site-content">{this.props.children}</div>
         <Components.SiteFooter />

@@ -25,10 +25,10 @@ function CustomTooltip({active, record}){
         <Item>
           <Item.Content>
             <Item.Header>
-              <Icon className={ActivityRecords.Utils.activityToIcon(record.activity)} size="large" style={{color: color}}/>
+              <Icon className={ActivityRecords.Utils.activityToIcon(record.activity)} style={{color: color}}/>
               {activityText}
             </Item.Header>
-            <Item.Meta>for {startDate} to {endDate}</Item.Meta>
+            <Item.Meta><Icon name="calendar" />&nbsp;for {startDate} to {endDate}</Item.Meta>
             <Item.Description>
               More info here
             </Item.Description>
@@ -148,7 +148,7 @@ class InventoryTimeline extends Component {
             ticks={tickXValues}
             domain={domain}
             tickFormatter={tickFormatter}
-            padding={{ left: 10, right: 20 }}
+            padding={{ left: 10, right: 0 }}
             axisLine={false}
             tickLine={false}
             allowDataOverflow={true}

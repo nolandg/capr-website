@@ -6,7 +6,9 @@ registerFragment(`
     activity
     startDate
     endDate
-    emissionData
+    co2e
+    dayCount
+    data
     # users
     userId
     user {

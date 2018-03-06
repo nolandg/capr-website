@@ -7,7 +7,7 @@ import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 
 class ElectricityActivityRecordEditForm extends EditForm {
   constructor(props) {
-    const fields = ['activity', 'startDate', 'endDate', 'emissionData'];
+    const fields = ['activity', 'startDate', 'endDate', 'data'];
     super(props, fields);
 
     this.state.values = {...this.state.values,
@@ -16,7 +16,7 @@ class ElectricityActivityRecordEditForm extends EditForm {
   }
 
   handleKwhChange = (e, { value }) => {
-    this.setState({ values: { ...this.state.values, emissionData: {
+    this.setState({ values: { ...this.state.values, data: {
       value: value,
       units: 'kWh',
     } }});
@@ -24,7 +24,7 @@ class ElectricityActivityRecordEditForm extends EditForm {
 
   render(){
     const {startDate, endDate} = this.state.values;
-    const kwh = this.state.values.emissionData?this.state.values.emissionData.value:0;
+    const kwh = this.state.values.data?this.state.values.data.value:0;
 
     const helpItems = [
       {

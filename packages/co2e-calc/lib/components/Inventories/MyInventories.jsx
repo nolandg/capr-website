@@ -34,11 +34,15 @@ class MyInventories extends Component {
     )
 
     return (
-      <div>
-        <Divider hidden />
+      <div  className="my-inventories">
+        <div  className="heading">
+          <Menu icon compact attached="top">
+            <Menu.Item>
+              <Icon name='cogs' />
+            </Menu.Item>
 
-        <div>
-          <Menu icon attached="top">
+            <Menu.Item header as="h3" className="title">Your {startDate.year()} Footprint</Menu.Item>
+
             <Menu.Item onClick={this.decrementYear}>
               <Icon name='chevron left' />
             </Menu.Item>

@@ -17,7 +17,7 @@ class ElectricityActivityRecordsTable extends Component {
 
   renderActivitySpecificCells = (record) => {
     return ([
-      <Table.Cell key="kWh">{record.emissionData?record.emissionData.value:'???'}</Table.Cell>
+      <Table.Cell key="kWh">{record.data?record.data.value:'???'}</Table.Cell>
     ]);
   }
 
@@ -59,8 +59,12 @@ class ActivityRecordsTable extends Component {
         }
         <Table.Cell>
           {moment(record.startDate).format('MMM DD')} to {moment(record.endDate).format('MMM DD, YYYY')}
+          &nbsp;({record.dayCount} days)
         </Table.Cell>
         {renderActivitySpecificCells?renderActivitySpecificCells(record):null}
+        <Table.Cell>
+          {record.co2e?(record.co2e*1000).toFixed(0):'?'}
+        </Table.Cell>
         <Table.Cell textAlign="center">
           <Components.EditModal document={record} component={editFormComponent} collection={ActivityRecords}
             title={editTitle}
@@ -88,6 +92,7 @@ class ActivityRecordsTable extends Component {
             }
             <Table.HeaderCell><Icon name="calendar" />Dates</Table.HeaderCell>
             {renderActivitySpecificHeaderCells?renderActivitySpecificHeaderCells():null}
+            <Table.HeaderCell><Icon name="cloud" />Emissions (kg)</Table.HeaderCell>
             <Table.HeaderCell textAlign="center"><Icon name="pencil" />Edit</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -105,7 +110,7 @@ class ActivityRecordsTable extends Component {
       <Accordion styled={activeIndex !== -1}>
         <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
           <Icon name='dropdown' />
-          BC Hydro Bills you've already entered
+          Title Here
         </Accordion.Title>
         <Accordion.Content active={activeIndex === 0}>
           {this.renderTable()}

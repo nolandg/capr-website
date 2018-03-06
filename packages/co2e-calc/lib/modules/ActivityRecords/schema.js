@@ -1,4 +1,5 @@
 import { getAllowedActivityValues, getAllowedUnitsValues } from './enumerations';
+import utils from './utils.js';
 
 const schema = {
 
@@ -42,6 +43,40 @@ const schema = {
     editableBy: ['members'],
   },
 
+  co2e: {
+    label: 'CO2e',
+    type: Number,
+    optional: true,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+    onInsert: (document, currentUser) => { return utils.calcCo2e(document) },
+    onEdit: (modifier, document, currentUser) => {
+      if(modifier.$set.activity || modifier.$set.data){
+        return utils.calcCo2e({document, ...modifier.$set});
+      }else{
+        return document.co2e;
+      }
+    },
+  },
+
+  dayCount: {
+    label: 'Number of days',
+    type: Number,
+    optional: true,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+    onInsert: (document, currentUser) => { return utils.calcNumberOfDays(document) },
+    onEdit: (modifier, document, currentUser) => {
+      if(modifier.$set.startDate || modifier.$set.endDate) {
+        return utils.calcNumberOfDays({document, ...modifier.$set});
+      }else{
+        return document.dayCount;
+      }
+    },
+  },
+
   group: {
     label: 'Group',
     type: Object,
@@ -59,7 +94,7 @@ const schema = {
     optional: true,
   },
 
-  emissionData: {
+  data: {
     label: 'Emission Data',
     type: Object,
     optional: true,
@@ -67,16 +102,16 @@ const schema = {
     insertableBy: ['members'],
     editableBy: ['members'],
   },
-  'emissionData.value': {
+  'data.value': {
     type: Number,
     optional: true,
   },
-  'emissionData.units': {
+  'data.units': {
     type: String,
     allowedValues: getAllowedUnitsValues(),
     optional: true,
   },
-  'emissionData.data': {
+  'data.data': {
     type: Object,
     optional: true,
   },
