@@ -2,7 +2,8 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
-import { ResponsiveContainer, LineChart, XAxis, YAxis, Tooltip, Line, ReferenceLine } from 'recharts';
+import { EmissionFactors } from '../../modules/EmissionFactors/index.js';
+import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, Line, ReferenceLine, LineChart, Area } from 'recharts';
 import { Item, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 
@@ -47,11 +48,27 @@ class InventoryTimeline extends Component {
     activeRecord: null,
   }
 
+  cachedMassagedData = {
+    data: null,
+    recordsJson: null,
+  }
+
+  getRecordsSpanningDate = (date, records) => {
+    return records.filter((record) => {
+      return moment(date).isBetween(record.startDate, record.endDate, null, '[]');
+    });
+  }
+
   getMassagedData = (records) => {
+    const recordsJson = JSON.stringify(records);
+    if(this.cachedMassagedData.recordsJson === recordsJson) return this.cachedMassagedData.data;
+
     const data = [];
     const activities = {};
     const categories = [];
+    const dates = [];
 
+    // Activities
     records.forEach((record) => {
       if(!activities[record.activity]) activities[record.activity] = [];
       const seriesName = record.activity + '.' + activities[record.activity].length;
@@ -70,9 +87,45 @@ class InventoryTimeline extends Component {
         seriesName,
         record,
       });
+
+      dates.push({ date: record.startDate, type: 'start', record });
+      dates.push({ date: record.endDate, type: 'end', record });
     });
 
-    return {activities, data, categories};
+    // Emissions
+    const sortedDates = [...dates].sort((a, b) => {
+      if(moment(a.date).isBefore(b.date)) return -1;
+      if(moment(a.date).isSame(b.date)) return 0;
+      else return 1;
+    })
+
+    sortedDates.forEach((date) => {
+      const simultaneousRecords = this.getRecordsSpanningDate(date.date, records);
+      const newDataPoint = {
+        date: moment(date.date).valueOf(),
+      };
+      let sameActivityCount = 0;
+
+      simultaneousRecords.forEach((record) => {
+        const seriesText = ActivityRecords.Utils.activityValueToText(record.activity);
+        const co2ePerDay = EmissionFactors.calcCo2e(record)*1000/record.dayCount;
+        newDataPoint[seriesText] = co2ePerDay;
+
+        if(record.activity === date.record.activity) sameActivityCount++;
+      });
+
+      data.push(newDataPoint);
+
+      if((sameActivityCount === 1) && date.type === 'end'){
+        const seriesText = ActivityRecords.Utils.activityValueToText(date.record.activity);
+        data.push({...newDataPoint, date: moment(date.date).add(1, 'seconds').valueOf(), [seriesText]: 0});
+      }
+    });
+
+    const returnData = {activities, data, categories};
+    this.cachedMassagedData.data = returnData;
+    this.cachedMassagedData.recordsJson = recordsJson;
+    return returnData;
   }
 
   getTickXValues = () => {
@@ -111,7 +164,7 @@ class InventoryTimeline extends Component {
         const stroke =  ActivityRecords.Utils.activityToColor(activity, isActive);
 
         lines.push(
-          <Line dataKey={seriesName} key={seriesName + '__lines'}
+          <Line dataKey={seriesName} key={seriesName + '__lines'} yAxisId="activities"
             dot={dot} activeDot={false}  stroke={stroke} strokeWidth={strokeWidth}
             onMouseEnter={() => { this.setState({activeRecord: record}) }}
             onMouseLeave={() => { this.setState({activeRecord: null}) }}
@@ -121,6 +174,20 @@ class InventoryTimeline extends Component {
     }
 
     return lines;
+  }
+
+  renderAreas = (activities, data) => {
+    const areas = [];
+
+    areas.push(
+      <Area dataKey="Electricity" stackId="1" yAxisId="emissions" type="stepAfter" key="electricity"
+         fill="rgba(255,0,0,.2)"
+        connectNulls={true}
+      />
+
+    );
+
+    return areas;
   }
 
   render(){
@@ -139,8 +206,8 @@ class InventoryTimeline extends Component {
 
     return (
       <ResponsiveContainer width={width} height={height}>
-        <LineChart data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        <ComposedChart data={data}
+          margin={{ top: 5, right: 10, left: 20, bottom: 5 }}
         >
           <XAxis dataKey="date"
             type="number"
@@ -156,13 +223,22 @@ class InventoryTimeline extends Component {
           <YAxis
             type="category"
             padding={{ top: 20, bottom: 20 }}
+            scale="point" // workaround for vertical offset from lines
             axisLine={false}
             tickLine={false}
+            yAxisId="activities"
           />
+          <YAxis
+            type="number"
+            yAxisId="emissions"
+            orientation="right"
+          />
+
           {this.renderReferenceLines(categories)}
           <Tooltip cursor={false} active={!!this.state.activeRecord} content={<CustomTooltip record={this.state.activeRecord}/>}/>
           {this.renderLines(activities, data)}
-        </LineChart>
+          {this.renderAreas(activities, data)}
+        </ComposedChart>
       </ResponsiveContainer>
     )
   }

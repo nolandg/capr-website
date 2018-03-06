@@ -54,7 +54,7 @@ class ActivityRecordsTable extends Component {
     return (
       <Table.Row key={record._id}>
         {showActivityColumn?
-          <Table.Cell>{ActivityRecords.activityValueToText(record.activity)}</Table.Cell>
+          <Table.Cell>{ActivityRecords.Utils.activityValueToText(record.activity)}</Table.Cell>
           :null
         }
         <Table.Cell>

@@ -26,7 +26,7 @@ class InventoryElectricity extends Component {
           </Grid.Column>
 
           <Grid.Column width={8}>
-            <Components.ActivityCompletion activityRecords={this.props.activityRecords} filterActivity="electricity" />
+            <Components.ActivityCompletion activityRecords={this.props.activityRecords} activityFilter="electricity" />
           </Grid.Column>
 
         </Grid>

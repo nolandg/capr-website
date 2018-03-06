@@ -20,8 +20,6 @@ const findFactor = (activityRecord, units) => {
         !moment(activityRecord.endDate).isBetween(factor.startDate, factor.endDate, null, '[]'))
         return false;
 
-
-    console.log('dates found');
     return true;
   });
 }
@@ -42,10 +40,15 @@ export const EmissionFactors = {
 
 const calcCo2eElectricity = (activityRecord) => {
   const { activity, data } = activityRecord;
+  if(!data){
+    console.error('Malformed electricity record, no data.');
+    return 0;
+  }
   const factor = findFactor(activityRecord, data.units);
 
   if(!factor) {
     console.error(`Could not find emission factor for activity ${activity} with data:`, data);
+    return 0;
   }
 
   return factor.factor * data.value;
