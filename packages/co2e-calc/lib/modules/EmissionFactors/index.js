@@ -7,6 +7,13 @@ const emissionFactors = [
     factor: .000011,
     startDate: moment('1970', 'YYYY'),
     endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'natural-gas',
+    units: 'GJ',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
   }
 ];
 
@@ -31,8 +38,9 @@ export const EmissionFactors = {
 
     switch (activity) {
       case 'electricity': return calcCo2eElectricity(activityRecord);
+      case 'natural-gas': return calcCo2eNaturalGas(activityRecord);
       default:
-        console.error(`Trying to calculate CO2e for unrecognized activity ${activity} with data:`, activity.data);
+        // console.error(`Trying to calculate CO2e for unrecognized activity ${activity} with data:`, activity.data);
         return 0;
     }
   }
@@ -42,6 +50,22 @@ const calcCo2eElectricity = (activityRecord) => {
   const { activity, data } = activityRecord;
   if(!data){
     console.error('Malformed electricity record, no data.');
+    return 0;
+  }
+  const factor = findFactor(activityRecord, data.units);
+
+  if(!factor) {
+    console.error(`Could not find emission factor for activity ${activity} with data:`, data);
+    return 0;
+  }
+
+  return factor.factor * data.value;
+}
+
+const calcCo2eNaturalGas = (activityRecord) => {
+  const { activity, data } = activityRecord;
+  if(!data){
+    console.error('Malformed natural gas record, no data.');
     return 0;
   }
   const factor = findFactor(activityRecord, data.units);

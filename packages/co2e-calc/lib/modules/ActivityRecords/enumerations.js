@@ -42,7 +42,7 @@ const orderedPalet= [
 ];
 const defaultColor = '#767676';
 
-export const activityToColor = (activity, active = false) => {
+export const activityToColor = (activity, type) => {
   const index = getAllowedActivityValues().indexOf(activity);
 
   if(index === -1 || index >= orderedPalet.length){
@@ -52,7 +52,10 @@ export const activityToColor = (activity, active = false) => {
 
   const color = orderedPalet[index];
 
-  if(active) return colors(color).lighten(.2).rgb().string();
+  if(type === 'active') return colors(color).lighten(.2).rgb().string();
+  if(type === 'faded') return colors(color).fade(.5).rgb().string();
+  if(type === 'faded-stroke') return colors(color).fade(.4).rgb().string();
+
   return color;
 }
 

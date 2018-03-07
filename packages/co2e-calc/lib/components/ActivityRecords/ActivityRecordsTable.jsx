@@ -39,6 +39,39 @@ class ElectricityActivityRecordsTable extends Component {
 registerComponent('ElectricityActivityRecordsTable', ElectricityActivityRecordsTable);
 
 /*******************************************************************************************************/
+/* Natural Gas
+/*******************************************************************************************************/
+class NaturalGasActivityRecordsTable extends Component {
+  renderActivitySpecificHeaderCells = () => {
+    return ([
+      <Table.HeaderCell key="gj"><Icon name="dashboard" />Gigajoules</Table.HeaderCell>
+    ]);
+  }
+
+  renderActivitySpecificCells = (record) => {
+    return ([
+      <Table.Cell key="gj">{record.data?record.data.value:'???'}</Table.Cell>
+    ]);
+  }
+
+  render() {
+    return (
+      <ActivityRecordsTable
+        {...this.props}
+        filterActivity="natural-gas"
+        editTitle="Edit Fortis BC Bill"
+        editFormComponent={Components.NaturalGasActivityRecordEditForm}
+        deleteTitle="Confirm Delete Bill"
+        deleteQuestion="Are you sure you want to delete this bill?"
+        renderActivitySpecificCells={this.renderActivitySpecificCells}
+        renderActivitySpecificHeaderCells={this.renderActivitySpecificHeaderCells}
+      />
+    );
+  }
+}
+registerComponent('NaturalGasActivityRecordsTable', NaturalGasActivityRecordsTable);
+
+/*******************************************************************************************************/
 /* Base/Generic Activity
 /*******************************************************************************************************/
 class ActivityRecordsTable extends Component {
