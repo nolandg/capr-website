@@ -139,16 +139,16 @@ class InventoryTimeline extends Component {
   renderReferenceLines = (categories) => {
     const tickXValues = this.getTickXValues();
 
-    // const horizontalLines = categories.map((category) => { return (
-    //   <ReferenceLine key={category} y={category} stroke="#DDD" strokeWidth="1" strokeDasharray="3 0"/>
-    // )});
+    const horizontalLines = categories.map((category) => { return (
+      <ReferenceLine key={category} y={category} stroke="#DDD" strokeWidth="1" strokeDasharray="3 0" yAxisId="activities"/>
+    )});
 
     const verticalLines = tickXValues.map((x) => { return (
       <ReferenceLine key={x} x={x} stroke="#DDD" strokeWidth="1" strokeDasharray="3 3"/>
     )});
 
     return [
-      // ...horizontalLines,
+      ...horizontalLines,
       ...verticalLines,
     ];
   }
@@ -182,7 +182,6 @@ class InventoryTimeline extends Component {
     areas.push(
       <Area dataKey="Electricity" stackId="1" yAxisId="emissions" type="stepAfter" key="electricity"
          fill="rgba(255,0,0,.2)"
-        connectNulls={true}
       />
 
     );
@@ -206,9 +205,7 @@ class InventoryTimeline extends Component {
 
     return (
       <ResponsiveContainer width={width} height={height}>
-        <ComposedChart data={data}
-          margin={{ top: 5, right: 10, left: 20, bottom: 5 }}
-        >
+        <ComposedChart data={data} margin={{ top: 5, right: 10, left: 20, bottom: 5 }}>
           <XAxis dataKey="date"
             type="number"
             scale="time"
@@ -234,10 +231,11 @@ class InventoryTimeline extends Component {
             orientation="right"
           />
 
-          {this.renderReferenceLines(categories)}
           <Tooltip cursor={false} active={!!this.state.activeRecord} content={<CustomTooltip record={this.state.activeRecord}/>}/>
-          {this.renderLines(activities, data)}
+
+          {this.renderReferenceLines(categories)}
           {this.renderAreas(activities, data)}
+          {this.renderLines(activities, data)}
         </ComposedChart>
       </ResponsiveContainer>
     )
