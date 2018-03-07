@@ -3,7 +3,7 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import { EmissionFactors } from '../../modules/EmissionFactors/index.js';
-import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, Line, ReferenceLine, Area } from 'recharts';
+import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, Line, ReferenceLine, Area, CartesianGrid, Label } from 'recharts';
 import { Item, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 
@@ -191,12 +191,16 @@ class InventoryTimeline extends Component {
   renderReferenceLines = () => {
     const { activityYValues, xTickValues } = this.state;
 
-    const horizontalLines = activityYValues.map((y) => { return (
-      <ReferenceLine key={y + '__y-reference-line'} y={y} stroke="#DDD" strokeWidth="1" strokeDasharray="3 0" yAxisId="activities"/>
-    )});
+    const horizontalLines = activityYValues.map((y) => {
+      const color = ActivityRecords.Utils.activityToColor(y);
+
+      return (
+        <ReferenceLine key={y + '__y-reference-line'} y={y} stroke={color} strokeWidth="2" strokeDasharray="1 0" yAxisId="activities"/>
+      );
+    });
 
     const verticalLines = xTickValues.map((x) => { return (
-      <ReferenceLine key={x + '__x-reference-line'} x={x} stroke="#DDD" strokeWidth="1" strokeDasharray="3 3"/>
+      <ReferenceLine key={x + '__x-reference-line'} x={x} stroke="#DDD" strokeWidth="1" strokeDasharray="3 6"/>
     )});
 
     return [
@@ -247,11 +251,11 @@ class InventoryTimeline extends Component {
     const domain = [ moment(startDate).valueOf(), moment(endDate).valueOf() ];
     const { xTickValues, data } = this.state;
 
-
     return (
       <ResponsiveContainer width={width} height={height-this.state.responsiveContainerWorkaround} debounce={0}>
         <ComposedChart data={data} margin={{ top: 5, right: 10, left: 20, bottom: 5 }}>
-          <XAxis dataKey="date"
+          <XAxis
+            dataKey="date"
             type="number"
             scale="time"
             ticks={xTickValues}
@@ -262,6 +266,20 @@ class InventoryTimeline extends Component {
             tickLine={false}
             allowDataOverflow={true}
           />
+
+          <YAxis
+            type="number"
+            yAxisId="emissions"
+            orientation="right"
+            axisLine={{strokeWidth: 1, stroke: '#DDD'}}
+            tickLine={{strokeWidth: 1, stroke: '#DDD'}}
+            tick={{fill: '#888'}}
+          >
+            <Label angle={270} position='center' fill="#888" style={{ textAnchor: 'middle' }}>
+              Emissions kg/day
+            </Label>
+          </YAxis>
+
           <YAxis
             type="category"
             padding={{ top: 20, bottom: 20 }}
@@ -269,11 +287,15 @@ class InventoryTimeline extends Component {
             axisLine={false}
             tickLine={false}
             yAxisId="activities"
+            tickFormatter={t => ActivityRecords.Utils.activityValueToText(t)}
           />
-          <YAxis
-            type="number"
-            yAxisId="emissions"
-            orientation="right"
+
+          <CartesianGrid
+            vertical={false}
+            stroke="#DDD"
+            strokeWidth={1}
+            strokeDasharray="3 6"
+            yAxisId="emissions" // does not work
           />
 
           <Tooltip cursor={false} active={!!this.state.activeRecord} content={<CustomTooltip record={this.state.activeRecord}/>}/>
