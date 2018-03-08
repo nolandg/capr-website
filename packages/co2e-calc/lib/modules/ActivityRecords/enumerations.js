@@ -13,17 +13,17 @@ export const getAllowedActivities = () => {
 
 export const getAllowedUnits = () => {
   return [
-    {value: 'kWh', label: 'Killowatt Hours', dimension: 'energy' },
-    {value: 'GJ', label: 'Gigajoules', dimension: 'energy' },
+    {value: 'kWh', text: 'Killowatt Hours', dimension: 'energy' },
+    {value: 'GJ', text: 'Gigajoules', dimension: 'energy' },
 
-    {value: 'L', label: 'Litres', dimension: 'volume' },
-    {value: 'US gal', label: 'US Gallons', dimension: 'volume' },
+    {value: 'L', text: 'Litres', dimension: 'volume' },
+    {value: 'US gal', text: 'US Gallons', dimension: 'volume' },
 
-    {value: 'km', label: 'Killometers', dimension: 'distance' },
-    {value: 'mi', label: 'Miles', dimension: 'distance' },
+    {value: 'km', text: 'Killometers', dimension: 'distance' },
+    {value: 'mi', text: 'Miles', dimension: 'distance' },
 
-    {value: 'kg', label: 'Killograms', dimension: 'mass' },
-    {value: 'lbs', label: 'Pounds', dimension: 'mass' },
+    {value: 'kg', text: 'Killograms', dimension: 'mass' },
+    {value: 'lbs', text: 'Pounds', dimension: 'mass' },
   ];
 }
 

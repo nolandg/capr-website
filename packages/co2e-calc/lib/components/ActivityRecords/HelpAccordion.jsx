@@ -7,6 +7,9 @@ class HelpAccordion extends Component {
 
   render() {
     const { items, title, subtitle } = this.props;
+
+    if(!items || !items.length) return null;
+
     const accordionItems = items.map((item) => { return {
       title: <Header as="h5" inverted style={{display: 'inline'}}>{item.title}</Header>,
       content:

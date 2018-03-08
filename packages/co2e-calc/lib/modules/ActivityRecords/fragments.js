@@ -9,6 +9,7 @@ registerFragment(`
     co2e
     dayCount
     data
+    group
     # users
     userId
     user {

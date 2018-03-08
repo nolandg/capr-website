@@ -85,12 +85,16 @@ const schema = {
     insertableBy: ['members'],
     editableBy: ['members'],
   },
-  'group.id': {
+  'group.name': {
     type: String,
     optional: true,
   },
   'group.label': {
     type: String,
+    optional: true,
+  },
+  'group.data': {
+    type: Object,
     optional: true,
   },
 
@@ -111,8 +115,8 @@ const schema = {
     allowedValues: getAllowedUnitsValues(),
     optional: true,
   },
-  'data.data': {
-    type: Object,
+  'data.valueType': {
+    type: String,
     optional: true,
   },
 

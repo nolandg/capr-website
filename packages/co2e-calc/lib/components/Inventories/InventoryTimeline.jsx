@@ -183,6 +183,10 @@ class InventoryTimeline extends Component {
   renderReferenceLines = () => {
     const { activityYValues, xTickValues } = this.state;
 
+    const verticalLines = xTickValues.map((x) => { return (
+      <ReferenceLine key={x + '__x-reference-line'} x={x} stroke="#DDD" strokeWidth="1" strokeDasharray="3 6"/>
+    )});
+
     const horizontalLines = activityYValues.map((y) => {
       const color = ActivityRecords.Utils.activityToColor(y);
 
@@ -191,13 +195,9 @@ class InventoryTimeline extends Component {
       );
     });
 
-    const verticalLines = xTickValues.map((x) => { return (
-      <ReferenceLine key={x + '__x-reference-line'} x={x} stroke="#DDD" strokeWidth="1" strokeDasharray="3 6"/>
-    )});
-
     return [
-      ...horizontalLines,
       ...verticalLines,
+      ...horizontalLines,
     ];
   }
 

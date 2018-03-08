@@ -8,6 +8,41 @@ import moment from 'moment';
 /*******************************************************************************************************/
 /* Electricity
 /*******************************************************************************************************/
+class VehicleActivityRecordsTable extends Component {
+  renderActivitySpecificHeaderCells = () => {
+    return ([
+      <Table.HeaderCell key="vehicle-name"><Icon name="car" />Vehicle</Table.HeaderCell>,
+      <Table.HeaderCell key="data"><Icon name="dashboard" />Data</Table.HeaderCell>
+    ]);
+  }
+
+  renderActivitySpecificCells = (record) => {
+    return ([
+      <Table.Cell key="vehicle-name">{record.group?record.group.label:'?'}</Table.Cell>,
+      <Table.Cell key="data">data here</Table.Cell>
+    ]);
+  }
+
+  render() {
+    return (
+      <ActivityRecordsTable
+        {...this.props}
+        filterActivity="vehicle"
+        editTitle="Edit Vehicle Entry"
+        editFormComponent={Components.VehicleActivityRecordEditForm}
+        deleteTitle="Confirm Delete Vechicle Entry"
+        deleteQuestion="Are you sure you want to delete this vehicle entry?"
+        renderActivitySpecificCells={this.renderActivitySpecificCells}
+        renderActivitySpecificHeaderCells={this.renderActivitySpecificHeaderCells}
+      />
+    );
+  }
+}
+registerComponent('VehicleActivityRecordsTable', VehicleActivityRecordsTable);
+
+/*******************************************************************************************************/
+/* Electricity
+/*******************************************************************************************************/
 class ElectricityActivityRecordsTable extends Component {
   renderActivitySpecificHeaderCells = () => {
     return ([
