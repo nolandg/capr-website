@@ -92,18 +92,25 @@ class InventoryTimeline extends Component {
     }
   }
 
+
+
   massageData = (records) => {
     const data = [];
     const activitySeriesNames = [];
     let activityYValues = [];
+    let dates = [];
 
-    const dates = [];
+    // Sort records from longest duration to shortest to ensure short ones
+    // show up on top
+    const recordsSortedByDuration = [...records].sort((a, b) => {
+      return b.dayCount - a.dayCount;
+    });
 
     //***** Activities *****//
     // Create short lines representing time spans covered by each record
     // Lines of for the same activity value have the same y (category) value
     // 'date' is the x value
-    records.forEach((record) => {
+    recordsSortedByDuration.forEach((record) => {
       // Name this series based on its record id which should be unique
       const seriesName = record._id;
       // The y value is on a category axis. The activity name will be translated to text by the tick formatter
@@ -126,55 +133,40 @@ class InventoryTimeline extends Component {
       activityYValues = [...new Set([...activityYValues, yValue])];
 
       // Keep track of each start and end date for emissions to use below
-      dates.push({ date: record.startDate, type: 'start', record });
-      dates.push({ date: record.endDate, type: 'end', record });
+      dates.push(record.startDate);
+      dates.push(record.endDate);
     });
 
     //***** Emissions *****//
     // Create a stacked area chart for emissions per day for each activity
     let emissionsSeriesNames = [];
 
+    // Add extra dates before and after each start and end date of these records
+    // Emissions will also be calculated on these dates to smooth the interpolation
+    dates.forEach((date) => {
+      dates.push(moment(date).subtract(5, 'days').toISOString())
+      dates.push(moment(date).add(5, 'days').toISOString());
+    });
+
     // Sort all the start and end dates for all records from earliest to latest
-    const sortedDates = [...dates].sort((a, b) => {
-      if(moment(a.date).isBefore(b.date)) return -1;
-      if(moment(a.date).isSame(b.date)) return 0;
+    dates.sort((a, b) => {
+      if(moment(a).isBefore(b)) return -1;
+      if(moment(a).isSame(b)) return 0;
       else return 1;
-    })
+    });
 
     // Create a stacked area data point for each date
     // 'date' is the x value
-    sortedDates.forEach((date) => {
-      // For every x values we must include all records that are also happening at the same time
-      const simultaneousRecords = ActivityRecords.Utils.findRecordsSpanningDate(date.date, records);
-      const newDataPoint = {
-        date: moment(date.date).valueOf(), // all series at this point share this x value
-      };
-      // Track how many simultaneous records are for the same activity
-      let sameActivityCount = 0;
+    dates.forEach((date) => {
+      const co2eTotals = ActivityRecords.Utils.calcTotalCo2eForEachActivityOnDate(records, date);
 
-      simultaneousRecords.forEach((record) => {
-        const seriesName = record.activity;
-        // Find the CO2e per day in kg
-        const co2ePerDay = EmissionFactors.calcCo2e(record)*1000/record.dayCount;
-
-        if(record.activity === date.record.activity) sameActivityCount++;
-
-        newDataPoint[seriesName] = co2ePerDay;
-
-        // Track all the series names created so we can make areas for them later
-        emissionsSeriesNames = [...new Set([...emissionsSeriesNames, seriesName])];
+      data.push({
+        date: moment(date).valueOf(),
+        ...co2eTotals,
       });
 
-      data.push(newDataPoint);
-
-      // To make the step interpolation look good we need to add a point with zero y value
-      // immediately after a record finishes if there's no other simultaneous records of that activity type
-      // Otherwise the graph doesn't go to zero until then next data point
-      // All other series retain their same value
-      if((sameActivityCount === 1) && date.type === 'end'){
-        const seriesName = date.record.activity;
-        data.push({...newDataPoint, date: moment(date.date).add(1, 'seconds').valueOf(), [seriesName]: 0});
-      }
+      // Track all the series names created so we can make areas for them later
+      emissionsSeriesNames = [...new Set([...emissionsSeriesNames, ...Object.keys(co2eTotals)])];
     });
 
     return {data, activitySeriesNames, emissionsSeriesNames, activityYValues};
@@ -237,10 +229,11 @@ class InventoryTimeline extends Component {
       const stroke = ActivityRecords.Utils.activityToColor(seriesName, 'faded-stroke');
 
       return (
-        <Area dataKey={seriesName} stackId="1" yAxisId="emissions" type="stepAfter" key={seriesName}
+        <Area dataKey={seriesName} stackId="1" yAxisId="emissions" type="monotone" key={seriesName}
           activeDot={false}
           stroke={stroke} strokeWidth="0"
           fill={fill}
+          connectNulls={true}
         />
       );
     });
@@ -254,6 +247,15 @@ class InventoryTimeline extends Component {
     return (
       <ResponsiveContainer width={width} height={height-this.state.responsiveContainerWorkaround} debounce={0}>
         <ComposedChart data={data} margin={{ top: 5, right: 10, left: 20, bottom: 5 }}>
+          <CartesianGrid
+            vertical={false}
+            stroke="#DDD"
+            strokeWidth={1}
+            strokeDasharray="3 6"
+            yAxisId="emissions" // does not work
+          />
+          {this.renderReferenceLines()}
+
           <XAxis
             dataKey="date"
             type="number"
@@ -290,17 +292,8 @@ class InventoryTimeline extends Component {
             tickFormatter={t => ActivityRecords.Utils.activityValueToText(t)}
           />
 
-          <CartesianGrid
-            vertical={false}
-            stroke="#DDD"
-            strokeWidth={1}
-            strokeDasharray="3 6"
-            yAxisId="emissions" // does not work
-          />
-
           <Tooltip cursor={false} active={!!this.state.activeRecord} content={<CustomTooltip record={this.state.activeRecord}/>}/>
 
-          {this.renderReferenceLines()}
           {this.renderAreas()}
           {this.renderLines()}
         </ComposedChart>

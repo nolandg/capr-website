@@ -6,9 +6,10 @@ import { ActivityRecords } from '../../modules/ActivityRecords';
 
 class InventoryGenericActivity extends Component {
   render(){
-    const { intro, editArea, activityFilter, recordsTableComponent, activityRecords } = this.props;
+    const { intro, editArea, activityFilter, recordsTableComponent, activityRecords, activity } = this.props;
     const RecordsTableComponent = recordsTableComponent;
-    
+    const color = ActivityRecords.Utils.activityToColor(activity);
+
     return (
       <div>
         <Grid stackable padded reversed="mobile" verticalAlign="middle">
@@ -20,7 +21,7 @@ class InventoryGenericActivity extends Component {
           </Grid.Column>
 
           <Grid.Column width={8}>
-            <Components.ActivityCompletion activityRecords={activityRecords} activityFilter={activityFilter} />
+            <Components.ActivityCompletion activityRecords={activityRecords} activity={activity} />
           </Grid.Column>
 
         </Grid>

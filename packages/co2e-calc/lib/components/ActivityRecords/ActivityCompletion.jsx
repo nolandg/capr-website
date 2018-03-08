@@ -3,6 +3,7 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ResponsiveContainer, PieChart, Pie, Cell, Label } from 'recharts';
 import moment from 'moment';
+import { ActivityRecords } from '../../modules/ActivityRecords';
 
 function CustomizedLabel({viewBox, percent}){
   return (
@@ -42,9 +43,10 @@ class ActivityCompletion extends Component {
   }
 
   render(){
-    const { width = '100%', height = 200, activityFilter, activityRecords } = this.props;
+    const { width = '100%', height = 200, activity, activityRecords } = this.props;
     let records = activityRecords;
-    if(activityFilter) records = records.filter((record) => {return record.activity === activityFilter});
+    if(activity) records = records.filter((record) => {return record.activity === activity});
+    const color = ActivityRecords.Utils.activityToColor(activity);
 
     const percent = this.getPercent(records);
     const data = [{name: 'completed', value: percent}, {name: 'not-completed', value: 100-percent}];
@@ -63,11 +65,7 @@ class ActivityCompletion extends Component {
               endAngle={90}
               >
               {data.map((entry, index) => {
-                let color;
-                if(entry.name === 'completed') color = '#21ba45';
-                else color = '#CCCCCC';
-
-                return <Cell fill={color} key={index} />
+                return <Cell fill={entry.name === 'completed'?color:'#CCC'} key={index} />
               })}
 
               <Label position="center" content={<CustomizedLabel percent={percent}/>} />

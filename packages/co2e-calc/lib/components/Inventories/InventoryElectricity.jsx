@@ -21,14 +21,14 @@ class InventoryElectricity extends Component {
     return (
       <Components.EditModal component={Components.ElectricityActivityRecordEditForm} collection={ActivityRecords}
         title="Add a BC Hydro bill"
-        buttonAttrs={{content: 'Add another BC Hydro bill', icon: 'plus', color: 'green'}} />
+        buttonAttrs={{content: 'Add another BC Hydro bill', icon: 'plus', color: 'blue'}} />
     );
   }
 
   render(){
 
     return (
-      <Components.InventoryGenericActivity activityFilter="electricity" activityRecords={this.props.activityRecords}
+      <Components.InventoryGenericActivity activity="electricity" activityRecords={this.props.activityRecords}
         recordsTableComponent={Components.ElectricityActivityRecordsTable}
         intro={this.renderIntro()}
         editArea={this.renderEditArea()}

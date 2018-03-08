@@ -15,6 +15,24 @@ export const findRecordsSpanningDate = (date, records) => {
   });
 }
 
+export const calcTotalCo2eForEachActivityOnDate = (records, date) => {
+  const simultaneousRecords = findRecordsSpanningDate(date, records);
+  const co2eTotals = {};
+
+  simultaneousRecords.forEach((record) => {
+    // Find the CO2e per day in kg
+    const co2ePerDay = EmissionFactors.calcCo2e(record)*1000/record.dayCount;
+
+    // Add a new entry to data point if needed
+    if(!co2eTotals[record.activity]) co2eTotals[record.activity] = 0;
+
+    // Add to total emissions for this activity on this date
+    co2eTotals[record.activity] += co2ePerDay;
+  });
+
+  return co2eTotals;
+}
+
 export const hashRecords = (records) => {
   const string = JSON.stringify(records);
 
@@ -28,6 +46,6 @@ export const hashRecords = (records) => {
       hash = ((hash<<5)-hash)+char;
       hash = hash & hash; // Convert to 32bit integer
   }
-  
+
   return hash;
 }

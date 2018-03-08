@@ -3,9 +3,24 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Icon, Segment } from 'semantic-ui-react';
 import { Utils } from 'meteor/vulcan:lib';
+import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
+
+const ColoredMenuItem = ({name, label, activeMenuItem, onClick, icon}) => {
+  const isActive = activeMenuItem === name;
+  const color = ActivityRecords.Utils.activityToColor(name);
+
+  return (
+    <Menu.Item name={name} active={isActive} onClick={onClick}
+      style={isActive?{borderColor: color}:null}
+      >
+      <Icon className={icon} style={isActive?{color: color}:null}/>
+      <span style={isActive?{color: color}:null}>{label}</span>
+    </Menu.Item>
+  );
+}
 
 class AddToInventoryForm extends Component {
-  state = {activeMenuItem: null}
+  state = {activeMenuItem: 'vehicle'}
 
   handleMenuItemClick = (e, { name }) => this.setState({ activeMenuItem: name })
 
@@ -23,30 +38,21 @@ class AddToInventoryForm extends Component {
 
     return (
       <div>
-        <Menu icon="labeled" size="massive" fluid widths={5} tabular attached="top" stackable>
-          <Menu.Item name="vehicle" active={activeMenuItem === 'vehicle'} onClick={this.handleMenuItemClick}>
-            <Icon name="car" />
-            Vehicles
-          </Menu.Item>
-          <Menu.Item name="electricity" active={activeMenuItem === 'electricity'} onClick={this.handleMenuItemClick}>
-            <Icon className="bc-hydro" />
-            Electricity
-          </Menu.Item>
-          <Menu.Item name="natural-gas" active={activeMenuItem === 'natural-gas'} onClick={this.handleMenuItemClick}>
-            <Icon className="fortis" />
-            Natural Gs
-          </Menu.Item>
-          <Menu.Item name="flights" active={activeMenuItem === 'flights'} onClick={this.handleMenuItemClick}>
-            <Icon name="plane" />
-            Flights
-          </Menu.Item>
-          <Menu.Item name="propane" active={activeMenuItem === 'propane'} onClick={this.handleMenuItemClick}>
-            <Icon className="propane" />
-            Propane
-          </Menu.Item>
+        <Menu icon="labeled" size="massive" fluid widths={5} tabular attached="top" stackable
+          style={{
+            borderBottomColor: ActivityRecords.Utils.activityToColor(activeMenuItem),
+            width: '100% !important',
+            marginLeft: '0 !important',
+            marginRight: '0 !important',
+          }}>
+          <ColoredMenuItem name="vehicle" icon="car" label="Vehicles" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="electricity" icon="bc-hydro" label="Electricity" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="natural-gas" icon="fortis" label="Natural Gas" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="flight" icon="plane" label="Flights" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="propane" icon="propane" label="Propane" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
         </Menu>
 
-        <Segment attached="bottom">
+        <Segment attached="bottom" style={{borderColor: ActivityRecords.Utils.activityToColor(activeMenuItem)}}>
           {Component?<Component activityRecords={this.props.activityRecords}/>:null}
         </Segment>
       </div>

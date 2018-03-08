@@ -7,6 +7,7 @@ export const getAllowedActivities = () => {
     {value: 'flight', text: 'Flight'},
     {value: 'heat-oil', text: 'Heating Oil'},
     {value: 'vehicle', text: 'Vehicle'},
+    {value: 'propane', text: 'Propane'},
   ];
 }
 

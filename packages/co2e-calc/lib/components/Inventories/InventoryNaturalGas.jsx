@@ -21,14 +21,14 @@ class InventoryNaturalGas extends Component {
     return (
       <Components.EditModal component={Components.NaturalGasActivityRecordEditForm} collection={ActivityRecords}
         title="Add a Fortis BC bill"
-        buttonAttrs={{content: 'Add another Fortis BC bill', icon: 'plus', color: 'green'}} />
+        buttonAttrs={{content: 'Add another Fortis BC bill', icon: 'plus', color: 'blue'}} />
     );
   }
 
   render(){
 
     return (
-      <Components.InventoryGenericActivity activityFilter="natural-gas" activityRecords={this.props.activityRecords}
+      <Components.InventoryGenericActivity activity="natural-gas" activityRecords={this.props.activityRecords}
         recordsTableComponent={Components.NaturalGasActivityRecordsTable}
         intro={this.renderIntro()}
         editArea={this.renderEditArea()}
