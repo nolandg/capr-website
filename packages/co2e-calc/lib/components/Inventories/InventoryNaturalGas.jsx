@@ -26,9 +26,10 @@ class InventoryNaturalGas extends Component {
   }
 
   render(){
+    const { ...rest } = this.props;
 
     return (
-      <Components.InventoryGenericActivity activity="natural-gas" activityRecords={this.props.activityRecords}
+      <Components.InventoryGenericActivity activity="natural-gas" {...rest}
         recordsTableComponent={Components.NaturalGasActivityRecordsTable}
         intro={this.renderIntro()}
         editArea={this.renderEditArea()}

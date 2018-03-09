@@ -21,9 +21,10 @@ class InventoryVehicle extends Component {
   }
 
   render(){
+    const { ...rest } = this.props;
 
     return (
-      <Components.InventoryGenericActivity activity="vehicle" activityRecords={this.props.activityRecords}
+      <Components.InventoryGenericActivity activity="vehicle" {...rest}
         recordsTableComponent={Components.VehicleActivityRecordsTable}
         intro={this.renderIntro()}
         editArea={this.renderEditArea()}

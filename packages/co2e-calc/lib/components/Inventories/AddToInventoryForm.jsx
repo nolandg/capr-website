@@ -30,6 +30,7 @@ class AddToInventoryForm extends Component {
 
   render(){
     const { activeMenuItem } = this.state;
+    const { startDate, endDate } = this.props;
     let Component;
 
     if(activeMenuItem){
@@ -53,7 +54,7 @@ class AddToInventoryForm extends Component {
         </Menu>
 
         <Segment attached="bottom" style={{borderColor: ActivityRecords.Utils.activityToColor(activeMenuItem)}}>
-          {Component?<Component activityRecords={this.props.activityRecords}/>:null}
+          {Component?<Component activityRecords={this.props.activityRecords} startDate={startDate} endDate={endDate} />:null}
         </Segment>
       </div>
     )

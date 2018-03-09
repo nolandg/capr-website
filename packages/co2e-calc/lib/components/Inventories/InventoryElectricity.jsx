@@ -26,9 +26,10 @@ class InventoryElectricity extends Component {
   }
 
   render(){
+    const { ...rest } = this.props;
 
     return (
-      <Components.InventoryGenericActivity activity="electricity" activityRecords={this.props.activityRecords}
+      <Components.InventoryGenericActivity activity="electricity" {...rest}
         recordsTableComponent={Components.ElectricityActivityRecordsTable}
         intro={this.renderIntro()}
         editArea={this.renderEditArea()}

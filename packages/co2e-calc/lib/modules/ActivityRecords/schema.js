@@ -1,6 +1,11 @@
 import { getAllowedActivityValues, getAllowedUnitsValues } from './enumerations';
 import utils from './utils.js';
 
+const hashGroupToName = (group) => {
+  const data = JSON.stringify(group.data);
+  return `${group.label}---${data}`;
+}
+
 const schema = {
 
   _id: {
@@ -84,6 +89,25 @@ const schema = {
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
+    form: {
+      defaultValue: {
+        name: '',
+        label: '',
+        data: {},
+      }
+    },
+    onInsert: (document, currentUser) => {
+      const group = document.group;
+      return {...group, name: hashGroupToName(group) };
+    },
+    onEdit: (modifier, document, currentUser) => {
+      if(modifier.$set && modifier.$set.group) {
+        const group = modifier.$set.group;
+        return {...group, name: hashGroupToName(group) };
+      }else{
+        return document.group;
+      }
+    },
   },
   'group.name': {
     type: String,
@@ -105,6 +129,13 @@ const schema = {
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
+    form: {
+      defaultValue: {
+        value: 0,
+        units: '',
+        valueType: '',
+      }
+    }
   },
   'data.value': {
     type: Number,

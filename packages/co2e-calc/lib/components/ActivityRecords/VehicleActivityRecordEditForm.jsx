@@ -11,20 +11,7 @@ class VehicleActivityRecordEditForm extends EditForm {
     const fields = ['activity', 'startDate', 'endDate', 'data', 'group'];
     super(props, fields);
 
-    this.state.values = {
-      ...this.state.values,
-      data: {
-        value: 0,
-        units: 'none',
-        valueType: '',
-        ...this.state.values.data,
-      },
-      group: {
-        name: '',
-        label: '',
-        data: {},
-        ...this.state.values.group,
-      },
+    this.state.values = {...this.state.values,
       activity: 'vehicle',
     };
   }
@@ -34,14 +21,13 @@ class VehicleActivityRecordEditForm extends EditForm {
   }
   handleGroupChange = (key, value) => {
     const group = { ...this.state.values.group, [key]: value};
-    group.name = JSON.stringify(group);
+    group.name = Date().valueOf();
 
     this.setState({ values: { ...this.state.values, group }});
   }
 
   render(){
     const {startDate, endDate, data, group } = this.state.values;
-    const { value, units } = data;
 
     return (
       <Form error={!!this.state.errors}>
@@ -56,10 +42,11 @@ class VehicleActivityRecordEditForm extends EditForm {
           onChange={(e, {value}) => this.handleGroupChange('label', value)} value={group.label}/>
 
         <Form.Group>
-          <Form.Input label="How many liters of fuel?" width={7}
-            onChange={(e, {value}) => this.handleDataChange('value', value)} value={value}/>
-          <Form.Field control={Select} label='Units' value={units} options={ActivityRecords.Utils.getAllowedUnits()}
-            placeholder='Units' onChange={(e, {value}) => this.handleDataChange('units', value)} />
+          <Form.Input label="How many liters of fuel?" name="data.value" value={data.value}
+            onChange={this.handleChange} width={7} />
+          <Form.Field label='Units' name="data.units" value={data.units} placeholder='Units'
+            control={Select} options={ActivityRecords.Utils.getAllowedUnits()} width={3}
+            onChange={(e, {value}) => this.handleDataChange('units', value)} />
 
         </Form.Group>
       </Form>
@@ -73,23 +60,7 @@ registerComponent('VehicleActivityRecordEditForm', VehicleActivityRecordEditForm
   withCurrentUser
 );
 
-class VehiclesActivityRecordEditForm extends EditForm {
-  constructor(props) {
-    const fields = ['activity', 'startDate', 'endDate', 'data'];
-    super(props, fields);
-
-    this.state.values = {...this.state.values,
-      activity: 'vehicle',
-    };
-  }
-
-  handleKwhChange = (e, { value }) => {
-    this.setState({ values: { ...this.state.values, data: {
-      value: value,
-      units: 'kWh',
-    } }});
-  }
-
+class VehiclesActivityRecordEditForm extends Component {
   renderRecord = (record) => {
     return (
       <div key={record._id}>
@@ -130,16 +101,13 @@ class VehiclesActivityRecordEditForm extends EditForm {
   }
 
   render(){
-    const {startDate, endDate} = this.state.values;
     const groupedRecords = this.groupByVehicle(this.props.activityRecords);
 
     const helpItems = [
     ];
 
     return (
-      <Form error={!!this.state.errors}>
-        {this.renderMessages()}
-
+      <div>
         <Components.EditModal component={Components.VehicleActivityRecordEditForm} collection={ActivityRecords}
           title="Add a new vehicle"
           showDelete={false}
@@ -150,7 +118,7 @@ class VehiclesActivityRecordEditForm extends EditForm {
         </div>
 
         <Components.HelpAccordion items={helpItems} title="Help" subtitle="How to find this information on your bill" />
-      </Form>
+      </div>
     )
   }
 }

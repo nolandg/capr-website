@@ -24,7 +24,12 @@ class ActivityCompletion extends Component {
     let days = [];
 
     records.forEach((record) => {
-      const newDays = this.getListOfDays(record.startDate, record.endDate);
+      // get a list of all the days in this record that fall within the period this ActivityCompletion
+      // component has been passed
+      const newDays = this.getListOfDays(
+        moment.max(record.startDate, this.props.startDate),
+        moment.min(record.endDate, this.props.endDate)
+      );
       days = [...new Set([...days,...newDays])];
     });
 

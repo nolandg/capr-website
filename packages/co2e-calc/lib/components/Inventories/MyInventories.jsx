@@ -27,11 +27,16 @@ class MyInventories extends Component {
   }
 
   render(){
-    const { startDate, endDate } = this.state;
-
     if(this.props.loading) return (
       <Loader />
     )
+
+    const { startDate, endDate } = this.state;
+    const records = this.props.results;
+    const recordsForPeriod = records.filter((record) => {
+      return moment(record.startDate).isBetween(startDate, endDate, null, '[]') ||
+             moment(record.endDate).isBetween(startDate, endDate, null, '[]');
+    });
 
     return (
       <div  className="my-inventories">
@@ -48,7 +53,7 @@ class MyInventories extends Component {
             </Menu.Item>
 
             <Menu.Item header>
-              <Icon name='calendar' />&nbsp;{this.state.startDate.year()}
+              <Icon name='calendar' />&nbsp;{startDate.year()}
             </Menu.Item>
 
             <Menu.Item onClick={this.incrementYear}>
@@ -58,14 +63,14 @@ class MyInventories extends Component {
         </div>
 
 
-        <Components.InventoryTimeline activityRecords={this.props.results}
+        <Components.InventoryTimeline activityRecords={records}
           startDate={startDate} endDate={endDate} width="100%" height={200}
         />
 
         <Container>
           <Divider hidden />
           <Header as="h2" textAlign="center">What do you want to add?</Header>
-          <Components.AddToInventoryForm activityRecords={this.props.results} />
+          <Components.AddToInventoryForm activityRecords={recordsForPeriod} startDate={startDate} endDate={endDate} />
         </Container>
 
         <Divider hidden />

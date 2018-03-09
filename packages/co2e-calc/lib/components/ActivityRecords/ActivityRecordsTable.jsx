@@ -6,7 +6,7 @@ import { ActivityRecords } from '../../modules/ActivityRecords';
 import moment from 'moment';
 
 /*******************************************************************************************************/
-/* Electricity
+/* Vechicle
 /*******************************************************************************************************/
 class VehicleActivityRecordsTable extends Component {
   renderActivitySpecificHeaderCells = () => {
@@ -19,7 +19,7 @@ class VehicleActivityRecordsTable extends Component {
   renderActivitySpecificCells = (record) => {
     return ([
       <Table.Cell key="vehicle-name">{record.group?record.group.label:'?'}</Table.Cell>,
-      <Table.Cell key="data">data here</Table.Cell>
+      <Table.Cell key="data">Value: {record.data?record.data.value:'?'}</Table.Cell>
     ]);
   }
 
