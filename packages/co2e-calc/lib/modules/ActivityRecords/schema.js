@@ -1,6 +1,6 @@
 import { getAllowedActivityValues, getAllowedUnitsValues } from './enumerations';
 import utils from './utils.js';
-
+ 
 const hashGroupToName = (group) => {
   const data = JSON.stringify(group.data);
   return `${group.label}---${data}`;
