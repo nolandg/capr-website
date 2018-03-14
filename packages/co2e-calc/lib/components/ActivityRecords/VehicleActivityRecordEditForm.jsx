@@ -1,10 +1,11 @@
 import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Header, Select, Checkbox } from 'semantic-ui-react'
+import { Form, Header, Select, Checkbox, Input } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import moment from 'moment';
+import _ from 'lodash';
 
 /*************************************************************************************************/
 /*
@@ -14,54 +15,74 @@ class VehicleActivityRecordEditForm extends EditForm {
     const fields = ['activity', 'startDate', 'endDate', 'data', 'group'];
     super(props, fields);
 
-    this.state.values = {...this.state.values,
-      activity: 'vehicle',
-    };
-  }
-
-  handleDataChange = (key, value) => {
-    this.setState({ values: { ...this.state.values, data: { ...this.state.values.data, [key]: value,} }});
-  }
-
-  handleGroupChange = (key, value) => {
-    const group = { ...this.state.values.group, [key]: value};
-    group.name = Date().valueOf();
-
-    this.setState({ values: { ...this.state.values, group }});
+    _.set(this.state, 'values.activity', 'vehicle');
+    _.set(this.state, 'values.data.valueType', '');
+    _.set(this.state, 'values.data.units', '');
+    _.set(this.state, 'values.data.unitsType', 'gasoline');
   }
 
   render(){
     const {startDate, endDate, data, group } = this.state.values;
     const fuelVolumeUnits = ActivityRecords.Utils.getUnitsForContext('vehicle.fuel-volume');
-    const distance = ActivityRecords.Utils.getUnitsForContext('vehicle.distance');
+    const distanceUnits = ActivityRecords.Utils.getUnitsForContext('vehicle.distance');
+    const fuelTypes = ActivityRecords.Utils.getFuelTypes();
 
     return (
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
 
-        <Form.Input label="Name of vehicle" name="group.label" value={group.label} width={7} onChange={this.handleChange} />
-        <p>Give this vehicle a name so you can keep track of what you've entered. Example: "Red car" or "My Wife's Tesla"</p>
-
         <Form.Field>
-          <Checkbox type="radio" toggle label="I know the liters of fuel I've burned (preffered!)" name='data.valueType' value='fuel-volume'
-            checked={data.valueType === 'fuel-volume'} onChange={this.handleChange} />
-        </Form.Field>
-        <Form.Field>
-          <Checkbox type="radio" toggle label="I know the kilometers I've driven" name='data.valueType' value='distance'
-            checked={data.valueType === 'distance'} onChange={this.handleChange} />
+          <label>Name of vehicle</label>
+          <Input name="group.label" value={group.label} width={7} onChange={this.handleChange} />
+          <p>Give this vehicle a name so you can keep track of what you've entered. eg: "Red car" or "My Wife's Tesla"</p>
         </Form.Field>
 
         <Form.Field>
           <label>For what period is this information for?</label>
           <Components.DateRangePicker startDate={startDate} endDate={endDate} handleChange={this.handleChange} />
         </Form.Field>
-        <Form.Group>
-          <Form.Input label="How many liters of fuel?" name="data.value" value={data.value} onChange={this.handleChange} width={7} />
-          <Form.Field label='Units' name="data.units" value={data.units} placeholder='Units'
-            control={Select} options={fuelVolumeUnits} width={3}
-            onChange={this.handleChange} />
 
-        </Form.Group>
+        <Form.Field>
+          <label>What kind of fuel does this vehicle burn?</label>
+          <Select name="data.unitsType" value={data.unitsType} placeholder='Fuel type' options={fuelTypes} onChange={this.handleChange} />
+        </Form.Field>
+
+        <Form.Field>
+          <Checkbox type="radio" toggle label="I know the liters of fuel I've burned (preferred method)" name='data.valueType' value='fuel-volume'
+            checked={data.valueType === 'fuel-volume'} onChange={this.handleChange} />
+        </Form.Field>
+        <Form.Field>
+          <Checkbox type="radio" toggle label="I know the kilometers I've driven" name='data.valueType' value='distance'
+            checked={data.valueType === 'distance'} onChange={this.handleChange} />
+        </Form.Field>
+        <Form.Field>
+          <Checkbox type="radio" toggle label="This vehicle is electric" name='data.valueType' value='electric'
+            checked={data.valueType === 'electric'} onChange={this.handleChange} />
+        </Form.Field>
+
+        {data.valueType === 'fuel-volume'?
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>How much fuel?</label>
+              <Input name="data.value" value={data.value} onChange={this.handleChange} />
+            </Form.Field>
+            <Form.Field>
+              <label>Units</label>
+              <Select name="data.units" value={data.units} placeholder='Units' options={fuelVolumeUnits} onChange={this.handleChange} />
+            </Form.Field>
+          </Form.Group>:null}
+
+        {data.valueType === 'distance'?
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>How far did you drive?</label>
+              <Input name="data.value" value={data.value} onChange={this.handleChange} />
+            </Form.Field>
+            <Form.Field>
+              <label>Units</label>
+              <Select name="data.units" value={data.units} placeholder='Units' options={distanceUnits} onChange={this.handleChange} />
+            </Form.Field>
+          </Form.Group>:null}
       </Form>
     )
   }

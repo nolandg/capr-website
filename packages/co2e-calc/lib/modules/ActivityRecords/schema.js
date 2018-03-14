@@ -1,9 +1,31 @@
 import { getAllowedActivityValues, getAllowedUnitsValues } from './enumerations';
 import utils from './utils.js';
- 
+import SimpleSchema from 'simpl-schema';
+
 const hashGroupToName = (group) => {
+  if(!group) return '';
+  if(!group.data) return group.label;
+
   const data = JSON.stringify(group.data);
   return `${group.label}---${data}`;
+}
+
+const errorIfNotPresent = (customThis) => {
+  let shouldBeRequired = customThis.field('saleType').value === 1;
+
+  if (shouldBeRequired) {
+    // inserts
+    if (!customThis.operator) {
+      if (!customThis.isSet || customThis.value === null || customThis.value === "") return SimpleSchema.ErrorTypes.REQUIRED;
+    }
+
+    // updates
+    else if (customThis.isSet) {
+      if (customThis.operator === "$set" && customThis.value === null || customThis.value === "") return SimpleSchema.ErrorTypes.REQUIRED;
+      if (customThis.operator === "$unset") return SimpleSchema.ErrorTypes.REQUIRED;
+      if (customThis.operator === "$rename") return SimpleSchema.ErrorTypes.REQUIRED;
+    }
+  }
 }
 
 const schema = {
@@ -125,7 +147,7 @@ const schema = {
   data: {
     label: 'Emission Data',
     type: Object,
-    optional: true,
+    optional: false,
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
@@ -135,20 +157,41 @@ const schema = {
         units: '',
         valueType: '',
       }
-    }
+    },
   },
   'data.value': {
     type: Number,
-    optional: true,
-  },
-  'data.units': {
-    type: String,
-    allowedValues: getAllowedUnitsValues(),
-    optional: true,
+    optional: false,
   },
   'data.valueType': {
     type: String,
     optional: true,
+    custom: function(){
+      switch(this.field('activity').value){
+        case 'vehicle':
+          if(this.field('activity').value === 'vehicle') return errorIfNotPresent(this);
+          break;
+      }
+    }
+  },
+  'data.units': {
+    type: String,
+    allowedValues: getAllowedUnitsValues(),
+    optional: false,
+  },
+  'data.unitsType': {
+    type: String,
+    optional: true,
+    custom: function(){
+      const data = this.field('data').value;
+
+      switch(this.field('activity').value){
+        case 'vehicle':
+          if(data && data.valueType === 'fuel-volume')
+          if(this.field('data').value === 'vehicle') return errorIfNotPresent(this);
+          break;
+      }
+    }
   },
 
   userId: {

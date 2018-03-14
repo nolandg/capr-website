@@ -27,6 +27,15 @@ export const getAllowedUnits = () => {
   ];
 }
 
+export const getFuelTypes = () => {
+  return [
+    {value: 'gasoline', text: 'Gasoline'},
+    {value: 'diesel', text: 'Diesel'},
+    {value: 'propane', text: 'Propane'},
+    {value: 'vegtable-oil', text: 'Vegtable oil'},
+  ];
+}
+
 const palet = { red: '#db2828', orange: '#f2711c', yellow: '#fbbd08', olive: '#b5cc18', green: '#21ba45', teal: '#00b5ad', blue: '#2185d0', violet: '#6435c9', purple: '#a333c8', pink: '#e03997', brown: '#a5673f', grey: '#767676', black: '#1b1c1d',};
 
 const orderedPalet= [
@@ -86,4 +95,9 @@ export const getAllowedActivityValues = () => {
 export const activityValueToText = (value) => {
   const activity = getAllowedActivities().find((a)=>{return a.value === value});
   return activity?activity.text:'';
+}
+
+export const fuelTypeValueToText = (value) => {
+  const fuel = getFuelTypes().find((f)=>{return f.value === value});
+  return fuel?fuel.text:'';
 }
