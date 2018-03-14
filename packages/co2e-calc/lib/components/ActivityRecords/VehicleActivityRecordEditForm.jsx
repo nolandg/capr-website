@@ -1,11 +1,14 @@
 import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Header, Select } from 'semantic-ui-react'
+import { Form, Header, Select, Checkbox } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import moment from 'moment';
 
+/*************************************************************************************************/
+/*
+/*************************************************************************************************/
 class VehicleActivityRecordEditForm extends EditForm {
   constructor(props) {
     const fields = ['activity', 'startDate', 'endDate', 'data', 'group'];
@@ -19,6 +22,7 @@ class VehicleActivityRecordEditForm extends EditForm {
   handleDataChange = (key, value) => {
     this.setState({ values: { ...this.state.values, data: { ...this.state.values.data, [key]: value,} }});
   }
+
   handleGroupChange = (key, value) => {
     const group = { ...this.state.values.group, [key]: value};
     group.name = Date().valueOf();
@@ -28,25 +32,34 @@ class VehicleActivityRecordEditForm extends EditForm {
 
   render(){
     const {startDate, endDate, data, group } = this.state.values;
+    const fuelVolumeUnits = ActivityRecords.Utils.getUnitsForContext('vehicle.fuel-volume');
+    const distance = ActivityRecords.Utils.getUnitsForContext('vehicle.distance');
 
     return (
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
 
+        <Form.Input label="Name of vehicle" name="group.label" value={group.label} width={7} onChange={this.handleChange} />
+        <p>Give this vehicle a name so you can keep track of what you've entered. Example: "Red car" or "My Wife's Tesla"</p>
+
+        <Form.Field>
+          <Checkbox type="radio" toggle label="I know the liters of fuel I've burned (preffered!)" name='data.valueType' value='fuel-volume'
+            checked={data.valueType === 'fuel-volume'} onChange={this.handleChange} />
+        </Form.Field>
+        <Form.Field>
+          <Checkbox type="radio" toggle label="I know the kilometers I've driven" name='data.valueType' value='distance'
+            checked={data.valueType === 'distance'} onChange={this.handleChange} />
+        </Form.Field>
+
         <Form.Field>
           <label>For what period is this information for?</label>
           <Components.DateRangePicker startDate={startDate} endDate={endDate} handleChange={this.handleChange} />
         </Form.Field>
-
-        <Form.Input label="Name of vehicle" width={7}
-          onChange={(e, {value}) => this.handleGroupChange('label', value)} value={group.label}/>
-
         <Form.Group>
-          <Form.Input label="How many liters of fuel?" name="data.value" value={data.value}
-            onChange={this.handleChange} width={7} />
+          <Form.Input label="How many liters of fuel?" name="data.value" value={data.value} onChange={this.handleChange} width={7} />
           <Form.Field label='Units' name="data.units" value={data.units} placeholder='Units'
-            control={Select} options={ActivityRecords.Utils.getAllowedUnits()} width={3}
-            onChange={(e, {value}) => this.handleDataChange('units', value)} />
+            control={Select} options={fuelVolumeUnits} width={3}
+            onChange={this.handleChange} />
 
         </Form.Group>
       </Form>
@@ -60,6 +73,9 @@ registerComponent('VehicleActivityRecordEditForm', VehicleActivityRecordEditForm
   withCurrentUser
 );
 
+/*************************************************************************************************/
+/*
+/*************************************************************************************************/
 class VehiclesActivityRecordEditForm extends Component {
   renderRecord = (record) => {
     return (

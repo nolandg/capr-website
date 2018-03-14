@@ -11,15 +11,19 @@ import moment from 'moment';
 class VehicleActivityRecordsTable extends Component {
   renderActivitySpecificHeaderCells = () => {
     return ([
-      <Table.HeaderCell key="vehicle-name"><Icon name="car" />Vehicle</Table.HeaderCell>,
-      <Table.HeaderCell key="data"><Icon name="dashboard" />Data</Table.HeaderCell>
+      <Table.HeaderCell key="group-label"><Icon name="car" />Vehicle</Table.HeaderCell>,
+      <Table.HeaderCell key="data"><Icon name="dashboard" />Data</Table.HeaderCell>,
+      <Table.HeaderCell key="value-type"><Icon name="dashboard" />Type</Table.HeaderCell>,
+      <Table.HeaderCell key="group-name"><Icon name="dashboard" />Group</Table.HeaderCell>,
     ]);
   }
 
   renderActivitySpecificCells = (record) => {
     return ([
-      <Table.Cell key="vehicle-name">{record.group?record.group.label:'?'}</Table.Cell>,
-      <Table.Cell key="data">Value: {record.data?record.data.value:'?'}</Table.Cell>
+      <Table.Cell key="group-label">{record.group?record.group.label:'?'}</Table.Cell>,
+      <Table.Cell key="data">{record.data?record.data.value:'?'} {record.data?record.data.units:''}</Table.Cell>,
+      <Table.Cell key="value-type">{record.data?record.data.valueType:'?'}</Table.Cell>,
+      <Table.Cell key="group-name">{record.group?record.group.name:'?'}</Table.Cell>,
     ]);
   }
 

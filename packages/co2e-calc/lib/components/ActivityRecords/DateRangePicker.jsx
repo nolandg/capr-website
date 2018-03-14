@@ -7,7 +7,7 @@ class DateRangePicker extends Component {
   state = {focusedInput: null}
 
   render() {
-    const { startDate, endDate, handleChange, ...rest } = this.props;
+    const { startDate, endDate, startDateName, endDateName, handleChange, ...rest } = this.props;
 
     return (
       <ReactDateRangePicker
@@ -16,8 +16,8 @@ class DateRangePicker extends Component {
         startDateId="startDateId" // PropTypes.string.isRequired,
         endDate={endDate?moment(endDate):null} // momentPropTypes.momentObj or null,
         endDateId="endDateId" // PropTypes.string.isRequired,
-        onDatesChange={(values) => 
-          handleChange(null, {type: 'airbnb-date-range-picker', names: {startDate: 'startDate', endDate: 'endDate'}, values})}
+        onDatesChange={(values) =>
+          handleChange(null, {type: 'airbnb-date-range-picker', names: {startDate: startDateName, endDate: endDateName}, values})}
         focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
         onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
         noBorder={true}
@@ -28,5 +28,10 @@ class DateRangePicker extends Component {
     );
   }
 }
+
+DateRangePicker.defaultProps = {
+  startDateName: 'startDate',
+  endDateName: 'endDate',
+};
 
 registerComponent('DateRangePicker', DateRangePicker);

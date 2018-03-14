@@ -13,17 +13,17 @@ export const getAllowedActivities = () => {
 
 export const getAllowedUnits = () => {
   return [
-    {value: 'kWh', text: 'Killowatt Hours', dimension: 'energy' },
-    {value: 'GJ', text: 'Gigajoules', dimension: 'energy' },
+    {value: 'kWh', text: 'Killowatt Hours', dimension: 'energy', contexts: ['electricity'] },
+    {value: 'GJ', text: 'Gigajoules', dimension: 'energy', contexts: ['natural-gas']  },
 
-    {value: 'L', text: 'Litres', dimension: 'volume' },
-    {value: 'US gal', text: 'US Gallons', dimension: 'volume' },
+    {value: 'L', text: 'Litres', dimension: 'volume', contexts: ['vehicle.fuel-volume'] },
+    {value: 'US gal', text: 'US Gallons', dimension: 'volume', contexts: ['vehicle.fuel-volume'] },
 
-    {value: 'km', text: 'Killometers', dimension: 'distance' },
-    {value: 'mi', text: 'Miles', dimension: 'distance' },
+    {value: 'km', text: 'Killometers', dimension: 'distance', contexts: ['vehicle.distance'] },
+    {value: 'mi', text: 'Miles', dimension: 'distance', contexts: ['vehicle.distance'] },
 
-    {value: 'kg', text: 'Killograms', dimension: 'mass' },
-    {value: 'lbs', text: 'Pounds', dimension: 'mass' },
+    {value: 'kg', text: 'Killograms', dimension: 'mass', contexts: [] },
+    {value: 'lbs', text: 'Pounds', dimension: 'mass', contexts: [] },
   ];
 }
 
@@ -75,8 +75,12 @@ export const getAllowedUnitsValues = () => {
   return getAllowedUnits().map((a) => {return a.value} );
 }
 
+export const getUnitsForContext = (context) => {
+  return getAllowedUnits().filter((unit) => { return unit.contexts.indexOf(context) !== -1} );
+}
+
 export const getAllowedActivityValues = () => {
-  return getAllowedActivities().map((a) => {return a.value} );
+  return getAllowedActivities().map((activity) => {return activity.value} );
 }
 
 export const activityValueToText = (value) => {
