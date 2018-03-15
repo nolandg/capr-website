@@ -28,7 +28,7 @@ class InventoryFlight extends Component {
     const { ...rest } = this.props;
 
     return (
-      <Components.InventoryGenericActivity activity="natural-gas" {...rest}
+      <Components.InventoryGenericActivity activity="flight" {...rest}
         recordsTableComponent={Components.FlightActivityRecordsTable}
         intro={this.renderIntro()}
         editArea={this.renderEditArea()}

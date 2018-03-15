@@ -12,10 +12,10 @@ class FlightActivityRecordEditForm extends EditForm {
     const fields = ['activity', 'startDate', 'endDate', 'data'];
     super(props, fields);
 
-    _.set(this.state, 'values.activity', 'natural-gas');
-    _.set(this.state, 'values.data.units', 'GJ');
+    _.set(this.state, 'values.activity', 'flight');
+    _.set(this.state, 'values.data.units', 'km');
   }
-  
+
   render(){
     const { DateRangeField, LocationField } = Components;
     const { values, errors } = this.state;
@@ -27,10 +27,8 @@ class FlightActivityRecordEditForm extends EditForm {
 
         <DateRangeField label="For what period is this bill for?" startName="startDate" endName="endDate" {...fieldProps} />
 
-        <Form.Group>
-          <LocationField label="From" name="data.flightOrigin" width={4} {...fieldProps} />
-          <LocationField label="To" name="data.flightDestination" width={4} {...fieldProps} />
-        </Form.Group>
+        <LocationField label="From" name="data.flightOrigin" width={4} {...fieldProps} />
+        <LocationField label="To" name="data.flightDestination" width={4} {...fieldProps} />
       </Form>
     )
   }

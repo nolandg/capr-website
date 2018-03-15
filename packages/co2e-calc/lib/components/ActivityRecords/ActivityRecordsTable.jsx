@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Icon, Table, Accordion } from 'semantic-ui-react';
 import { ActivityRecords } from '../../modules/ActivityRecords';
 import moment from 'moment';
+import _ from 'lodash';
 
 /*******************************************************************************************************/
 /* Vechicle
@@ -101,13 +102,19 @@ registerComponent('ElectricityActivityRecordsTable', ElectricityActivityRecordsT
 class FlightActivityRecordsTable extends Component {
   renderActivitySpecificHeaderCells = () => {
     return ([
-      <Table.HeaderCell key="distance"><Icon name="globe" />Distance</Table.HeaderCell>
+      <Table.HeaderCell key="origin"><Icon name="marker" />Origin</Table.HeaderCell>,
+      <Table.HeaderCell key="destination"><Icon name="marker" />Destination</Table.HeaderCell>,
+      <Table.HeaderCell key="distance"><Icon name="globe" />Distance</Table.HeaderCell>,
     ]);
   }
 
   renderActivitySpecificCells = (record) => {
+    const data = record.data;
+
     return ([
-      <Table.Cell key="distance">{record.data?record.data.distance:'?'}</Table.Cell>
+      <Table.Cell key="origin">{_.get(data, 'flightOrigin.text', '?')}</Table.Cell>,
+      <Table.Cell key="destination">{_.get(data, 'flightDestination.text', '?')}</Table.Cell>,
+      <Table.Cell key="distance">{_.get(data, 'distance', '?')}</Table.Cell>,
     ]);
   }
 
