@@ -92,8 +92,6 @@ class InventoryTimeline extends Component {
     }
   }
 
-
-
   massageData = (records) => {
     const data = [];
     const activitySeriesNames = [];
@@ -277,7 +275,7 @@ class InventoryTimeline extends Component {
             tickLine={{strokeWidth: 1, stroke: '#DDD'}}
             tick={{fill: '#888'}}
           >
-            <Label angle={270} position='center' fill="#888" style={{ textAnchor: 'middle' }}>
+            <Label angle={270} position='insideLeft' fill="#888" style={{ textAnchor: 'middle' }} offset={50}>
               Emissions kg/day
             </Label>
           </YAxis>

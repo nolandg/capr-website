@@ -1,31 +1,72 @@
-import { getAllowedActivityValues, getAllowedUnitsValues } from './enumerations';
+import { getAllowedActivityValues, getAllowedUnitsValues, getUnitValuesForContext, getFuelTypeValues, getVehicleTypeValues } from './enumerations';
 import utils from './utils.js';
 import SimpleSchema from 'simpl-schema';
 
-const hashGroupToName = (group) => {
-  if(!group) return '';
-  if(!group.data) return group.label;
+const errorIfMissing = (name, message, context) => {
+  const field = context.field(name);
+  let error = false;
 
-  const data = JSON.stringify(group.data);
-  return `${group.label}---${data}`;
+  // inserts
+  if (!field.operator) {
+    if (!field.isSet || field.value === null || field.value === "") error = true;
+  }
+
+  // updates
+  else if (field.isSet) {
+    if (field.operator === "$set" && field.value === null || field.value === "") error = true;
+    if (field.operator === "$unset") error = true;
+    if (field.operator === "$rename") error = true;
+  }
+
+  if(error){
+    context.addValidationErrors([{name, type: SimpleSchema.ErrorTypes.REQUIRED, message }]);
+    return true;
+  }
 }
 
-const errorIfNotPresent = (customThis) => {
-  let shouldBeRequired = customThis.field('saleType').value === 1;
+const errorIfDisallowedUnits = (name, unitsContext, message, context) => {
+  const allowedValues = getUnitValuesForContext(unitsContext);
+  return errorIfDisallowedValue(name, allowedValues, message, context);
+}
 
-  if (shouldBeRequired) {
-    // inserts
-    if (!customThis.operator) {
-      if (!customThis.isSet || customThis.value === null || customThis.value === "") return SimpleSchema.ErrorTypes.REQUIRED;
-    }
+const errorIfDisallowedValue = (name, allowedValues, message, context) => {
+  const field = context.field(name);
 
-    // updates
-    else if (customThis.isSet) {
-      if (customThis.operator === "$set" && customThis.value === null || customThis.value === "") return SimpleSchema.ErrorTypes.REQUIRED;
-      if (customThis.operator === "$unset") return SimpleSchema.ErrorTypes.REQUIRED;
-      if (customThis.operator === "$rename") return SimpleSchema.ErrorTypes.REQUIRED;
-    }
+  if(allowedValues.indexOf(field.value) === -1){
+    context.addValidationErrors([{name, type: SimpleSchema.ErrorTypes.VALUE_NOT_ALLOWED, message }]);
+    return true;
   }
+}
+
+const errorIfNotEqual = (name, value, message, context) => {
+  const field = context.field(name);
+
+  if(field.value !== value){
+    context.addValidationErrors([{name, type: SimpleSchema.ErrorTypes.VALUE_NOT_ALLOWED, message }]);
+    return true;
+  }
+}
+
+const checkAndAddErrors = (checks, context) => {
+  let error = false;
+
+  checks.forEach(({type, field, value, units, message}) => {
+    // const field = context.field(name);
+    const label = context.validationContext._schema[field].label;
+    const fieldValue = context.field(field).value;
+
+    let msg = message;
+    if(!msg){
+      if(type === 'missing') msg = `You must specifiy ${label}.`;
+      if(type === 'units') msg = `"${fieldValue}" are not a valid units for ${label}.`;
+    }
+
+    if(type === 'missing') error |= errorIfMissing(field, msg, context);
+    if(type === 'units') error |= errorIfDisallowedUnits(field, units, msg, context);
+    if(type === 'equal') error |= errorIfNotEqual(field, value, msg, context);
+  });
+
+  return error;
 }
 
 const schema = {
@@ -52,6 +93,30 @@ const schema = {
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
+  },
+
+  label: {
+    label: 'Label',
+    type: String,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+    form: {
+      defaultValue: '',
+    },
+    optional: true,
+    custom: function() {
+      const activity = this.field('activity').value;
+      const checks = [];
+
+      switch(activity){
+        case 'vehicle':
+          checks.push({type: 'missing', field: 'label', message: 'Vehicle name is a required.'});
+          break;
+      }
+
+      return !checkAndAddErrors(checks, this);
+    },
   },
 
   startDate: {
@@ -104,94 +169,131 @@ const schema = {
     },
   },
 
-  group: {
-    label: 'Group',
-    type: Object,
-    optional: true,
-    viewableBy: ['members'],
-    insertableBy: ['members'],
-    editableBy: ['members'],
-    form: {
-      defaultValue: {
-        name: '',
-        label: '',
-        data: {},
-      }
-    },
-    onInsert: (document, currentUser) => {
-      const group = document.group;
-      return {...group, name: hashGroupToName(group) };
-    },
-    onEdit: (modifier, document, currentUser) => {
-      if(modifier.$set && modifier.$set.group) {
-        const group = modifier.$set.group;
-        return {...group, name: hashGroupToName(group) };
-      }else{
-        return document.group;
-      }
-    },
-  },
-  'group.name': {
-    type: String,
-    optional: true,
-  },
-  'group.label': {
-    type: String,
-    optional: true,
-  },
-  'group.data': {
-    type: Object,
-    optional: true,
-  },
-
   data: {
     label: 'Emission Data',
     type: Object,
-    optional: false,
+    optional: true,
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
     form: {
       defaultValue: {
-        value: 0,
+        type: '',
+        distance: '',
+        fuelVolume: '',
+        energy: '',
+        fuelType: '',
         units: '',
-        valueType: '',
+        efficiency: '',
       }
     },
-  },
-  'data.value': {
-    type: Number,
-    optional: false,
-  },
-  'data.valueType': {
-    type: String,
-    optional: true,
-    custom: function(){
-      switch(this.field('activity').value){
+    custom: function() {
+      const activity = this.field('activity').value;
+      const data = this.field('data').value;
+      const checks = [];
+
+      switch(activity){
+        case 'electricity':
+          checks.push({type: 'missing', field: 'data.energy'});
+          checks.push({type: 'units', field: 'data.units', units: 'electricity'});
+          break;
         case 'vehicle':
-          if(this.field('activity').value === 'vehicle') return errorIfNotPresent(this);
+          checks.push({type: 'missing', field: 'data.type' });
+
+          if(data.type === 'distance') {
+            checks.push({type: 'missing', field: 'data.distance'});
+            checks.push({type: 'missing', field: 'data.units'});
+            checks.push({type: 'units', field: 'data.units', units: 'vehicle.distance'});
+            if(data.knownEfficiency === 'true'){
+              checks.push({type: 'missing', field: 'data.efficiency'});
+              checks.push({type: 'missing', field: 'data.efficiencyUnits'});
+            }else{
+              checks.push({type: 'missing', field: 'data.vehicleType'});
+            }
+          }else if(data.type === 'fuel-volume') {
+            checks.push({type: 'missing', field: 'data.fuelVolume'});
+            checks.push({type: 'missing', field: 'data.units'});
+            checks.push({type: 'units', field: 'data.units', units: 'vehicle.fuel-volume'});
+          }else if(data.type === 'electric') {
+            checks.push({type: 'equal', field: 'data.fuelType', value: 'electricity',
+              message: 'You specified an electric vehicle type but not electricity as fuel.'});
+          }
+          if(data.fuelType === 'electricity'){
+            checks.push({type: 'equal', field: 'data.type', value: 'electric',
+              message: 'You specified electricity as fuel but not an electric vehicle type.'});
+          }
           break;
       }
+
+      return !checkAndAddErrors(checks, this);
     }
+  },
+
+  'data.type': {
+    label: 'Type',
+    type: String,
+    optional: true,
+    allowedValues: ['distance', 'fuel-volume', 'electric'],
+  },
+  'data.energy': {
+    label: 'Energy',
+    type: Number,
+    optional: true,
+  },
+  'data.distance': {
+    label: 'Distance',
+    type: Number,
+    optional: true,
+  },
+  'data.flightOrigin': {
+    label: 'Origin',
+    type: Object,
+    optional: true,
+  },
+  'data.flightDestination': {
+    label: 'Destination',
+    type: Object,
+    optional: true,
+  },
+  'data.fuelVolume': {
+    label: 'Fuel Volume',
+    type: Number,
+    optional: true,
+  },
+  'data.fuelType': {
+    label: 'Fuel Type',
+    type: String,
+    optional: true,
+    allowedValues: getFuelTypeValues(),
+  },
+  'data.knownEfficiency': {
+    label: 'Known Efficiency',
+    type: String,
+    optional: true,
+    allowedValues: ['true', 'false'],
+  },
+  'data.vehicleType': {
+    label: 'Vehicle Type',
+    type: String,
+    optional: true,
+    allowedValues: getVehicleTypeValues(),
+  },
+  'data.efficiency': {
+    label: 'Efficiency',
+    type: Number,
+    optional: true,
+  },
+  'data.efficiencyUnits': {
+    label: 'Efficiency Units',
+    type: String,
+    optional: true,
+    allowedValues: getUnitValuesForContext('vehicle.efficiency'),
   },
   'data.units': {
-    type: String,
-    allowedValues: getAllowedUnitsValues(),
-    optional: false,
-  },
-  'data.unitsType': {
+    label: 'Units',
     type: String,
     optional: true,
-    custom: function(){
-      const data = this.field('data').value;
-
-      switch(this.field('activity').value){
-        case 'vehicle':
-          if(data && data.valueType === 'fuel-volume')
-          if(this.field('data').value === 'vehicle') return errorIfNotPresent(this);
-          break;
-      }
-    }
+    allowedValues: getAllowedUnitsValues(),
   },
 
   userId: {

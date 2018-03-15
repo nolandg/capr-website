@@ -11,19 +11,37 @@ import moment from 'moment';
 class VehicleActivityRecordsTable extends Component {
   renderActivitySpecificHeaderCells = () => {
     return ([
-      <Table.HeaderCell key="group-label"><Icon name="car" />Vehicle</Table.HeaderCell>,
+      <Table.HeaderCell key="label"><Icon name="car" />Vehicle</Table.HeaderCell>,
       <Table.HeaderCell key="data"><Icon name="dashboard" />Data</Table.HeaderCell>,
-      <Table.HeaderCell key="value-type"><Icon name="dashboard" />Type</Table.HeaderCell>,
-      <Table.HeaderCell key="group-name"><Icon name="dashboard" />Group</Table.HeaderCell>,
     ]);
   }
 
   renderActivitySpecificCells = (record) => {
+    const data = record.data;
+    let str = '';
+
+    if(!data){
+      str = '';
+    }else{
+      const fuel = ActivityRecords.Utils.fuelTypeValueToText(data.fuelType);
+
+      if(data.type === 'electric'){
+        str = 'Yay for electric vehicles!';
+      }else if(data.type === 'fuel-volume'){
+        str = `${data.fuelVolume} ${data.units} of ${fuel} burned`;
+      }else if(data.type === 'distance'){
+        if(data.knownEfficiency === 'true'){
+          str = `${data.distance} ${data.units} at ${data.efficiency} ${data.efficiencyUnits} of ${fuel}`;
+        }else{
+          const vehicleType = ActivityRecords.Utils.vehicleTypeValueToEfficiencyString(data.vehicleType);
+          str = `${data.distance} ${data.units} in a ${vehicleType} of ${fuel}`;
+        }
+      }
+    }
+
     return ([
-      <Table.Cell key="group-label">{record.group?record.group.label:'?'}</Table.Cell>,
-      <Table.Cell key="data">{record.data?record.data.value:'?'} {record.data?record.data.units:''}</Table.Cell>,
-      <Table.Cell key="value-type">{record.data?record.data.valueType:'?'}</Table.Cell>,
-      <Table.Cell key="group-name">{record.group?record.group.name:'?'}</Table.Cell>,
+      <Table.Cell key="label">{record.label}</Table.Cell>,
+      <Table.Cell key="data">{str}</Table.Cell>,
     ]);
   }
 
@@ -56,7 +74,7 @@ class ElectricityActivityRecordsTable extends Component {
 
   renderActivitySpecificCells = (record) => {
     return ([
-      <Table.Cell key="kWh">{record.data?record.data.value:'???'}</Table.Cell>
+      <Table.Cell key="energy">{record.data?record.data.energy:'?'}</Table.Cell>
     ]);
   }
 
@@ -78,6 +96,39 @@ class ElectricityActivityRecordsTable extends Component {
 registerComponent('ElectricityActivityRecordsTable', ElectricityActivityRecordsTable);
 
 /*******************************************************************************************************/
+/* Flight
+/*******************************************************************************************************/
+class FlightActivityRecordsTable extends Component {
+  renderActivitySpecificHeaderCells = () => {
+    return ([
+      <Table.HeaderCell key="distance"><Icon name="globe" />Distance</Table.HeaderCell>
+    ]);
+  }
+
+  renderActivitySpecificCells = (record) => {
+    return ([
+      <Table.Cell key="distance">{record.data?record.data.distance:'?'}</Table.Cell>
+    ]);
+  }
+
+  render() {
+    return (
+      <ActivityRecordsTable
+        {...this.props}
+        filterActivity="flight"
+        editTitle="Edit Flight"
+        editFormComponent={Components.FlightActivityRecordEditForm}
+        deleteTitle="Confirm Delete Flight"
+        deleteQuestion="Are you sure you want to delete this flight?"
+        renderActivitySpecificCells={this.renderActivitySpecificCells}
+        renderActivitySpecificHeaderCells={this.renderActivitySpecificHeaderCells}
+      />
+    );
+  }
+}
+registerComponent('FlightActivityRecordsTable', FlightActivityRecordsTable);
+
+/*******************************************************************************************************/
 /* Natural Gas
 /*******************************************************************************************************/
 class NaturalGasActivityRecordsTable extends Component {
@@ -89,7 +140,7 @@ class NaturalGasActivityRecordsTable extends Component {
 
   renderActivitySpecificCells = (record) => {
     return ([
-      <Table.Cell key="gj">{record.data?record.data.value:'???'}</Table.Cell>
+      <Table.Cell key="energy">{record.data?record.data.energy:'?'}</Table.Cell>
     ]);
   }
 

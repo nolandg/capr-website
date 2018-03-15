@@ -4,12 +4,12 @@ registerFragment(`
   fragment AcivityRecordsList on ActivityRecord {
     _id
     activity
+    label
     startDate
     endDate
     co2e
     dayCount
     data
-    group
     # users
     userId
     user {

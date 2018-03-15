@@ -3,28 +3,22 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
-import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
+import  { EditForm } from 'meteor/noland:vulcan-semantic-ui';
+import _ from 'lodash';
 
 class ElectricityActivityRecordEditForm extends EditForm {
   constructor(props) {
     const fields = ['activity', 'startDate', 'endDate', 'data'];
     super(props, fields);
 
-    this.state.values = {...this.state.values,
-      activity: 'electricity',
-    };
-  }
-
-  handleKwhChange = (e, { value }) => {
-    this.setState({ values: { ...this.state.values, data: {
-      value: value,
-      units: 'kWh',
-    } }});
+    _.set(this.state, 'values.activity', 'electricity');
+    _.set(this.state, 'values.data.units', 'kWh');
   }
 
   render(){
-    const {startDate, endDate} = this.state.values;
-    const kwh = this.state.values.data?this.state.values.data.value:0;
+    const { FormField, DateRangeField } = Components;
+    const { values, errors } = this.state;
+    const fieldProps = { values, errors, onChange: this.handleChange };
 
     const helpItems = [
       {
@@ -55,14 +49,9 @@ class ElectricityActivityRecordEditForm extends EditForm {
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
 
-        <Form.Field>
-          <label>For what period is this bill for?</label>
-          <Components.DateRangePicker startDate={startDate} endDate={endDate} handleChange={this.handleChange} />
-        </Form.Field>
+        <DateRangeField label="For what period is this bill for?" startName="startDate" endName="endDate" {...fieldProps} />
 
-
-        <Form.Input label="How many kilowatt-hours are on this bill?" width={7}
-          onChange={this.handleKwhChange} value={kwh}/>
+        <FormField label="How many kilowatt-hours are on this bill?" name="data.energy" width={7} {...fieldProps} />
 
         <Components.HelpAccordion items={helpItems} title="Help" subtitle="How to find this information on your bill" />
       </Form>

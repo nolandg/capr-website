@@ -22,8 +22,21 @@ export const getAllowedUnits = () => {
     {value: 'km', text: 'Killometers', dimension: 'distance', contexts: ['vehicle.distance'] },
     {value: 'mi', text: 'Miles', dimension: 'distance', contexts: ['vehicle.distance'] },
 
+    {value: 'L/100-km', text: 'Liters per 100km', dimension: 'volume/distance', contexts: ['vehicle.efficiency'] },
+    {value: 'mi/gal', text: 'Miles per gallon', dimension: 'distance/volume', contexts: ['vehicle.efficiency'] },
+
     {value: 'kg', text: 'Killograms', dimension: 'mass', contexts: [] },
     {value: 'lbs', text: 'Pounds', dimension: 'mass', contexts: [] },
+  ];
+}
+
+export const getVehicleTypes = () => {
+  return [
+    {value: 'motorcycle', text: 'Motocycle', efficiency: 123, efficiencyUnits: 'L/100-km'},
+    {value: 'small-car', text: 'Small car', efficiency: 123, efficiencyUnits: 'L/100-km'},
+    {value: 'large-car', text: 'Large car', efficiency: 123, efficiencyUnits: 'L/100-km'},
+    {value: 'suv', text: 'SUV', efficiency: 123, efficiencyUnits: 'L/100-km'},
+    {value: 'truck', text: 'Truck', efficiency: 123, efficiencyUnits: 'L/100-km'},
   ];
 }
 
@@ -33,6 +46,7 @@ export const getFuelTypes = () => {
     {value: 'diesel', text: 'Diesel'},
     {value: 'propane', text: 'Propane'},
     {value: 'vegtable-oil', text: 'Vegtable oil'},
+    {value: 'electricity', text: 'Electricity'},
   ];
 }
 
@@ -80,24 +94,55 @@ export const activityToIcon = (activity) => {
   }
 }
 
+export const getFuelTypeValues = () => {
+  return getFuelTypes().map(fuel => fuel.value);
+}
+
+export const getVehicleTypeValues = () => {
+  return getVehicleTypes().map(v => v.value);
+}
+
+export const getVehicleTypeOptions = () => {
+  return getVehicleTypes().map(({value, text}) => {return {value, text}});
+}
+
 export const getAllowedUnitsValues = () => {
-  return getAllowedUnits().map((a) => {return a.value} );
+  return getAllowedUnits().map(a => a.value );
 }
 
 export const getUnitsForContext = (context) => {
-  return getAllowedUnits().filter((unit) => { return unit.contexts.indexOf(context) !== -1} );
+  return getAllowedUnits().filter(unit => unit.contexts.indexOf(context) !== -1 );
+}
+
+export const getUnitValuesForContext = (context) => {
+  return getUnitsForContext(context).map(unit => unit.value);
 }
 
 export const getAllowedActivityValues = () => {
-  return getAllowedActivities().map((activity) => {return activity.value} );
+  return getAllowedActivities().map(activity => activity.value );
 }
 
 export const activityValueToText = (value) => {
-  const activity = getAllowedActivities().find((a)=>{return a.value === value});
+  const activity = getAllowedActivities().find(a =>  a.value === value);
   return activity?activity.text:'';
 }
 
+export const unitValueToText = (value) => {
+  const units = getAllowedUnits().find(u =>  u.value === value);
+  return units?units.text:'';
+}
+
+export const vehicleTypeValueToText = (value) => {
+  const vehicle = getAllowedUnits().find(v =>  v.value === value);
+  return vehicle?vehicle.text:'';
+}
+
+export const vehicleTypeValueToEfficiencyString = (value) => {
+  const vehicle = getVehicleTypes().find(v =>  v.value === value);
+  return vehicle?`${vehicle.text} at ${vehicle.efficiency}${vehicle.efficiencyUnits}`:'';
+}
+
 export const fuelTypeValueToText = (value) => {
-  const fuel = getFuelTypes().find((f)=>{return f.value === value});
+  const fuel = getFuelTypes().find(f => f.value === value);
   return fuel?fuel.text:'';
 }

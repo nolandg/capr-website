@@ -4,27 +4,21 @@ import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
+import _ from 'lodash';
 
 class NaturalGasActivityRecordEditForm extends EditForm {
   constructor(props) {
     const fields = ['activity', 'startDate', 'endDate', 'data'];
     super(props, fields);
 
-    this.state.values = {...this.state.values,
-      activity: 'natural-gas',
-    };
-  }
-
-  handleGJChange = (e, { value }) => {
-    this.setState({ values: { ...this.state.values, data: {
-      value: value,
-      units: 'GJ',
-    } }});
+    _.set(this.state, 'values.activity', 'natural-gas');
+    _.set(this.state, 'values.data.units', 'GJ');
   }
 
   render(){
-    const {startDate, endDate} = this.state.values;
-    const gj = this.state.values.data?this.state.values.data.value:0;
+    const { FormField, DateRangeField } = Components;
+    const { values, errors } = this.state;
+    const fieldProps = { values, errors, onChange: this.handleChange };
 
     const helpItems = [
       {
@@ -55,14 +49,9 @@ class NaturalGasActivityRecordEditForm extends EditForm {
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
 
-        <Form.Field>
-          <label>For what period is this bill for?</label>
-          <Components.DateRangePicker startDate={startDate} endDate={endDate} handleChange={this.handleChange} />
-        </Form.Field>
+        <DateRangeField label="For what period is this bill for?" startName="startDate" endName="endDate" {...fieldProps} />
 
-
-        <Form.Input label="How many gigajoules are on this bill?" width={7}
-          onChange={this.handleGJChange} value={gj}/>
+        <FormField label="How many gigajoules are on this bill?" name="data.energy" width={7} {...fieldProps} />
 
         <Components.HelpAccordion items={helpItems} title="Help" subtitle="How to find this information on your bill" />
       </Form>

@@ -59,7 +59,7 @@ const calcCo2eElectricity = (activityRecord) => {
     return 0;
   }
 
-  return factor.factor * data.value;
+  return factor.factor * data.energy;
 }
 
 const calcCo2eNaturalGas = (activityRecord) => {
@@ -75,5 +75,5 @@ const calcCo2eNaturalGas = (activityRecord) => {
     return 0;
   }
 
-  return factor.factor * data.value;
+  return factor.factor * data.energy;
 }
