@@ -3,9 +3,7 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Select } from 'semantic-ui-react';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
-import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
-import { DateRangePicker } from 'react-dates';
-import moment from 'moment';
+import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui'; 
 
 class ActivityRecordsEditForm extends EditForm {
   constructor(props) {

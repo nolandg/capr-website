@@ -5,6 +5,7 @@ import { Form } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
+import utils from '../../modules/utils.js';
 
 class FlightActivityRecordEditForm extends EditForm {
   constructor(props) {
@@ -14,7 +15,7 @@ class FlightActivityRecordEditForm extends EditForm {
     _.set(this.state, 'values.activity', 'natural-gas');
     _.set(this.state, 'values.data.units', 'GJ');
   }
-
+  
   render(){
     const { DateRangeField, LocationField } = Components;
     const { values, errors } = this.state;

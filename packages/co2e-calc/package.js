@@ -9,19 +9,9 @@ Package.onUse(function (api) {
   api.versionsFrom('METEOR@1.5.2');
 
   api.use([
-
-    'promise',
     'fourseven:scss@4.5.0',
-
-    // vulcan core
     'vulcan:core@1.8.7',
-
-    // vulcan packages
-    'vulcan:accounts@1.8.7',
-    'vulcan:email@1.8.7',
-    'vulcan:forms@1.8.7',
-    'vulcan:embed@1.8.7',
-
+    'noland:vulcan-semantic-ui',
   ]);
 
   api.addAssets([
