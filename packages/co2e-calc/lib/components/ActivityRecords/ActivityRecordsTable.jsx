@@ -69,7 +69,7 @@ registerComponent('VehicleActivityRecordsTable', VehicleActivityRecordsTable);
 class ElectricityActivityRecordsTable extends Component {
   renderActivitySpecificHeaderCells = () => {
     return ([
-      <Table.HeaderCell key="kWh"><Icon name="dashboard" />Kilowatt Hours</Table.HeaderCell>
+      <Table.HeaderCell key="energy"><Icon name="dashboard" />Kilowatt Hours</Table.HeaderCell>
     ]);
   }
 
@@ -97,6 +97,72 @@ class ElectricityActivityRecordsTable extends Component {
 registerComponent('ElectricityActivityRecordsTable', ElectricityActivityRecordsTable);
 
 /*******************************************************************************************************/
+/* Propane
+/*******************************************************************************************************/
+class PropaneActivityRecordsTable extends Component {
+  renderActivitySpecificHeaderCells = () => {
+    return ([
+      <Table.HeaderCell key="amount"><Icon name="dashboard" />Amount</Table.HeaderCell>
+    ]);
+  }
+
+  renderActivitySpecificCells = (record) => {
+    return ([
+      <Table.Cell key="amount">?</Table.Cell>
+    ]);
+  }
+
+  render() {
+    return (
+      <ActivityRecordsTable
+        {...this.props}
+        filterActivity="electricity"
+        editTitle="Edit Propane Consumption"
+        editFormComponent={Components.PropaneActivityRecordEditForm}
+        deleteTitle="Confirm Delete Propane Consumption"
+        deleteQuestion="Are you sure you want to delete this propane information?"
+        renderActivitySpecificCells={this.renderActivitySpecificCells}
+        renderActivitySpecificHeaderCells={this.renderActivitySpecificHeaderCells}
+      />
+    );
+  }
+}
+registerComponent('PropaneActivityRecordsTable', PropaneActivityRecordsTable);
+
+/*******************************************************************************************************/
+/* HeatingOil
+/*******************************************************************************************************/
+class HeatingOilActivityRecordsTable extends Component {
+  renderActivitySpecificHeaderCells = () => {
+    return ([
+      <Table.HeaderCell key="amount"><Icon name="dashboard" />Amount</Table.HeaderCell>
+    ]);
+  }
+
+  renderActivitySpecificCells = (record) => {
+    return ([
+      <Table.Cell key="amount">?</Table.Cell>
+    ]);
+  }
+
+  render() {
+    return (
+      <ActivityRecordsTable
+        {...this.props}
+        filterActivity="electricity"
+        editTitle="Edit HeatingOil Consumption"
+        editFormComponent={Components.HeatingOilActivityRecordEditForm}
+        deleteTitle="Confirm Delete Heating Oil Consumption"
+        deleteQuestion="Are you sure you want to delete this heating oil information?"
+        renderActivitySpecificCells={this.renderActivitySpecificCells}
+        renderActivitySpecificHeaderCells={this.renderActivitySpecificHeaderCells}
+      />
+    );
+  }
+}
+registerComponent('HeatingOilActivityRecordsTable', HeatingOilActivityRecordsTable);
+
+/*******************************************************************************************************/
 /* Flight
 /*******************************************************************************************************/
 class FlightActivityRecordsTable extends Component {
@@ -104,7 +170,7 @@ class FlightActivityRecordsTable extends Component {
     return ([
       <Table.HeaderCell key="origin"><Icon name="marker" />Origin</Table.HeaderCell>,
       <Table.HeaderCell key="destination"><Icon name="marker" />Destination</Table.HeaderCell>,
-      <Table.HeaderCell key="distance"><Icon name="globe" />Distance</Table.HeaderCell>,
+      <Table.HeaderCell key="distance"><Icon className="distance" />Distance (km)</Table.HeaderCell>,
     ]);
   }
 
@@ -213,7 +279,7 @@ class ActivityRecordsTable extends Component {
     }
 
     return (
-      <Table celled>
+      <Table celled className="activity-records-table">
         <Table.Header>
           <Table.Row>
             {showActivityColumn?

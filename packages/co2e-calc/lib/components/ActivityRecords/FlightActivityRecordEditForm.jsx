@@ -1,11 +1,11 @@
 import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'semantic-ui-react'
+import { Form, Header, Divider } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
-import utils from '../../modules/utils.js';
+import { distanceBetweenLocationsInKm } from '../../modules/utils.js';
 
 class FlightActivityRecordEditForm extends EditForm {
   constructor(props) {
@@ -16,19 +16,55 @@ class FlightActivityRecordEditForm extends EditForm {
     _.set(this.state, 'values.data.units', 'km');
   }
 
+  handleDistanceChange = (event, element) => {
+    this.handleChange(event, element);
+    console.log(this.state);
+
+    let origin = _.get(this.state, 'values.data.flightOrigin', {});
+    let destination = _.get(this.state, 'values.data.flightDestination', {});
+
+    if(element.name === 'data.flightOrigin') origin = element.value;
+    if(element.name === 'data.flightDestination') destination = element.value;
+
+    if(!origin.lat || !destination.lat) return;
+
+    let distance = distanceBetweenLocationsInKm(origin, destination);
+
+    if(element.name === 'data.isRoundTrip'){
+      if(element.value === 'true') distance *= 2;
+    }else if(this.state.values.data.isRoundTrip === 'true'){
+      distance *= 2;
+    }
+
+    this.updateValue('data.distance', distance);
+  }
+
   render(){
-    const { DateRangeField, LocationField } = Components;
+    const { DateRangeField, LocationField, CheckboxField } = Components;
     const { values, errors } = this.state;
+    const { data } = values;
     const fieldProps = { values, errors, onChange: this.handleChange };
+
 
     return (
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
 
-        <DateRangeField label="For what period is this bill for?" startName="startDate" endName="endDate" {...fieldProps} />
+        <DateRangeField label="When did you fly?" startName="startDate" endName="endDate" {...fieldProps}
+          description="This can be very approximate, don't try to remember exact dates!"/>
 
-        <LocationField label="From" name="data.flightOrigin" width={4} {...fieldProps} />
-        <LocationField label="To" name="data.flightDestination" width={4} {...fieldProps} />
+        <CheckboxField type="radio" toggle label="This was a round-trip flight"
+          name="data.isRoundTrip" value="true" onChange={this.handleDistanceChange} values={values} errors={errors}  />
+        <CheckboxField type="radio" toggle label="This was a one-way flight"
+          name="data.isRoundTrip" value="false" onChange={this.handleDistanceChange} values={values} errors={errors}  />
+
+        <LocationField label="From" name="data.flightOrigin" width={4}
+          onChange={this.handleDistanceChange} values={values} errors={errors} />
+        <LocationField label="To" name="data.flightDestination" width={4}
+          onChange={this.handleDistanceChange} values={values} errors={errors}  />
+
+        <Divider hidden />
+        <Header as="h3">Distance: {data.distance} {data.distance?'km':''}</Header>
       </Form>
     )
   }

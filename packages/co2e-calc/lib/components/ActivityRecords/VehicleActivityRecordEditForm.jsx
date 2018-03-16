@@ -76,7 +76,9 @@ class VehicleActivityRecordEditForm extends EditForm {
           :null}
         {data.type ?
           <Header as="h2">
-            <Icon name="dashboard" />
+            {data.type === 'fuel-volume'?<Icon className="gasoline" />:null}
+            {data.type === 'distance'?<Icon className="distance" />:null}
+            {data.type === 'electric'?<Icon name="check" />:null}
             <Header.Content>{dataHeader}</Header.Content>
           </Header>
         :null}

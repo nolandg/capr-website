@@ -47,3 +47,22 @@
     }
   }
 }
+
+.activity-records-table{
+  th {
+    text-align: center !important;
+    i.icon {
+      width: 100%;
+      font-size: 2em;
+    }
+  }
+}
+
+.add-to-inventory-wrapper{
+  margin: 10px 20px 10px 20px;
+}
+@media all and (min-width: 950px) {
+  .add-to-inventory-wrapper{
+    margin: 10px 60px 10px 60px;
+  }
+}

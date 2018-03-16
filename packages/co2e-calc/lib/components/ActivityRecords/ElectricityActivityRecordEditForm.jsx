@@ -51,7 +51,7 @@ class ElectricityActivityRecordEditForm extends EditForm {
 
         <DateRangeField label="For what period is this bill for?" startName="startDate" endName="endDate" {...fieldProps} />
 
-        <FormField label="How many kilowatt-hours are on this bill?" name="data.energy" width={7} {...fieldProps} />
+        <FormField label="How many kilowatt-hours are on this bill?" name="data.energy" widthEm={9} {...fieldProps} />
 
         <Components.HelpAccordion items={helpItems} title="Help" subtitle="How to find this information on your bill" />
       </Form>

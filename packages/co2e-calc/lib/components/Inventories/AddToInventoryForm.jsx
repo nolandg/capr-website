@@ -39,7 +39,7 @@ class AddToInventoryForm extends Component {
 
     return (
       <div>
-        <Menu icon="labeled" size="massive" fluid widths={5} tabular attached="top" stackable
+        <Menu icon="labeled" size="massive" fluid tabular attached="top" stackable
           style={{
             borderBottomColor: ActivityRecords.Utils.activityToColor(activeMenuItem),
             width: '100% !important',
@@ -47,10 +47,11 @@ class AddToInventoryForm extends Component {
             marginRight: '0 !important',
           }}>
           <ColoredMenuItem name="vehicle" icon="car" label="Vehicles" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
-          <ColoredMenuItem name="electricity" icon="bc-hydro" label="Electricity" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
-          <ColoredMenuItem name="natural-gas" icon="fortis" label="Natural Gas" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="electricity" icon="powerline" label="Electricity" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="natural-gas" icon="natural-gas" label="Natural Gas" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
           <ColoredMenuItem name="flight" icon="plane" label="Flights" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
           <ColoredMenuItem name="propane" icon="propane" label="Propane" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="heating-oil" icon="heating-oil" label="Heating Oil" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
         </Menu>
 
         <Segment attached="bottom" style={{borderColor: ActivityRecords.Utils.activityToColor(activeMenuItem)}}>

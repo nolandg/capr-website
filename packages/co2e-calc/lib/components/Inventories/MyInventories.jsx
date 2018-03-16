@@ -67,11 +67,11 @@ class MyInventories extends Component {
           startDate={startDate} endDate={endDate} width="100%" height={200}
         />
 
-        <Container>
+        <div className="add-to-inventory-wrapper">
           <Divider hidden />
           <Header as="h2" textAlign="center">What do you want to add?</Header>
           <Components.AddToInventoryForm activityRecords={recordsForPeriod} startDate={startDate} endDate={endDate} />
-        </Container>
+        </div>
 
         <Divider hidden />
         <Divider hidden />

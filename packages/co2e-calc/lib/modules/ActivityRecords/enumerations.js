@@ -5,7 +5,7 @@ export const getAllowedActivities = () => {
     {value: 'electricity', text: 'Electricity'},
     {value: 'natural-gas', text: 'Natural Gas'},
     {value: 'flight', text: 'Flight'},
-    {value: 'heat-oil', text: 'Heating Oil'},
+    {value: 'heating-oil', text: 'Heating Oil'},
     {value: 'vehicle', text: 'Vehicle'},
     {value: 'propane', text: 'Propane'},
   ];
@@ -16,8 +16,8 @@ export const getAllowedUnits = () => {
     {value: 'kWh', text: 'Killowatt Hours', dimension: 'energy', contexts: ['electricity'] },
     {value: 'GJ', text: 'Gigajoules', dimension: 'energy', contexts: ['natural-gas']  },
 
-    {value: 'L', text: 'Litres', dimension: 'volume', contexts: ['vehicle.fuel-volume'] },
-    {value: 'US gal', text: 'US Gallons', dimension: 'volume', contexts: ['vehicle.fuel-volume'] },
+    {value: 'L', text: 'Litres', dimension: 'volume', contexts: ['vehicle.fuel-volume', 'propane', 'heating-oil'] },
+    {value: 'US gal', text: 'US Gallons', dimension: 'volume', contexts: ['vehicle.fuel-volume', 'propane', 'heating-oil'] },
 
     {value: 'km', text: 'Killometers', dimension: 'distance', contexts: ['vehicle.distance'] },
     {value: 'mi', text: 'Miles', dimension: 'distance', contexts: ['vehicle.distance'] },
@@ -25,8 +25,8 @@ export const getAllowedUnits = () => {
     {value: 'L/100-km', text: 'Liters per 100km', dimension: 'volume/distance', contexts: ['vehicle.efficiency'] },
     {value: 'mi/gal', text: 'Miles per gallon', dimension: 'distance/volume', contexts: ['vehicle.efficiency'] },
 
-    {value: 'kg', text: 'Killograms', dimension: 'mass', contexts: [] },
-    {value: 'lbs', text: 'Pounds', dimension: 'mass', contexts: [] },
+    {value: 'kg', text: 'Killograms', dimension: 'mass', contexts: ['propane', 'heating-oil'] },
+    {value: 'lbs', text: 'Pounds', dimension: 'mass', contexts: ['propane', 'heating-oil'] },
   ];
 }
 

@@ -185,6 +185,7 @@ const schema = {
         fuelType: '',
         units: '',
         efficiency: '',
+        isRoundTrip: 'true',
       }
     },
     custom: function() {
@@ -239,6 +240,12 @@ const schema = {
     label: 'Energy',
     type: Number,
     optional: true,
+  },
+  'data.isRoundTrip': {
+    label: 'Round Trip',
+    type: String,
+    optional: true,
+    form: {defaultValue: 'true'},
   },
   'data.distance': {
     label: 'Distance',
