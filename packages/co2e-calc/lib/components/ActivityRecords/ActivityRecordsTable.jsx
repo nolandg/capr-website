@@ -108,7 +108,7 @@ class PropaneActivityRecordsTable extends Component {
 
   renderActivitySpecificCells = (record) => {
     return ([
-      <Table.Cell key="amount">?</Table.Cell>
+      <Table.Cell key="amount">{_.get(record, 'data.amount', '?')} {_.get(record, 'data.units', '?')}</Table.Cell>
     ]);
   }
 
@@ -116,7 +116,7 @@ class PropaneActivityRecordsTable extends Component {
     return (
       <ActivityRecordsTable
         {...this.props}
-        filterActivity="electricity"
+        filterActivity="propane"
         editTitle="Edit Propane Consumption"
         editFormComponent={Components.PropaneActivityRecordEditForm}
         deleteTitle="Confirm Delete Propane Consumption"
@@ -141,7 +141,7 @@ class HeatingOilActivityRecordsTable extends Component {
 
   renderActivitySpecificCells = (record) => {
     return ([
-      <Table.Cell key="amount">?</Table.Cell>
+      <Table.Cell key="amount">{_.get(record, 'data.amount', '?')} {_.get(record, 'data.units', '?')}</Table.Cell>
     ]);
   }
 
@@ -149,7 +149,7 @@ class HeatingOilActivityRecordsTable extends Component {
     return (
       <ActivityRecordsTable
         {...this.props}
-        filterActivity="electricity"
+        filterActivity="heating-oil"
         editTitle="Edit HeatingOil Consumption"
         editFormComponent={Components.HeatingOilActivityRecordEditForm}
         deleteTitle="Confirm Delete Heating Oil Consumption"

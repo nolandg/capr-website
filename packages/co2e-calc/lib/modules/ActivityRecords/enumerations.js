@@ -13,20 +13,25 @@ export const getAllowedActivities = () => {
 
 export const getAllowedUnits = () => {
   return [
-    {value: 'kWh', text: 'Killowatt Hours', dimension: 'energy', contexts: ['electricity'] },
-    {value: 'GJ', text: 'Gigajoules', dimension: 'energy', contexts: ['natural-gas']  },
+    // Energy
+    {value: 'kWh', text: 'Killowatt Hours', toBase: 1, dimension: 'energy', contexts: ['electricity'] },
+    {value: 'GJ', text: 'Gigajoules', toBase: .0036, dimension: 'energy', contexts: ['natural-gas']  },
 
-    {value: 'L', text: 'Litres', dimension: 'volume', contexts: ['vehicle.fuel-volume', 'propane', 'heating-oil'] },
-    {value: 'US gal', text: 'US Gallons', dimension: 'volume', contexts: ['vehicle.fuel-volume', 'propane', 'heating-oil'] },
+    // Volume
+    {value: 'L', text: 'Litres', toBase: 1, dimension: 'volume', contexts: ['vehicle.fuel-volume', 'propane', 'heating-oil'] },
+    {value: 'US gal', text: 'US Gallons', toBase: 0.264172, dimension: 'volume', contexts: ['vehicle.fuel-volume', 'propane', 'heating-oil'] },
 
-    {value: 'km', text: 'Killometers', dimension: 'distance', contexts: ['vehicle.distance'] },
-    {value: 'mi', text: 'Miles', dimension: 'distance', contexts: ['vehicle.distance'] },
+    // Distance
+    {value: 'km', text: 'Killometers', toBase: 1, dimension: 'distance', contexts: ['vehicle.distance', 'flight.distance'] },
+    {value: 'mi', text: 'Miles', toBase: 0.621371, dimension: 'distance', contexts: ['vehicle.distance'] },
 
-    {value: 'L/100-km', text: 'Liters per 100km', dimension: 'volume/distance', contexts: ['vehicle.efficiency'] },
-    {value: 'mi/gal', text: 'Miles per gallon', dimension: 'distance/volume', contexts: ['vehicle.efficiency'] },
+    // Fuel efficiency
+    {value: 'L/100-km', text: 'Liters per 100km', toBase: 1, dimension: 'volume/distance', contexts: ['vehicle.efficiency'] },
+    {value: 'mi/gal', text: 'Miles per gallon', toBase: 235.215, dimension: 'distance/volume', contexts: ['vehicle.efficiency'] },
 
-    {value: 'kg', text: 'Killograms', dimension: 'mass', contexts: ['propane', 'heating-oil'] },
-    {value: 'lbs', text: 'Pounds', dimension: 'mass', contexts: ['propane', 'heating-oil'] },
+    // Mass/force
+    {value: 'kg', text: 'Killograms', toBase: 1, dimension: 'mass', contexts: ['propane', 'heating-oil'] },
+    {value: 'lbs', text: 'Pounds', toBase: 2.20462, dimension: 'mass', contexts: ['propane', 'heating-oil'] },
   ];
 }
 
@@ -65,6 +70,40 @@ const orderedPalet= [
   palet.grey,
 ];
 const defaultColor = '#767676';
+
+export const findUnits = (value) => {
+  return getAllowedUnits.find(units => units.value === value);
+}
+
+export const convertUnits = (value, fromUnits, toUnits) => {
+  const from = findUnits(fromUnits);
+  const to = findUnits(toUnits);
+
+  if(!to) {
+    console.error('Trying to convert to unknown units "' + toUnits + '"');
+    return 0;
+  }
+  if(!from) {
+    console.error('Trying to convert from unknown units "' + fromUnits + '"');
+    return 0;
+  }
+
+  return value * from.toBase / to.toBase;
+}
+
+export const convertToBaseUnits = (value, fromUnits) => {
+  if(typeof fromUnits === 'string') fromUnits = findUnits(fromUnits);
+  if(!fromUnits){
+    console.error(`Could not find units ${fromUnits} to convert to base.`);
+    return 0;
+  }
+  const baseUnits = getAllowedUnits.find(units => (units.dimension === fromUnits.dimension) && (units.toBase === 1));
+  if(!baseUnits){
+    console.error(`Could not find base units for ${fromUnits.text}.`);
+  }
+
+  return convertUnits(value, fromUnits, baseUnits);
+}
 
 export const activityToColor = (activity, type) => {
   const index = getAllowedActivityValues().indexOf(activity);

@@ -2,7 +2,6 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
-import { EmissionFactors } from '../../modules/EmissionFactors/index.js';
 import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, Line, ReferenceLine, Area, CartesianGrid, Label } from 'recharts';
 import { Item, Icon } from 'semantic-ui-react';
 import moment from 'moment';
@@ -275,7 +274,7 @@ class InventoryTimeline extends Component {
             tickLine={{strokeWidth: 1, stroke: '#DDD'}}
             tick={{fill: '#888'}}
           >
-            <Label angle={270} position='insideLeft' fill="#888" style={{ textAnchor: 'middle' }} offset={50}>
+            <Label angle={270} position='insideLeft' fill="#888" style={{ textAnchor: 'middle' }} offset={60}>
               Emissions kg/day
             </Label>
           </YAxis>

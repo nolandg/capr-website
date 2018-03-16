@@ -2,7 +2,6 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Icon, Segment } from 'semantic-ui-react';
-import { Utils } from 'meteor/vulcan:lib';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 
 const ColoredMenuItem = ({name, label, activeMenuItem, onClick, icon}) => {
@@ -38,7 +37,7 @@ class AddToInventoryForm extends Component {
     }
 
     return (
-      <div>
+      <div className="add-to-inventory">
         <Menu icon="labeled" size="massive" fluid tabular attached="top" stackable
           style={{
             borderBottomColor: ActivityRecords.Utils.activityToColor(activeMenuItem),

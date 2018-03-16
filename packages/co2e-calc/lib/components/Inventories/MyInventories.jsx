@@ -1,7 +1,7 @@
 import { Components, registerComponent, withList } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Divider, Header, Loader, Menu, Icon, Segment } from 'semantic-ui-react';
+import { Divider, Header, Loader, Menu, Icon, } from 'semantic-ui-react';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import moment from 'moment';
 

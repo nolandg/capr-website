@@ -12,7 +12,7 @@ class PropaneActivityRecordEditForm extends EditForm {
     super(props, fields);
 
     _.set(this.state, 'values.activity', 'propane');
-    _.set(this.state, 'values.data.units', 'GJ');
+    _.set(this.state, 'values.data.units', '');
   }
 
   render(){
@@ -28,7 +28,7 @@ class PropaneActivityRecordEditForm extends EditForm {
         <DateRangeField label="For what period is this information for?" startName="startDate" endName="endDate" {...fieldProps} />
 
         <Form.Group widths="equal">
-          <FormField label="How much propane did you buy?" name="data.amount" {...fieldProps} /> :null}
+          <FormField label="How much propane did you buy?" name="data.amount" {...fieldProps} />
           <SelectField label="Units" name="data.units" placeholder='Units' options={units} {...fieldProps} />
         </Form.Group>
       </Form>

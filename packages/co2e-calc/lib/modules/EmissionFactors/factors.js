@@ -1,0 +1,81 @@
+import moment from 'moment';
+
+exports = [
+  {
+    activity: 'electricity',
+    units: 'kWh',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'natural-gas',
+    units: 'GJ',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'vehicle.gasoline',
+    units: 'L',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'vehicle.diesel',
+    units: 'L',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'vehicle.vegtable-oil',
+    units: 'L',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'vehicle.propane',
+    units: 'L',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'propane',
+    units: 'L',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'heating-oil',
+    units: 'L',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'flight.short',
+    units: 'km',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'flight.med',
+    units: 'km',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+  {
+    activity: 'flight.long',
+    units: 'km',
+    factor: .000011,
+    startDate: moment('1970', 'YYYY'),
+    endDate: moment('2050', 'YYYY'),
+  },
+];

@@ -186,6 +186,7 @@ const schema = {
         units: '',
         efficiency: '',
         isRoundTrip: 'true',
+        amount: '',
       }
     },
     custom: function() {
@@ -196,11 +197,34 @@ const schema = {
       switch(activity){
         case 'electricity':
           checks.push({type: 'missing', field: 'data.energy'});
+          checks.push({type: 'missing', field: 'data.units'});
           checks.push({type: 'units', field: 'data.units', units: 'electricity'});
+          break;
+        case 'natural-gas':
+          checks.push({type: 'missing', field: 'data.energy'});
+          checks.push({type: 'missing', field: 'data.units'});
+          checks.push({type: 'units', field: 'data.units', units: 'natural-gas'});
+          break;
+        case 'heating-oil':
+          checks.push({type: 'missing', field: 'data.amount'});
+          checks.push({type: 'missing', field: 'data.units'});
+          checks.push({type: 'units', field: 'data.units', units: 'heating-oil'});
+          break;
+        case 'propane':
+          checks.push({type: 'missing', field: 'data.amount'});
+          checks.push({type: 'missing', field: 'data.units'});
+          checks.push({type: 'units', field: 'data.units', units: 'propane'});
+          break;
+        case 'flight':
+          checks.push({type: 'missing', field: 'data.distance'});
+          checks.push({type: 'missing', field: 'data.flightOrigin'});
+          checks.push({type: 'missing', field: 'data.flightDestination'});
+          checks.push({type: 'missing', field: 'data.isRoundTrip'});
+          checks.push({type: 'missing', field: 'data.units'});
+          checks.push({type: 'units', field: 'data.units', units: 'flight.distance'});
           break;
         case 'vehicle':
           checks.push({type: 'missing', field: 'data.type' });
-
           if(data.type === 'distance') {
             checks.push({type: 'missing', field: 'data.distance'});
             checks.push({type: 'missing', field: 'data.units'});
@@ -236,6 +260,11 @@ const schema = {
     optional: true,
     allowedValues: ['distance', 'fuel-volume', 'electric'],
   },
+  'data.amount': {
+    label: 'Amount',
+    type: Number,
+    optional: true,
+  },
   'data.energy': {
     label: 'Energy',
     type: Number,
@@ -245,6 +274,7 @@ const schema = {
     label: 'Round Trip',
     type: String,
     optional: true,
+    allowedValues: ['true', 'false'],
     form: {defaultValue: 'true'},
   },
   'data.distance': {

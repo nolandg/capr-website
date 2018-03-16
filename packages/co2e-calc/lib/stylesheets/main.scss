@@ -60,9 +60,16 @@
 
 .add-to-inventory-wrapper{
   margin: 10px 20px 10px 20px;
-}
-@media all and (min-width: 950px) {
-  .add-to-inventory-wrapper{
+  @media all and (min-width: 950px) {
     margin: 10px 60px 10px 60px;
+  }
+
+  .add-to-inventory{
+    .menu{
+      display: flex;
+      .item{
+        flex-grow: 1;
+      }
+    }
   }
 }

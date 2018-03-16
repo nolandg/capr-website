@@ -1,7 +1,7 @@
 import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Header, Divider } from 'semantic-ui-react'
+import { Form, Header, Divider, Icon } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
@@ -18,7 +18,6 @@ class FlightActivityRecordEditForm extends EditForm {
 
   handleDistanceChange = (event, element) => {
     this.handleChange(event, element);
-    console.log(this.state);
 
     let origin = _.get(this.state, 'values.data.flightOrigin', {});
     let destination = _.get(this.state, 'values.data.flightDestination', {});
@@ -64,7 +63,10 @@ class FlightActivityRecordEditForm extends EditForm {
           onChange={this.handleDistanceChange} values={values} errors={errors}  />
 
         <Divider hidden />
-        <Header as="h3">Distance: {data.distance} {data.distance?'km':''}</Header>
+        <Header as="h3">
+          <Icon className="distance" />
+          <Header.Content>Distance: {data.distance} {data.distance?'km':''}</Header.Content>
+        </Header>
       </Form>
     )
   }
