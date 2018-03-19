@@ -1,4 +1,4 @@
-import { getAllowedActivityValues, getAllowedUnitsValues, getUnitValuesForContext, getFuelTypeValues, getVehicleTypeValues } from './enumerations';
+import { getAllowedActivityValues, getAllowedUnitsValues, getUnitValuesForContext, getFuelTypeValues, getVehicleTypeValues } from '../enumerations';
 import utils from './utils.js';
 import SimpleSchema from 'simpl-schema';
 

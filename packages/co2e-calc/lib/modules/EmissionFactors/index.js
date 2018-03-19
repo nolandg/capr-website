@@ -1,12 +1,8 @@
 import moment from 'moment';
 import factors from './factors.js';
-import { ActivityRecords } from '../ActivityRecords';
-
-const { Utils } = ActivityRecords;
-const { convertToBaseUnits } = Utils;
+import { convertToBaseUnits, findVehicleType, convertMassToVolume, convertUnits } from '../enumerations';
 
 const findFactor = (activity, units, startDate, endDate) => {
-
   return factors.find((factor) => {
     if(factor.activity !== activity) return false;
     if(factor.units.toLowerCase() !== units.toLowerCase()) return false;
@@ -37,63 +33,85 @@ export const EmissionFactors = {
   }
 }
 
+const factorNotFoundError = ({activity, data}) => {
+  console.error(`Could not find emission factor for activity ${activity} with data:`, data);
+}
+
 /********************************************************************************************************/
 /* Electricity
 /********************************************************************************************************/
-const calcCo2eElectricity = (activityRecord) => {
-  const { activity, data } = activityRecord;
-  if(!data || !data.energy || !data.units){
-    console.error('Malformed electricity record, bad data.');
-    return 0;
-  }
-  const factor = findFactor('electricity', data.units, activityRecord.startDate, activityRecord.endDate);
+const calcCo2eElectricity = (record) => {
+  const { data, startDate, endDate } = record;
+  const units = 'kWh';
+  const energy = convertUnits(data.energy, data.units, units);
 
+  const factor = findFactor('electricity', units, startDate, endDate);
   if(!factor) {
-    console.error(`Could not find emission factor for activity ${activity} with data:`, data);
+    factorNotFoundError(record);
     return 0;
   }
 
-  return factor.factor * data.energy;
+  return factor.factor * energy;
 }
 
 /********************************************************************************************************/
 /* Vehicle
 /********************************************************************************************************/
-const calcCo2eVehicle = (activityRecord) => {
-  const { activity, data } = activityRecord;
-  if(!data){
-    console.error('Malformed vehicle record, no data.');
-    return 0;
-  }
-  const { type, units, distance, fuelVolume, fuelType, vehicleType, knownEfficiency, efficiencyUnits, efficiency } = data;
+const calcCo2eVehicle = (record) => {
+  const { data, startDate, endDate } = record;
+  const { type, units, fuelType, knownEfficiency, efficiencyUnits } = data;
+  const vehicleType = findVehicleType(data.vehicleType);
 
   // Convert all the values we might need to base units
-  const basedDistance = convertToBaseUnits(distance, units);
-  const basedFuelVolume = convertToBaseUnits(fuelVolume, units);
-  let basedEfficiency;
-  if(type === 'distance' && knownEfficiency === 'true')
-    basedEfficiency = convertToBaseUnits(efficiency, efficiencyUnits);
+  const distance = convertToBaseUnits(data.distance, units);
+  const fuelVolume = convertToBaseUnits(data.fuelVolume, units);
+  let efficiency;
+  if(type === 'distance'){
+    if(knownEfficiency === 'true'){
+      efficiency = convertToBaseUnits(efficiency, efficiencyUnits);
+    }else{
+      efficiency = vehicleType.efficiency;
+    }
+  }
 
   let factor;
-  let ammount;
+  let liters;
 
+  // find liters of fuel
   if(type === 'fuel-volume'){
-
+    liters = fuelVolume;
   }else if(type === 'distance'){
-    let basedEfficiency;
-    if(knownEfficiency === 'true'){
-      basedEfficiency =
-    }
+    liters = efficiency * distance / 100; // divide by 100 because efficiency is in L/100 km
   }else if(type === 'electric'){
-    return 0;
+    liters = 0;
   } else {
     console.error('Bad vehicle data type.');
     return 0;
   }
-  const factor = findFactor(activityRecord, data.units);
 
+  factor = findFactor(`vehicle.${fuelType}`, 'L', startDate, endDate);
   if(!factor) {
-    console.error(`Could not find emission factor for activity ${activity} with data:`, data);
+    factorNotFoundError(record);
+    return 0;
+  }
+
+  return factor.factor * liters;
+}
+
+/********************************************************************************************************/
+/* Propane
+/********************************************************************************************************/
+const calcCo2ePropane = (record) => {
+  const { data, startDate, endDate } = record;
+
+  let amount = convertToBaseUnits(data.amount, data.units);
+  if(data.units.dimension === 'mass'){
+    amount = convertMassToVolume(amount, 'propane');
+  }
+
+  const factor = findFactor('propane', 'L', startDate, endDate);
+  if(!factor) {
+    factorNotFoundError(record);
     return 0;
   }
 
@@ -101,77 +119,59 @@ const calcCo2eVehicle = (activityRecord) => {
 }
 
 /********************************************************************************************************/
-/* Propane
+/* Heating Oil
 /********************************************************************************************************/
-const calcCo2ePropane = (activityRecord) => {
-  const { activity, data } = activityRecord;
-  if(!data){
-    console.error('Malformed electricity record, no data.');
-    return 0;
-  }
-  const factor = findFactor(activityRecord, data.units);
+const calcCo2eHeatingOil = (record) => {
+  const { data, startDate, endDate } = record;
 
+  let amount = convertToBaseUnits(data.amount, data.units);
+  if(data.units.dimension === 'mass'){
+    amount = convertMassToVolume(amount, 'heating-oil');
+  }
+
+  const factor = findFactor('heating-oil', 'L', startDate, endDate);
   if(!factor) {
-    console.error(`Could not find emission factor for activity ${activity} with data:`, data);
+    factorNotFoundError(record);
     return 0;
   }
 
-  return factor.factor * data.energy;
-}
-
-/********************************************************************************************************/
-/* Heatin Oil
-/********************************************************************************************************/
-const calcCo2eHeatingOil = (activityRecord) => {
-  const { activity, data } = activityRecord;
-  if(!data){
-    console.error('Malformed electricity record, no data.');
-    return 0;
-  }
-  const factor = findFactor(activityRecord, data.units);
-
-  if(!factor) {
-    console.error(`Could not find emission factor for activity ${activity} with data:`, data);
-    return 0;
-  }
-
-  return factor.factor * data.energy;
+  return factor.factor * amount;
 }
 
 /********************************************************************************************************/
 /* Flight
 /********************************************************************************************************/
-const calcCo2eFlight = (activityRecord) => {
-  const { activity, data } = activityRecord;
-  if(!data){
-    console.error('Malformed electricity record, no data.');
-    return 0;
-  }
-  const factor = findFactor(activityRecord, data.units);
+const calcCo2eFlight = (record) => {
+  const { data, startDate, endDate } = record;
 
+  let distance = convertToBaseUnits(data.distance, data.units);
+  let length = 'med';
+  if(distance < 463) length = 'short';
+  else if(distance > 1108) length = 'long';
+
+  const factor = findFactor(`flight.${length}`, 'km', startDate, endDate);
   if(!factor) {
-    console.error(`Could not find emission factor for activity ${activity} with data:`, data);
+    factorNotFoundError(record);
     return 0;
   }
 
-  return factor.factor * data.energy;
+  return factor.factor * distance;
 }
 
 /********************************************************************************************************/
 /* Natural Gas
 /********************************************************************************************************/
-const calcCo2eNaturalGas = (activityRecord) => {
-  const { activity, data } = activityRecord;
-  if(!data){
-    console.error('Malformed natural gas record, no data.');
-    return 0;
-  }
-  const factor = findFactor('electricity', data.units, activityRecord.startDate, activityRecord.endDate);
+const calcCo2eNaturalGas = (record) => {
+  const { data, startDate, endDate } = record;
+  const units = 'GJ';
 
+  let energy = convertUnits(data.energy, data.units, units);
+
+  const factor = findFactor('natural-gas', units, startDate, endDate);
   if(!factor) {
-    console.error(`Could not find emission factor for activity ${activity} with data:`, data);
+    factorNotFoundError(record);
     return 0;
   }
 
-  return factor.factor * data.energy;
+  return factor.factor * energy;
 }

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { EmissionFactors } from '../EmissionFactors/index.js';
+import { EmissionFactors } from '../EmissionFactors';
 
 export const calcCo2e = (activityRecord) => {
   return EmissionFactors.calcCo2e(activityRecord);
@@ -20,8 +20,7 @@ export const calcTotalCo2eForEachActivityOnDate = (records, date) => {
   const co2eTotals = {};
 
   simultaneousRecords.forEach((record) => {
-    // Find the CO2e per day in kg
-    const co2ePerDay = EmissionFactors.calcCo2e(record)*1000/record.dayCount;
+    const co2ePerDay = record.co2e/record.dayCount;
 
     // Add a new entry to data point if needed
     if(!co2eTotals[record.activity]) co2eTotals[record.activity] = 0;

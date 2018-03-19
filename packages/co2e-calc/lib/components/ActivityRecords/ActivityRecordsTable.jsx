@@ -259,7 +259,7 @@ class ActivityRecordsTable extends Component {
         </Table.Cell>
         {renderActivitySpecificCells?renderActivitySpecificCells(record):null}
         <Table.Cell>
-          {record.co2e?(record.co2e*1000).toFixed(0):'?'}
+          {record.co2e?(record.co2e).toFixed(0):'?'}
         </Table.Cell>
         <Table.Cell textAlign="center">
           <Components.EditModal document={record} component={editFormComponent} collection={ActivityRecords}

@@ -37,11 +37,11 @@ export const getAllowedUnits = () => {
 
 export const getVehicleTypes = () => {
   return [
-    {value: 'motorcycle', text: 'Motocycle', efficiency: 123, efficiencyUnits: 'L/100-km'},
-    {value: 'small-car', text: 'Small car', efficiency: 123, efficiencyUnits: 'L/100-km'},
-    {value: 'large-car', text: 'Large car', efficiency: 123, efficiencyUnits: 'L/100-km'},
-    {value: 'suv', text: 'SUV', efficiency: 123, efficiencyUnits: 'L/100-km'},
-    {value: 'truck', text: 'Truck', efficiency: 123, efficiencyUnits: 'L/100-km'},
+    {value: 'motorcycle', text: 'Motocycle', efficiency: 3, efficiencyUnits: 'L/100-km'},
+    {value: 'small-car', text: 'Small car', efficiency: 7, efficiencyUnits: 'L/100-km'},
+    {value: 'large-car', text: 'Large car', efficiency: 10, efficiencyUnits: 'L/100-km'},
+    {value: 'suv', text: 'SUV', efficiency: 15, efficiencyUnits: 'L/100-km'},
+    {value: 'truck', text: 'Truck', efficiency: 18, efficiencyUnits: 'L/100-km'},
   ];
 }
 
@@ -53,6 +53,19 @@ export const getFuelTypes = () => {
     {value: 'vegtable-oil', text: 'Vegtable oil'},
     {value: 'electricity', text: 'Electricity'},
   ];
+}
+
+export const convertMassToVolume = (mass, substance) => {
+  let density; // in L/kg
+  switch (substance) {
+    case 'propane': density = 1.9825; break;
+    case 'heating-oil': density = 1.1547; break;
+  }
+  if(!density){
+    console.error(`Trying to convert mass to volume for unknown substance ${substance}.`);
+    return 0;
+  }
+  return mass * density;
 }
 
 const palet = { red: '#db2828', orange: '#f2711c', yellow: '#fbbd08', olive: '#b5cc18', green: '#21ba45', teal: '#00b5ad', blue: '#2185d0', violet: '#6435c9', purple: '#a333c8', pink: '#e03997', brown: '#a5673f', grey: '#767676', black: '#1b1c1d',};
@@ -71,8 +84,13 @@ const orderedPalet= [
 ];
 const defaultColor = '#767676';
 
+export const findVehicleType = (value) => {
+  return getVehicleTypes().find(v => v.value === value);
+}
+
 export const findUnits = (value) => {
-  return getAllowedUnits.find(units => units.value === value);
+  if(typeof value === 'object') return value;
+  return getAllowedUnits().find(units => units.value.toLowerCase() === value.toLowerCase());
 }
 
 export const convertUnits = (value, fromUnits, toUnits) => {
@@ -97,7 +115,7 @@ export const convertToBaseUnits = (value, fromUnits) => {
     console.error(`Could not find units ${fromUnits} to convert to base.`);
     return 0;
   }
-  const baseUnits = getAllowedUnits.find(units => (units.dimension === fromUnits.dimension) && (units.toBase === 1));
+  const baseUnits = getAllowedUnits().find(units => (units.dimension === fromUnits.dimension) && (units.toBase === 1));
   if(!baseUnits){
     console.error(`Could not find base units for ${fromUnits.text}.`);
   }
@@ -150,7 +168,8 @@ export const getAllowedUnitsValues = () => {
 }
 
 export const getUnitsForContext = (context) => {
-  return getAllowedUnits().filter(unit => unit.contexts.indexOf(context) !== -1 );
+  return getAllowedUnits().filter(u => u.contexts.indexOf(context) !== -1 )
+    .map(({value, text}) => {return {value, text}});
 }
 
 export const getUnitValuesForContext = (context) => {
