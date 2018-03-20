@@ -145,7 +145,7 @@ const calcCo2eFlight = (record) => {
   const { data, startDate, endDate } = record;
 
   let distance = convertToBaseUnits(data.distance, data.units);
-  let length = 'med';
+  let length = 'medium';
   if(distance < 463) length = 'short';
   else if(distance > 1108) length = 'long';
 

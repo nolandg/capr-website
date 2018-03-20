@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Icon, Table, Accordion } from 'semantic-ui-react';
 import { ActivityRecords } from '../../modules/ActivityRecords';
 import moment from 'moment';
+import { Link } from 'react-router';
 import _ from 'lodash';
 
 /*******************************************************************************************************/
@@ -251,8 +252,10 @@ class ActivityRecordsTable extends Component {
       <Table.Row key={record._id}>
         {showActivityColumn?
           <Table.Cell>{ActivityRecords.Utils.activityValueToText(record.activity)}</Table.Cell>
-          :null
-        }
+          :null}
+        {showActivityColumn?
+          <Table.Cell>{record.user.username}</Table.Cell>
+          :null}
         <Table.Cell>
           {moment(record.startDate).format('MMM DD')} to {moment(record.endDate).format('MMM DD, YYYY')}
           &nbsp;({record.dayCount} days)
@@ -267,12 +270,15 @@ class ActivityRecordsTable extends Component {
             showDelete={true} deleteTitle={deleteTitle} deleteQuestion={deleteQuestion}
             buttonAttrs={{content: 'Edit', icon: 'pencil', color: 'blue', size: 'mini', basic: true, compact: true, }} />
         </Table.Cell>
+        {/* <Table.Cell>
+          <Link to={'/activity-records/' + record._id}>Debug</Link>
+        </Table.Cell> */}
       </Table.Row>
     );
   }
 
   renderTable = () => {
-    let { records, filterActivity, renderActivitySpecificHeaderCells, showActivityColumn } = this.props;
+    let { records, filterActivity, renderActivitySpecificHeaderCells, showActivityColumn, showUserColumn } = this.props;
 
     if(filterActivity){
       records = records.filter((r) => {return r.activity === filterActivity});
@@ -284,8 +290,10 @@ class ActivityRecordsTable extends Component {
           <Table.Row>
             {showActivityColumn?
               <Table.HeaderCell><Icon name="bath" />Activity</Table.HeaderCell>
-              :null
-            }
+              :null}
+            {showUserColumn?
+              <Table.HeaderCell><Icon name="user" />User</Table.HeaderCell>
+              :null}
             <Table.HeaderCell><Icon name="calendar" />Dates</Table.HeaderCell>
             {renderActivitySpecificHeaderCells?renderActivitySpecificHeaderCells():null}
             <Table.HeaderCell><Icon name="cloud" />Emissions (kg)</Table.HeaderCell>

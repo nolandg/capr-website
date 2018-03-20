@@ -15,7 +15,10 @@ import '../components/ActivityRecords/FlightActivityRecordEditForm.jsx';
 import '../components/ActivityRecords/PropaneActivityRecordEditForm.jsx';
 import '../components/ActivityRecords/HeatingOilActivityRecordEditForm.jsx';
 
+import '../components/ActivityRecords/ActivityRecordsSingle.jsx';
+
 // Inventories
+import '../components/Inventories/UserInventories.jsx';
 import '../components/Inventories/MyInventories.jsx';
 import '../components/Inventories/AddToInventoryForm.jsx';
 import '../components/Inventories/InventoryTimeline.jsx';

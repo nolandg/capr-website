@@ -14,8 +14,8 @@ export const ActivityRecords = createCollection({
 
 ActivityRecords.config = {};
 
-ActivityRecords.checkAccess = (currentUser, activity) => {
-  if (Users.isAdmin(currentUser) || Users.owns(currentUser, activity)) {
+ActivityRecords.checkAccess = (currentUser, document) => {
+  if (Users.isAdmin(currentUser) || Users.owns(currentUser, document)) {
     // admins can always see everything, users can always see their own records
     return true;
   }  else {

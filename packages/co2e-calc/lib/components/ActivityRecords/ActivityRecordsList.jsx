@@ -9,8 +9,8 @@ import moment from 'moment';
 class ActivityRecordsList extends Component{
 
   render() {
-    let { results, loading, count, totalCount, loadMore, networkStatus} = this.props;
-    const loadingMore = networkStatus === 2;
+    const { results, loading, count, totalCount, loadMore, networkStatus} = this.props;
+    // const hasMore = totalCount > results.length;
 
     if(loading) return <Loader />
 
@@ -18,7 +18,6 @@ class ActivityRecordsList extends Component{
       <div>Nothing to show :-(</div>
     )
 
-    const hasMore = totalCount > results.length;
 
     return (
       <div>
@@ -28,12 +27,8 @@ class ActivityRecordsList extends Component{
           deleteTitle="Confirm Delete Record"
           deleteQuestion="Are you sure you want to delete this activity record?"
           showActivityColumn={true}
+          showUserColumn={true}
         />
-
-        {hasMore ?
-          <Components.ActivityRecordsLoadMore loading={loadingMore} loadMore={loadMore} count={count} totalCount={totalCount} />
-          : null
-        }
       </div>
     );
 
@@ -57,6 +52,7 @@ const options = {
   collection: ActivityRecords,
   queryName: 'activityRecordsList',
   fragmentName: 'AcivityRecordsList',
+  limit: 1000,
 };
 
 registerComponent('ActivityRecordsList', ActivityRecordsList,
