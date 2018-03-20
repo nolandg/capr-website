@@ -31,5 +31,7 @@ import '../components/Inventories/InventoryFlight.jsx';
 import '../components/Inventories/InventoryPropane.jsx';
 import '../components/Inventories/InventoryHeatingOil.jsx';
 
+import '../components/Inventories/InventoryEditForm.jsx';
+
 // Admin
 import '../components/admin/CO2eCalcAdmin.jsx';
