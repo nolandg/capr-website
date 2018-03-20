@@ -13,6 +13,8 @@ class UserInventories extends Component {
   }
 
   incrementYear = () => {
+    if(this.state.startDate.year() >= moment().year()) return;
+
     this.setState({
       startDate: this.state.startDate.add(1, 'years'),
       endDate: this.state.endDate.add(1, 'years'),
@@ -56,7 +58,7 @@ class UserInventories extends Component {
               <Icon name='calendar' />&nbsp;{startDate.year()}
             </Menu.Item>
 
-            <Menu.Item onClick={this.incrementYear}>
+            <Menu.Item onClick={this.incrementYear} disabled={startDate.year() >= moment().year()}>
               <Icon name='chevron right' />
             </Menu.Item>
           </Menu>
