@@ -18,9 +18,8 @@ class InventoryFlight extends Component {
 
   renderEditArea = () => {
     return (
-      <Components.EditModal component={Components.FlightActivityRecordEditForm} collection={ActivityRecords}
-        title="Add a Flight"
-        buttonAttrs={{content: 'Add a Flight', icon: 'plus', color: 'blue'}} />
+      <Components.AddRecordButton component={Components.FlightActivityRecordEditForm} activity="flight"
+        title="Add a Flight" content="Add a Flight"/>
     );
   }
 

@@ -15,9 +15,8 @@ class InventoryHeatingOil extends Component {
 
   renderEditArea = () => {
     return (
-      <Components.EditModal component={Components.HeatingOilActivityRecordEditForm} collection={ActivityRecords}
-        title="Add a Heating Oil"
-        buttonAttrs={{content: 'Add heating oil', icon: 'plus', color: 'blue'}} />
+      <Components.AddRecordButton component={Components.HeatingOilActivityRecordEditForm} activity="heating-oil"
+        title="Add Heating Oil" content="Add Heating Oil"/>
     );
   }
 

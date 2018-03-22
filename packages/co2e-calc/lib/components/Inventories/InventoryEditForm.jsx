@@ -1,7 +1,7 @@
 import { Components, registerComponent, withEdit, withRemove, withCurrentUser, withNew } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Icon } from 'semantic-ui-react'
+import { Form, Icon, Divider } from 'semantic-ui-react'
 import { Inventories } from '../../modules/Inventories';
 import  { EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import moment from 'moment';
@@ -37,13 +37,21 @@ class InventoryEditForm extends EditForm {
           All of your information is strictly confidential and will not be shared with
           anyone without your explicit consent.
         </p>
+        <Divider hidden />
 
-        <FormField label={<span><Icon name="users" />How many people live in your home?</span>} name="homeOccupantCount" widthEm={9} {...fieldProps} />
+        <FormField label="How many people live in your home?" labelIcon="users" labelAs="h3"
+          name="homeOccupantCount" widthEm={9} {...fieldProps} />
+        <Divider hidden />
+
         <Form.Group width="equal">
-          <FormField label="What is the area of your home?" name="homeArea" widthEm={20} {...fieldProps} />
-          <SelectField label="Units" name="homeAreaUnits" options={areaUnits} widthEm={9} {...fieldProps} />
+          <FormField label="What is the area of your home?" labelIcon="move" labelAs="h3"
+            name="homeArea" widthEm={20} {...fieldProps} />
+          <SelectField label="Units:" labelIcon={null} labelAs="h3" name="homeAreaUnits" options={areaUnits} widthEm={9} {...fieldProps} />
         </Form.Group>
-        <FormField label="What is the postal code of your home?" name="postalCode" widthEm={9} {...fieldProps} />
+        <Divider hidden />
+
+        <FormField label="What is the postal code of your home?" labelIcon="marker" labelAs="h3"
+          name="postalCode" widthEm={9} {...fieldProps} />
 
       </Form>
     )

@@ -7,12 +7,13 @@ import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 const ColoredMenuItem = ({name, label, activeMenuItem, onClick, icon}) => {
   const isActive = activeMenuItem === name;
   const color = ActivityRecords.Utils.activityToColor(name);
+  const iconClass = ActivityRecords.Utils.activityToIconClass(name);
 
   return (
     <Menu.Item name={name} active={isActive} onClick={onClick}
       style={isActive?{borderColor: color}:null}
       >
-      <Icon className={icon} style={isActive?{color: color}:null}/>
+      <Icon className={iconClass} style={isActive?{color: color}:null}/>
       <span style={isActive?{color: color}:null}>{label}</span>
     </Menu.Item>
   );
@@ -45,12 +46,12 @@ class AddToInventoryForm extends Component {
             marginLeft: '0 !important',
             marginRight: '0 !important',
           }}>
-          <ColoredMenuItem name="vehicle" icon="car" label="Vehicles" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
-          <ColoredMenuItem name="electricity" icon="powerline" label="Electricity" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
-          <ColoredMenuItem name="natural-gas" icon="natural-gas" label="Natural Gas" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
-          <ColoredMenuItem name="flight" icon="plane" label="Flights" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
-          <ColoredMenuItem name="propane" icon="propane" label="Propane" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
-          <ColoredMenuItem name="heating-oil" icon="heating-oil" label="Heating Oil" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="vehicle" label="Vehicles" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="electricity" label="Electricity" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="natural-gas" label="Natural Gas" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="flight" label="Flights" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="propane" label="Propane" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
+          <ColoredMenuItem name="heating-oil" label="Heating Oil" onClick={this.handleMenuItemClick} activeMenuItem={activeMenuItem} />
         </Menu>
 
         <Segment attached="bottom" style={{borderColor: ActivityRecords.Utils.activityToColor(activeMenuItem)}}>

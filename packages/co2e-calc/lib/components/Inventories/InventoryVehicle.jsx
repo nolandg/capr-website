@@ -21,9 +21,8 @@ class InventoryVehicle extends Component {
 
   renderEditArea = () => {
     return (
-      <Components.EditModal component={Components.VehicleActivityRecordEditForm} collection={ActivityRecords}
-        title="Add a Vehicle"
-        buttonAttrs={{content: 'Add a Vehicle', icon: 'plus', color: 'blue'}} />
+      <Components.AddRecordButton component={Components.VehicleActivityRecordEditForm} activity="vehicle"
+        title="Add a Vehicle" content="Add a Vehicle"/>
     );
   }
 

@@ -22,6 +22,7 @@ import '../components/Inventories/UserInventories.jsx';
 import '../components/Inventories/MyInventories.jsx';
 import '../components/Inventories/AddToInventoryForm.jsx';
 import '../components/Inventories/InventoryTimeline.jsx';
+import '../components/Inventories/AddRecordButton.jsx';
 
 import '../components/Inventories/InventoryGenericActivity.jsx';
 import '../components/Inventories/InventoryElectricity.jsx';

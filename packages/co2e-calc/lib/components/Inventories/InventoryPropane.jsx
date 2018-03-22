@@ -15,9 +15,8 @@ class InventoryPropane extends Component {
 
   renderEditArea = () => {
     return (
-      <Components.EditModal component={Components.PropaneActivityRecordEditForm} collection={ActivityRecords}
-        title="Add a Propane"
-        buttonAttrs={{content: 'Add propane', icon: 'plus', color: 'blue'}} />
+      <Components.AddRecordButton component={Components.PropaneActivityRecordEditForm} activity="propane"
+        title="Add Propane" content="Add a Propane"/>
     );
   }
 

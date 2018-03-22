@@ -123,6 +123,20 @@ export const convertToBaseUnits = (value, fromUnits) => {
   return convertUnits(value, fromUnits, baseUnits);
 }
 
+export const activityToIconClass = (activity) => {
+  switch (activity) {
+    case 'vehicle': return 'car';
+    case 'electricity': return 'powerline';
+    case 'flight': return 'plane';
+    case 'heating-oil': return 'heating-oil';
+    case 'propane': return 'propane';
+    case 'natural-gas': return 'natural-gas';
+    default:
+      console.error(`Trying to return icon class for unknown activity ${activity}.`);
+      return '';
+  }
+}
+
 export const activityToColor = (activity, type) => {
   const index = getAllowedActivityValues().indexOf(activity);
 

@@ -19,9 +19,8 @@ class InventoryNaturalGas extends Component {
 
   renderEditArea = () => {
     return (
-      <Components.EditModal component={Components.NaturalGasActivityRecordEditForm} collection={ActivityRecords}
-        title="Add a Fortis BC bill"
-        buttonAttrs={{content: 'Add another Fortis BC bill', icon: 'plus', color: 'blue'}} />
+      <Components.AddRecordButton component={Components.NaturalGasActivityRecordEditForm} activity="natural-gas"
+        title="Add a Fortis BC Bill" content="Add another Fortis BC bill'"/>
     );
   }
 
