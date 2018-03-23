@@ -18,6 +18,7 @@ const getInventoriesAffectedByRecord = async (record) => {
         postalCode
         homeArea
         homeAreaUnits
+        homeAreaUnits
         homeOccupantCount
         user{
           _id
@@ -33,7 +34,7 @@ const getInventoriesAffectedByRecord = async (record) => {
 
 const getRecordsAffectingInventory = async (inventory) => {
   const terms = {
-    view: 'affectingRecord',
+    view: 'userDateRange',
     userId: inventory.user_id,
     startDate: inventory.startDate,
     endDate: inventory.endDate,
@@ -41,21 +42,31 @@ const getRecordsAffectingInventory = async (inventory) => {
 
   const query = `
     query MyQuery($terms: JSON){
-      ActivitiesRecordsList(terms: $terms){
+      ActivityRecordsList(terms: $terms){
         _id
+        activity
+        label
         startDate
         endDate
+        co2e
+        dayCount
       }
     }
   `;
+
   const results = await runQuery(query, {terms: terms});
-  return results.data.InventoriesList;
+  return results.data.ActivityRecordsList;
 }
 
-export const calcInventoryData = async (modifier, record, currentUser, collection) => {
+export const calcInventoryData = async (record) => {
   const inventories = await getInventoriesAffectedByRecord(record);
 
-  inventories.forEach(i => {
-    console.log('Returned inentory for year: ', moment(i.startDate).year());
+  inventories.forEach(async inventory => {
+    const year = moment(inventory.startDate).year();
+    const records = await getRecordsAffectingInventory(record);
+    console.log(`----------- Inventory for ${year} has ${records.length} records ------------`);
+    records.forEach(record => {
+      console.log(`     Record: ${record.activity} for ${Math.ceil(record.co2e)} kg`);
+    });
   });
 }
