@@ -5,6 +5,8 @@ import { Divider, Header, Loader, Menu, Icon, Container, Dropdown } from 'semant
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import moment from 'moment';
 import { Inventories } from '../../modules/Inventories';
+import { withRouter } from 'react-router';
+
 
 class UserInventories extends Component {
   state = {
@@ -33,8 +35,13 @@ class UserInventories extends Component {
   handleEditInventoryClick = () => {
     this.setState({inventoryEditModalOpen: true});
   }
+
   closeEditInventoryModal = () => {
     this.setState({inventoryEditModalOpen: false});
+  }
+
+  handleBackClick = () => {
+    this.props.router.transitionTo(this.props.router.createLocation('/'));
   }
 
   render(){
@@ -137,7 +144,7 @@ class UserInventories extends Component {
   }
 }
 
-registerComponent('UserInventories', UserInventories, [withList, {
+registerComponent('UserInventories', UserInventories, withRouter, [withList, {
   collection: ActivityRecords,
   queryName: 'activityRecordsList',
   fragmentName: 'AcivityRecordsList',

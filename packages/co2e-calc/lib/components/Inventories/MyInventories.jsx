@@ -1,15 +1,22 @@
 import { Components, registerComponent, withCurrentUser, withList } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Loader } from 'semantic-ui-react';
+import { Loader, Container, Divider } from 'semantic-ui-react';
 import { Inventories } from '../../modules/Inventories';
+import { Link } from 'react-router';
 
 class MyInventories extends Component {
 
   render(){
     if(this.props.currentUserLoading || this.props.loading) return (
-      <Loader />
+      <Container><Loader /></Container>
     )
+    if(!this.props.currentUser) return (
+      <Container>
+        It looks like you're not logged in.<br />
+        Go <Link to="/">back</Link> to the main page to login.
+      </Container>
+    );
 
     const inventories = this.props.results;
 

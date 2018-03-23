@@ -74,7 +74,6 @@ class InventoryTimeline extends Component {
 
     this.state = {
       ...this.massageData(records),
-      recordsHash: ActivityRecords.Utils.hashRecords(records),
       xTickValues: this.generateXTickValues(),
       responsiveContainerWorkaround: 1,
     }
@@ -87,23 +86,9 @@ class InventoryTimeline extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    const records = nextProps.activityRecords;
-    let remassageData = false;
-
-    if(!nextProps.startDate.isSame(this.props.startDate)) remassageData = true;
-    else if(nextProps.endDate.isSame(this.props.endDate)) remassageData = true;
-    else {
-      const nextRecordsHash = ActivityRecords.Utils.hashRecords(records);
-      if(this.state.recordsHash !== nextRecordsHash) remassageData = true;
-    }
-
-    if(1 || remassageData){
-      this.setState({
-        ...this.massageData(records),
-        recordsHash: ActivityRecords.Utils.hashRecords(records),
-        xTickValues: this.generateXTickValues(),
-      });
-    }
+    this.setState({
+      xTickValues: this.generateXTickValues(),
+    });
   }
 
   massageData = (records) => {
