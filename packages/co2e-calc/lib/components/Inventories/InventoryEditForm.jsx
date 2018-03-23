@@ -15,7 +15,7 @@ class InventoryEditForm extends EditForm {
     if(this.isNew()){
       _.set(this.state, 'values.startDate', moment().year(props.year).startOf('year'));
       _.set(this.state, 'values.endDate', moment().year(props.year).endOf('year'));
-      _.set(this.state, 'values.areaUnits', 'sqft');
+      _.set(this.state, 'values.homeAreaUnits', 'sqft');
     }
   }
 

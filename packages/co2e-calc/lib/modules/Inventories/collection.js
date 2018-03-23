@@ -1,5 +1,6 @@
 import schema from './schema.js';
-import { createCollection, getDefaultResolvers, getDefaultMutations } from 'meteor/vulcan:core';
+import { createCollection, getDefaultResolvers, getDefaultMutations, addCallback } from 'meteor/vulcan:core';
+import { calcInventoryData } from './utils.js';
 import Users from 'meteor/vulcan:users';
 
 export const Inventories = createCollection({
@@ -18,3 +19,5 @@ Inventories.checkAccess = (currentUser, document) => {
     return false;
   }
 }
+
+addCallback('activityrecords.edit.async', calcInventoryData);

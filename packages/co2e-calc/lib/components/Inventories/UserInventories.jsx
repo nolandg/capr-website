@@ -33,7 +33,7 @@ class UserInventories extends Component {
   handleEditInventoryClick = () => {
     this.setState({inventoryEditModalOpen: true});
   }
-  handleEditInventoryClose = () => {
+  closeEditInventoryModal = () => {
     this.setState({inventoryEditModalOpen: false});
   }
 
@@ -61,8 +61,10 @@ class UserInventories extends Component {
           open={this.state.inventoryEditModalOpen}
           document={inventory}  icon="home"
           title={`Update Your ${year} Home Info`}
-          showDelete={false}
-          onClose={this.handleEditInventoryClose}
+          showDelete={true}
+          onClose={this.closeEditInventoryModal}
+          deleteQuestion="Are you sure you want to delete information about this year's footprint?"
+          deleteTitle="Delete Footprint Info?"
         />
 
         <div  className="heading">
@@ -70,7 +72,7 @@ class UserInventories extends Component {
             <Dropdown item icon="bars">
               <Dropdown.Menu>
 
-                <Dropdown.Item onClick={this.handleEditInventoryClick}>
+                <Dropdown.Item onClick={this.handleEditInventoryClick} disabled={!inventory}>
                   <Icon name="home" />
                   Update your {year} home details
                 </Dropdown.Item>
