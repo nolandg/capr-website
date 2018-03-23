@@ -7,7 +7,6 @@ import moment from 'moment';
 import { Inventories } from '../../modules/Inventories';
 import { withRouter } from 'react-router';
 
-
 class UserInventories extends Component {
   state = {
     startDate: moment().startOf('year'),
@@ -51,10 +50,6 @@ class UserInventories extends Component {
 
     const { startDate, endDate } = this.state;
     const records = this.props.results;
-    const recordsForPeriod = records.filter((record) => {
-      return moment(record.startDate).isBetween(startDate, endDate, null, '[]') ||
-             moment(record.endDate).isBetween(startDate, endDate, null, '[]');
-    });
     const year = startDate.year();
 
     const inventory = this.props.inventories.find(i => {
@@ -112,14 +107,14 @@ class UserInventories extends Component {
 
         {inventory?
           <div>
-            <Components.InventoryTimeline activityRecords={records}
+            <Components.InventoryTimeline results={records}
               startDate={startDate} endDate={endDate} width="100%" height={200}
             />
 
             <div className="add-to-inventory-wrapper">
               <Divider hidden />
               <Header as="h2" textAlign="center">What do you want to add?</Header>
-              <Components.AddToInventoryForm activityRecords={recordsForPeriod} inventory={inventory}
+              <Components.AddToInventoryForm activityRecords={records} inventory={inventory}
                 startDate={startDate} endDate={endDate} />
             </div>
           </div>
@@ -144,8 +139,9 @@ class UserInventories extends Component {
   }
 }
 
-registerComponent('UserInventories', UserInventories, withRouter, [withList, {
+const withListOptions = {
   collection: ActivityRecords,
   queryName: 'activityRecordsList',
   fragmentName: 'AcivityRecordsList',
-}]);
+};
+registerComponent('UserInventories', UserInventories, withRouter, [withList, withListOptions]);
