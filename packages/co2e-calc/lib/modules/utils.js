@@ -1,3 +1,62 @@
+import { runQuery } from 'meteor/vulcan:core';
+
+export const getInventoriesAffectedByRecord = async (record) => {
+  const terms = {
+    view: 'userDateRange',
+    userId: record.user_id,
+    startDate: record.startDate,
+    endDate: record.endDate,
+  };
+
+  const query = `
+    query MyQuery($terms: JSON){
+      InventoriesList(terms: $terms){
+        _id
+        startDate
+        endDate
+        postalCode
+        homeArea
+        homeAreaUnits
+        homeAreaUnits
+        homeOccupantCount
+        user{
+          _id
+          username
+          displayName
+        }
+      }
+    }
+  `;
+  const results = await runQuery(query, {terms: terms});
+  return results.data.InventoriesList;
+}
+
+export const getRecordsAffectingInventory = async (inventory) => {
+  const terms = {
+    view: 'userDateRange',
+    userId: inventory.user_id,
+    startDate: inventory.startDate,
+    endDate: inventory.endDate,
+  };
+
+  const query = `
+    query MyQuery($terms: JSON){
+      ActivityRecordsList(terms: $terms){
+        _id
+        activity
+        label
+        startDate
+        endDate
+        co2e
+        dayCount
+      }
+    }
+  `;
+
+  const results = await runQuery(query, {terms: terms});
+  return results.data.ActivityRecordsList;
+}
+
 export const distanceBetweenLocationsInKm = (a, b) => {
   return distanceBetweenLatlngInKm(a.lat, a.lng, b.lat, b.lng);
 }

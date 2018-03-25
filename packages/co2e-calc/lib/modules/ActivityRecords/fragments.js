@@ -10,6 +10,11 @@ registerFragment(`
     co2e
     dayCount
     data
+    inventories
+    inventoryObjects {
+      _id
+      homeArea
+    }
     # users
     userId
     user {

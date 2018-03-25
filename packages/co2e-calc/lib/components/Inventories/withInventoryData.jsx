@@ -117,7 +117,7 @@ export default function withInventoryData(WrappedComponent) {
     }
 
     updateData = (records) => {
-      this.setState(this.getUpdatedData());
+      this.setState(this.getUpdatedData(records));
     }
 
     generateMonthlyXTickValues = () => {

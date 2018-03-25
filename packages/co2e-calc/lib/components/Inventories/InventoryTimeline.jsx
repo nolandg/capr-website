@@ -155,7 +155,7 @@ class InventoryTimeline extends Component {
             stroke="#DDD"
             strokeWidth={1}
             strokeDasharray="3 6"
-            yAxisId="emissions" // does not work
+            yAxisId="emissions" // does not work, relies instead on order that y-axes appear in this component
           />
           {this.renderReferenceLines()}
 

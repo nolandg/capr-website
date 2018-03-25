@@ -9,6 +9,7 @@ registerFragment(`
     homeArea
     homeAreaUnits
     homeOccupantCount
+    emissionRecords
     # users
     userId
     user {
@@ -16,3 +17,9 @@ registerFragment(`
     }
   }
 `);
+
+// emissionRecords {
+//   _id
+//   activity
+//   co2e
+// }

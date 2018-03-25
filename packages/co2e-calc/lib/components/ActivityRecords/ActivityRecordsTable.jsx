@@ -283,6 +283,7 @@ class ActivityRecordsTable extends Component {
     if(filterActivity){
       records = records.filter((r) => {return r.activity === filterActivity});
     }
+    if(!records || !records.length) return null;
 
     return (
       <Table celled className="activity-records-table">

@@ -113,7 +113,8 @@ class UserInventories extends Component {
 
             <div className="add-to-inventory-wrapper">
               <Divider hidden />
-              <Header as="h2" textAlign="center">What do you want to add?</Header>
+              <Header as="h1" textAlign="center">What do you want to add?</Header>
+              <Header as="h2">Inventory home area: {inventory.homeArea}</Header>
               <Components.AddToInventoryForm activityRecords={records} inventory={inventory}
                 startDate={startDate} endDate={endDate} />
             </div>

@@ -1,4 +1,5 @@
 import SimpleSchema from 'simpl-schema';
+import { getRecordsAffectingInventory } from '../utils.js';
 
 const schema = {
   _id: {
@@ -61,6 +62,25 @@ const schema = {
     type: String,
     optional: false,
     regEx: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+  },
+
+  emissionRecords: {
+    type: Array,
+    optional: true,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+    onEdit: (modifier, document, currentUser) => {
+      return getRecordsAffectingInventory({document, ...modifier.$set});
+    },
+  },
+  'emissionRecords.$': {
+    type: Object,
+    blackbox: true,
+    optional: true,
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],

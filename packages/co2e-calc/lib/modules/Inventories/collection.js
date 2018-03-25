@@ -21,9 +21,9 @@ Inventories.checkAccess = (currentUser, document) => {
 }
 
 // Overley verbose syntax because of warnings about unnamed callback functions
-function handeActivityRecordEdit(record, prevRecord, currentUser, collection, context){calcInventoryData(record, currentUser, collection, context);}
-function handeActivityRecordNew(record, currentUser, collection, context){calcInventoryData(record, currentUser, collection, context);}
-function handeActivityRecordRemove(record, currentUser, collection, context){calcInventoryData(record, currentUser, collection, context);}
-addCallback('activityrecords.edit.async', handeActivityRecordEdit);
+function handeActivityRecordEdit(modifier, record, currentUser, collection, context){return calcInventoryData(record, modifier, currentUser, collection, context);}
+function handeActivityRecordNew(record, currentUser, collection, context){return calcInventoryData(record, null, currentUser, collection, context);}
+function handeActivityRecordRemove(record, currentUser, collection, context){return calcInventoryData(record, null, currentUser, collection, context);}
+addCallback('activityrecords.edit.before', handeActivityRecordEdit);
 addCallback('activityrecords.new.async', handeActivityRecordNew);
 addCallback('activityrecords.remove.async', handeActivityRecordRemove);

@@ -33,6 +33,7 @@ export const calcTotalCo2eForEachActivityOnDate = (records, date) => {
 }
 
 export const hashRecords = (records) => {
+  if(!records || !records.length) return '';
   const string = JSON.stringify(records);
 
   let hash = 0;

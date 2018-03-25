@@ -1,6 +1,8 @@
 import { getAllowedActivityValues, getAllowedUnitsValues, getUnitValuesForContext, getFuelTypeValues, getVehicleTypeValues } from '../enumerations';
 import utils from './utils.js';
 import SimpleSchema from 'simpl-schema';
+import { getInventoriesAffectedByRecord } from '../utils.js';
+import { getCollection } from 'meteor/vulcan:core';
 
 const errorIfMissing = (name, message, context) => {
   const field = context.field(name);
@@ -130,6 +132,36 @@ const schema = {
   endDate: {
     label: 'End Date',
     type: Date,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+  },
+
+  inventories: {
+    type: Array,
+    optional: true,
+    viewableBy: ['members'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+    onEdit: async (modifier, document, currentUser) => {
+      const inventories = await getInventoriesAffectedByRecord({document, ...modifier.$set});
+      return inventories.map(inventory => inventory._id);
+    },
+    resolveAs: {
+      fieldName: 'inventoryObjects',
+      type: '[Inventory]',
+      resolver: async (record, args, context) => {
+        if(!record.inventories || !record.inventories.length) return [];
+        // const inventoryObjects = await context.Inventories.loader.loadMany(record.inventories);
+        const inventoryObjects = await context.Inventories.find({_id: {$in: record.inventories}}).fetch();
+        return inventoryObjects;
+      },
+      addOriginalField: true
+    },
+  },
+  'inventories.$': {
+    type: String,
+    optional: true,
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
