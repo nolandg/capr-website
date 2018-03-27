@@ -154,17 +154,6 @@ export const activityToColor = (activity, type) => {
   return color;
 }
 
-export const activityToIcon = (activity) => {
-  switch (activity) {
-    case 'electricity': return 'bc-hydro';
-    case 'vehicle': return 'car';
-    case 'natural-gas': return 'fortis';
-    case 'flight': return 'plane';
-    case 'propane': return 'propane';
-    default: return '';
-  }
-}
-
 export const getFuelTypeValues = () => {
   return getFuelTypes().map(fuel => fuel.value);
 }

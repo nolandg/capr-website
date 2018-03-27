@@ -49,12 +49,19 @@ class UserInventories extends Component {
     )
 
     const { startDate, endDate } = this.state;
-    const records = this.props.results;
-    const year = startDate.year();
-
     const inventory = this.props.inventories.find(i => {
       return moment(i.startDate).isSame(startDate, 'day') && moment(i.endDate).isSame(endDate, 'day');
     });
+    const records = this.props.results;
+    let recordsForPeriod = records;
+    if(inventory){
+      recordsForPeriod = records.filter((record) => {
+        return moment(record.startDate).isBetween(inventory.startDate, inventory.endDate, null, '[]') ||
+               moment(record.endDate).isBetween(inventory.startDate, inventory.endDate, null, '[]');
+      });
+    }
+    const year = startDate.year();
+
 
     return (
       <div  className="my-inventories">
@@ -107,15 +114,12 @@ class UserInventories extends Component {
 
         {inventory?
           <div>
-            <Components.InventoryTimeline results={records}
-              startDate={startDate} endDate={endDate} width="100%" height={200}
-            />
+            <Components.InventoryTimeline inventory={inventory} width="100%" height={200} />
 
             <div className="add-to-inventory-wrapper">
               <Divider hidden />
               <Header as="h1" textAlign="center">What do you want to add?</Header>
-              <Header as="h2">Inventory home area: {inventory.chartData ? inventory.chartData.debug : 'none'}</Header>
-              <Components.AddToInventoryForm activityRecords={records} inventory={inventory}
+              <Components.AddToInventoryForm activityRecords={recordsForPeriod} inventory={inventory}
                 startDate={startDate} endDate={endDate} />
             </div>
           </div>

@@ -3,43 +3,9 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, Line, ReferenceLine, Area, CartesianGrid, Label } from 'recharts';
-import { Item, Icon } from 'semantic-ui-react';
+// import { Item, Icon } from 'semantic-ui-react';
+import ChartTooltip from './ChartTooltip';
 import moment from 'moment';
-import withInventoryData from './withInventoryData.jsx';
-
-
-/**********************************************************************************/
-/* CustomTooltip
-/**********************************************************************************/
-function CustomTooltip({active, record}){
-  if(!active) return null;
-
-  if(!record) return null;
-
-  const activityText =  ActivityRecords.Utils.activityValueToText(record.activity);
-  const color = ActivityRecords.Utils.activityToColor(record.activity);
-  const startDate = moment(record.startDate).format('MMM D');
-  const endDate = moment(record.endDate).format('MMM D');
-
-  return (
-    <div className="timeline-tooltip">
-      <Item.Group>
-        <Item>
-          <Item.Content>
-            <Item.Header>
-              <Icon className={ActivityRecords.Utils.activityToIcon(record.activity)} style={{color: color}}/>
-              {activityText}
-            </Item.Header>
-            <Item.Meta><Icon name="calendar" />&nbsp;for {startDate} to {endDate}</Item.Meta>
-            <Item.Description>
-              More info here
-            </Item.Description>
-          </Item.Content>
-        </Item>
-      </Item.Group>
-    </div>
-  );
-}
 
 /**********************************************************************************/
 /* CustomActivityTick
@@ -84,7 +50,7 @@ class InventoryTimeline extends Component {
   }
 
   renderReferenceLines = () => {
-    const { activityYValues, monthlyXTickValues } = this.props.timelineData;
+    const { activityYValues, monthlyXTickValues } = this.props.inventory.chartData.timelineData;
 
     const verticalLines = monthlyXTickValues.map((x) => { return (
       <ReferenceLine key={x + '__x-reference-line'} x={x} stroke="#DDD" strokeWidth="1" strokeDasharray="3 6"/>
@@ -105,7 +71,7 @@ class InventoryTimeline extends Component {
   }
 
   renderLines = () => {
-    const { activitySeriesNames } = this.props.timelineData;
+    const { activitySeriesNames } = this.props.inventory.chartData.timelineData;
     const lines = [];
     const dot = {strokeWidth: 4, r: 8, fill: '#FFF'};
     const strokeWidth = 20;
@@ -127,7 +93,7 @@ class InventoryTimeline extends Component {
   }
 
   renderAreas = () => {
-    return this.props.timelineData.emissionsSeriesNames.map((seriesName) => {
+    return this.props.inventory.chartData.timelineData.emissionsSeriesNames.map((seriesName) => {
       const fill = ActivityRecords.Utils.activityToColor(seriesName, 'faded');
       const stroke = ActivityRecords.Utils.activityToColor(seriesName, 'faded-stroke');
 
@@ -143,9 +109,10 @@ class InventoryTimeline extends Component {
   }
 
   render(){
-    const { width, height, startDate, endDate, timelineData } = this.props;
-    const domain = [ moment(startDate).valueOf(), moment(endDate).valueOf() ];
-    const { monthlyXTickValues, data } = timelineData;
+    const { width, height, inventory } = this.props;
+    if(!inventory || !inventory.chartData || !inventory.chartData.timelineData) return null;
+    const domain = [ moment(inventory.startDate).valueOf(), moment(inventory.endDate).valueOf() ];
+    const { monthlyXTickValues, data } = inventory.chartData.timelineData;
 
     return (
       <ResponsiveContainer width={width} height={height-this.state.responsiveContainerWorkaround} debounce={0}>
@@ -196,7 +163,7 @@ class InventoryTimeline extends Component {
             width={80}
           />
 
-          <Tooltip cursor={false} active={!!this.state.activeRecord} content={<CustomTooltip record={this.state.activeRecord}/>}/>
+          <Tooltip cursor={false} active={!!this.state.activeRecord} content={<ChartTooltip record={this.state.activeRecord}/>}/>
 
           {this.renderAreas()}
           {this.renderLines()}
@@ -211,4 +178,4 @@ InventoryTimeline.defaultProps = {
   height: 200,
 }
 
-registerComponent('InventoryTimeline', InventoryTimeline, withInventoryData);
+registerComponent('InventoryTimeline', InventoryTimeline);
