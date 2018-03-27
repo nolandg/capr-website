@@ -29,7 +29,7 @@ class MyInventories extends Component {
 
 const listOptions = {
   collection: Inventories,
-  queryName: 'inventoriesList',
-  fragmentName: 'InventoriesList',
+  queryName: 'Inventory',
+  fragmentName: 'Inventory',
 };
 registerComponent('MyInventories', MyInventories, withCurrentUser, [withList, listOptions]);

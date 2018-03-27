@@ -1,7 +1,7 @@
 import { registerFragment } from 'meteor/vulcan:core';
 
 registerFragment(`
-  fragment AcivityRecordsList on ActivityRecord {
+  fragment ActivityRecord on ActivityRecord {
     _id
     activity
     label
@@ -10,10 +10,8 @@ registerFragment(`
     co2e
     dayCount
     data
-    inventories
-    inventoryObjects {
-      _id
-      homeArea
+    inventories {
+      ...Inventory
     }
     # users
     userId
@@ -22,11 +20,3 @@ registerFragment(`
     }
   }
 `);
-
-// registerFragment(`
-//   fragment ActivityRecordsPage on ActivityRecord {
-//     ...ActivityRecordsList
-//     body
-//     htmlBody
-//   }
-// `);

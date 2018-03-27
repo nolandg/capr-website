@@ -114,7 +114,7 @@ class UserInventories extends Component {
             <div className="add-to-inventory-wrapper">
               <Divider hidden />
               <Header as="h1" textAlign="center">What do you want to add?</Header>
-              <Header as="h2">Inventory home area: {inventory.homeArea}</Header>
+              <Header as="h2">Inventory home area: {inventory.chartData ? inventory.chartData.debug : 'none'}</Header>
               <Components.AddToInventoryForm activityRecords={records} inventory={inventory}
                 startDate={startDate} endDate={endDate} />
             </div>
@@ -143,6 +143,6 @@ class UserInventories extends Component {
 const withListOptions = {
   collection: ActivityRecords,
   queryName: 'activityRecordsList',
-  fragmentName: 'AcivityRecordsList',
+  fragmentName: 'ActivityRecord',
 };
 registerComponent('UserInventories', UserInventories, withRouter, [withList, withListOptions]);

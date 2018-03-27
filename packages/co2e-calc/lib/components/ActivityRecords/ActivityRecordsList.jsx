@@ -51,7 +51,7 @@ ActivityRecordsList.propTypes = {
 const options = {
   collection: ActivityRecords,
   queryName: 'activityRecordsList',
-  fragmentName: 'AcivityRecordsList',
+  fragmentName: 'ActivityRecord',
   limit: 1000,
 };
 

@@ -9,7 +9,7 @@ export const getInventoriesAffectedByRecord = async (record) => {
   };
 
   const query = `
-    query MyQuery($terms: JSON){
+    query FindInventoriesAffectedByRecord($terms: JSON){
       InventoriesList(terms: $terms){
         _id
         startDate
@@ -17,9 +17,11 @@ export const getInventoriesAffectedByRecord = async (record) => {
         postalCode
         homeArea
         homeAreaUnits
-        homeAreaUnits
         homeOccupantCount
-        user{
+        chartData
+        # users
+        userId
+        user {
           _id
           username
           displayName
@@ -29,6 +31,11 @@ export const getInventoriesAffectedByRecord = async (record) => {
   `;
   const results = await runQuery(query, {terms: terms});
   return results.data.InventoriesList;
+}
+
+export const getInventoryIdsAffectedByRecord = async (record) => {
+  const inventories = await getInventoriesAffectedByRecord(record);
+  return inventories.map(i => i._id);
 }
 
 export const getRecordsAffectingInventory = async (inventory) => {
@@ -49,6 +56,13 @@ export const getRecordsAffectingInventory = async (inventory) => {
         endDate
         co2e
         dayCount
+        # users
+        userId
+        user {
+          _id
+          username
+          displayName
+        }
       }
     }
   `;

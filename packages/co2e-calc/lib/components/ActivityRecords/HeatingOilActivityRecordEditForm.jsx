@@ -37,8 +37,8 @@ class HeatingOilActivityRecordEditForm extends EditForm {
 }
 
 registerComponent('HeatingOilActivityRecordEditForm', HeatingOilActivityRecordEditForm,
-  [withEdit, {collection: ActivityRecords, fragmentName: 'AcivityRecordsList'}],
+  [withEdit, {collection: ActivityRecords, fragmentName: 'ActivityRecord'}],
   [withRemove, {collection: ActivityRecords}],
-  [withNew, {collection: ActivityRecords, fragmentName: 'AcivityRecordsList'}],
+  [withNew, {collection: ActivityRecords, fragmentName: 'ActivityRecord'}],
   withCurrentUser
 );

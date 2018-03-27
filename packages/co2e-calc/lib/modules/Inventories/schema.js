@@ -1,6 +1,3 @@
-import SimpleSchema from 'simpl-schema';
-import { getRecordsAffectingInventory } from '../utils.js';
-
 const schema = {
   _id: {
     type: String,
@@ -67,17 +64,7 @@ const schema = {
     editableBy: ['members'],
   },
 
-  emissionRecords: {
-    type: Array,
-    optional: true,
-    viewableBy: ['members'],
-    insertableBy: ['members'],
-    editableBy: ['members'],
-    onEdit: (modifier, document, currentUser) => {
-      return getRecordsAffectingInventory({document, ...modifier.$set});
-    },
-  },
-  'emissionRecords.$': {
+  chartData: {
     type: Object,
     blackbox: true,
     optional: true,

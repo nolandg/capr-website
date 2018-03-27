@@ -73,8 +73,8 @@ class FlightActivityRecordEditForm extends EditForm {
 }
 
 registerComponent('FlightActivityRecordEditForm', FlightActivityRecordEditForm,
-  [withEdit, {collection: ActivityRecords, fragmentName: 'AcivityRecordsList'}],
+  [withEdit, {collection: ActivityRecords, fragmentName: 'ActivityRecord'}],
   [withRemove, {collection: ActivityRecords}],
-  [withNew, {collection: ActivityRecords, fragmentName: 'AcivityRecordsList'}],
+  [withNew, {collection: ActivityRecords, fragmentName: 'ActivityRecord'}],
   withCurrentUser
 );

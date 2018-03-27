@@ -1,28 +1,39 @@
 import { getCollection } from 'meteor/vulcan:core';
-// import { getInventoriesAffectedByRecord, getRecordsAffectingInventory } from '../utils.js';
-import moment from 'moment';
+import { getRecordsAffectingInventory, getInventoriesAffectedByRecord } from '../utils.js';
+import _ from 'lodash';
+// import moment from 'moment';
 
-export const calcInventoryData = async (record, modifier, currentUser, collection, context) => {
+export const updateInventoryData = async (record, modifier, currentUser, remove = false) => {
   const Inventories = getCollection('Inventories');
+  const newRecord = modifier && modifier.$set ? {...record, ...modifier.$set} : record;
+  const prevRecord = record;
+  record = undefined;
 
-  const value = Math.random();
-  // record.inventories.forEach(async (inventory, index) => {
-  //   await Inventories.update(inventory, {$set: {homeArea: value}});
-  // });
+  // Get inventories that might be affected by both the previous and new record
+  let inventories = await getInventoriesAffectedByRecord(prevRecord);
+  if(modifier && modifier.$set){
+    inventories = _.unionBy(inventories, await getInventoriesAffectedByRecord(newRecord), i => i._id);
+  }
 
-  const updateResults = await Inventories.update(record.inventories[0], {$set: {homeArea: value}});
+  for(let inventory of inventories){
+    // Assemble array of records affecting this inventory
+    const records = await getRecordsAffectingInventory(inventory);
+    // Either remove or update the this record for which the callback was called
+    records.forEach((record, index) => {
+      if(record._id === newRecord._id){
+        if(remove) records.splice(index, 1);
+        else records[index] = newRecord;
+      }
+    });
 
-  const inventoryObjects = await Inventories.loader.loadMany(record.inventories);
-  // record.inventoryObjects = inventoryObjects;
-  modifier.$set.inventoryObjects = inventoryObjects;
+    const chartData = calcChartData(inventory, records);
+    await Inventories.update(inventory._id, {$set: {chartData}});
+  }
+}
 
-  // modifier.$set.inventories = record.inventories;
-  // modifier.$set.data.energy = value * 1000;
-  // // console.log(record);
-
-  // record.inventoryObjects = [
-  //   {homeArea: value},
-  // ];
-  //
-  return modifier;
+const calcChartData = (inventory, records) => {
+  const chartData = {
+    debug: Math.random(),
+  };
+  return chartData;
 }

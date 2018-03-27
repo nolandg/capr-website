@@ -1,7 +1,7 @@
 import { registerFragment } from 'meteor/vulcan:core';
 
 registerFragment(`
-  fragment InventoriesList on Inventory {
+  fragment Inventory on Inventory {
     _id
     startDate
     endDate
@@ -9,7 +9,7 @@ registerFragment(`
     homeArea
     homeAreaUnits
     homeOccupantCount
-    emissionRecords
+    chartData
     # users
     userId
     user {
@@ -17,9 +17,3 @@ registerFragment(`
     }
   }
 `);
-
-// emissionRecords {
-//   _id
-//   activity
-//   co2e
-// }

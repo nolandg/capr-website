@@ -59,8 +59,8 @@ class InventoryEditForm extends EditForm {
 }
 
 registerComponent('InventoryEditForm', InventoryEditForm,
-  [withEdit, {collection: Inventories, fragmentName: 'InventoriesList'}],
+  [withEdit, {collection: Inventories, fragmentName: 'Inventory'}],
   [withRemove, {collection: Inventories}],
-  [withNew, {collection: Inventories, fragmentName: 'InventoriesList'}],
+  [withNew, {collection: Inventories, fragmentName: 'Inventory'}],
   withCurrentUser
 );

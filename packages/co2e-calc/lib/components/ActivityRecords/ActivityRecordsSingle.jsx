@@ -31,7 +31,7 @@ const ActivityRecordsSingleWrapped = (props, context) => {
 const documentOptions = {
   collection: ActivityRecords,
   queryName: 'activityRecordsList',
-  fragmentName: 'AcivityRecordsList',
+  fragmentName: 'ActivityRecord',
 }
 registerComponent('ActivityRecordsSingleWrapped', ActivityRecordsSingleWrapped, [withDocument, documentOptions]);
 
