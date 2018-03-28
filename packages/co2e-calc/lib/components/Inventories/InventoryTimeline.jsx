@@ -26,27 +26,19 @@ function CustomActivityTick(props){
 /* InventoryTimeline
 /**********************************************************************************/
 class InventoryTimeline extends Component {
-  state = {
-    activeRecord: null,
-  }
-
-  cachedMassagedData = {
-    data: null,
-    recordsJson: null,
-  }
-
   constructor(props) {
     super(props);
 
     this.state = {
       responsiveContainerWorkaround: 1,
+      activeRecord: null,
     }
   }
 
   componentDidMount = () => {
     setTimeout(() => {
       this.setState({responsiveContainerWorkaround: 0});
-    }, 3000);
+    }, 2000);
   }
 
   renderReferenceLines = () => {

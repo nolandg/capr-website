@@ -21,14 +21,14 @@ function CustomizedLabel({viewBox, percent}){
 class ActivityCompletion extends Component {
 
   getPercent = (records) => {
+    const inventory = this.props.inventory;
     let days = [];
 
     records.forEach((record) => {
-      // get a list of all the days in this record that fall within the period this ActivityCompletion
-      // component has been passed
+      // get a list of all the days in this record that fall within the inventory period
       const newDays = this.getListOfDays(
-        moment.max(record.startDate, this.props.startDate),
-        moment.min(record.endDate, this.props.endDate)
+        moment.max(record.startDate, moment(inventory.startDate)),
+        moment.min(record.endDate, moment(inventory.endDate))
       );
       days = [...new Set([...days,...newDays])];
     });

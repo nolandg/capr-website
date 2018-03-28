@@ -13,6 +13,7 @@ class AddRecordButton extends Component {
       <Components.EditModal component={component} collection={ActivityRecords} {...rest}
         title={title} icon={icon} color={color}
         style={{backgroundColor: color, color: '#FFF'}}
+        inventory={this.props.inventory}
         buttonAttrs={{content: content, icon: 'plus', style: {backgroundColor: color, color: '#FFF'}}} />
     )
   }

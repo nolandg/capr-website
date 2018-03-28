@@ -1,4 +1,9 @@
 import { runQuery } from 'meteor/vulcan:core';
+import moment from 'moment';
+
+export const getMidpointMoment = (startDate, endDate) => {
+  return moment(startDate).month(Math.floor((moment(startDate).month() + moment(endDate).month())/2))
+}
 
 export const getInventoriesAffectedByRecord = async (record) => {
   const terms = {

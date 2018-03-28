@@ -18,21 +18,17 @@ export const updateInventoryData = async (record, modifier, currentUser, remove 
   for(let inventory of inventories){
     // Assemble array of records affecting this inventory
     let records = await getRecordsAffectingInventory(inventory);
-    // Either remove or update the this record for which the callback was called
     records.forEach((record, index) => {
       if(record._id === newRecord._id){
-        if(remove) records.splice(index, 1);
-        else records[index] = newRecord;
+        if(remove){
+          records.splice(index, 1);
+        }
       }
     });
-    // Add this record if it affects this inventory
-    if(!remove && (moment(newRecord.startDate).isBetween(inventory.startDate, inventory.endDate, null, '[]') ||
-        moment(newRecord.endDate).isBetween(inventory.startDate, inventory.endDate, null, '[]'))){
-      records = _.unionBy(records, [newRecord], i => i._id);
-    }
 
     const chartData = calcChartData(inventory, records);
-    await Inventories.update(inventory._id, {$set: {chartData}});
+    await Inventories.update(inventory._id, {$set: {chartData, homeArea: Math.random()}});
+    console.log('From utils--data: ', chartData.timelineData.data);
   }
 }
 

@@ -2,11 +2,10 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Divider, Grid} from 'semantic-ui-react';
-import { ActivityRecords } from '../../modules/ActivityRecords';
 
 class InventoryGenericActivity extends Component {
   render(){
-    const { intro, editArea, startDate, endDate, recordsTableComponent, activityRecords, activity } = this.props;
+    const { intro, editArea, recordsTableComponent, activityRecords, activity, inventory } = this.props;
     const RecordsTableComponent = recordsTableComponent;
 
     return (
@@ -20,7 +19,7 @@ class InventoryGenericActivity extends Component {
           </Grid.Column>
 
           <Grid.Column width={8}>
-            <Components.ActivityCompletion activityRecords={activityRecords} activity={activity} startDate={startDate} endDate={endDate} />
+            <Components.ActivityCompletion activityRecords={activityRecords} activity={activity} inventory={inventory} />
           </Grid.Column>
 
         </Grid>

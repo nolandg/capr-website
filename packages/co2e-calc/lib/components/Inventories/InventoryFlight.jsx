@@ -1,7 +1,6 @@
 import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { ActivityRecords } from '../../modules/ActivityRecords';
 
 class InventoryFlight extends Component {
 
@@ -19,7 +18,7 @@ class InventoryFlight extends Component {
   renderEditArea = () => {
     return (
       <Components.AddRecordButton component={Components.FlightActivityRecordEditForm} activity="flight"
-        title="Add a Flight" content="Add a Flight"/>
+        title="Add a Flight" content="Add a Flight" inventory={this.props.inventory}/>
     );
   }
 

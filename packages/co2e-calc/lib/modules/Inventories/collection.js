@@ -24,6 +24,6 @@ Inventories.checkAccess = (currentUser, document) => {
 async function handeActivityRecordEdit(modifier, record, currentUser){await updateInventoryData(record, modifier, currentUser); return modifier;}
 async function handeActivityRecordNew(record, currentUser){await updateInventoryData(record, null, currentUser); return record;}
 async function handeActivityRecordRemove(record, currentUser){await updateInventoryData(record, null, currentUser, true); return record;}
-addCallback('activityrecords.edit.before', handeActivityRecordEdit);
-addCallback('activityrecords.new.before', handeActivityRecordNew);
+addCallback('activityrecords.edit.after', handeActivityRecordEdit);
+addCallback('activityrecords.new.after', handeActivityRecordNew);
 addCallback('activityrecords.remove.before', handeActivityRecordRemove);
