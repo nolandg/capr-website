@@ -6,6 +6,7 @@ import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
 import { distanceBetweenLocationsInKm } from '../../modules/utils.js';
+import { getMidpointMoment } from '../../modules/utils.js';
 
 class FlightActivityRecordEditForm extends EditForm {
   constructor(props) {
@@ -43,13 +44,14 @@ class FlightActivityRecordEditForm extends EditForm {
     const { values, errors } = this.state;
     const { data } = values;
     const fieldProps = { values, errors, onChange: this.handleChange };
-
+    const { inventory } = this.props;
+    const initialMonth = inventory?getMidpointMoment(inventory.startDate, inventory.endDate):null;
 
     return (
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
 
-        <DateRangeField label="When did you fly?" startName="startDate" endName="endDate" {...fieldProps}
+        <DateRangeField label="When did you fly?" startName="startDate" endName="endDate" initialMonth={initialMonth} {...fieldProps}
           description="This can be very approximate, don't try to remember exact dates!"/>
 
         <CheckboxField type="radio" toggle label="This was a round-trip flight"

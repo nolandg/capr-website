@@ -23,7 +23,7 @@ Inventories.checkAccess = (currentUser, document) => {
 // Overley verbose syntax because of warnings about unnamed callback functions
 async function handeActivityRecordEdit(modifier, record, currentUser){await updateInventoryData(record, modifier, currentUser); return modifier;}
 async function handeActivityRecordNew(record, currentUser){await updateInventoryData(record, null, currentUser); return record;}
-async function handeActivityRecordRemove(record, currentUser){await updateInventoryData(record, null, currentUser, true); return record;}
+async function handeActivityRecordRemove(record, currentUser){await updateInventoryData(record, null, currentUser, true);}
 addCallback('activityrecords.edit.after', handeActivityRecordEdit);
 addCallback('activityrecords.new.after', handeActivityRecordNew);
 addCallback('activityrecords.remove.before', handeActivityRecordRemove);

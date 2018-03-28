@@ -148,6 +148,9 @@ const schema = {
     onInsert: async (document, currentUser) => {
       return await getInventoryIdsAffectedByRecord(document);
     },
+    onRemove: async (document, currentUser) => {
+      return await getInventoryIdsAffectedByRecord(document);
+    },
     resolveAs: {
       fieldName: 'inventories',
       type: '[Inventory]',

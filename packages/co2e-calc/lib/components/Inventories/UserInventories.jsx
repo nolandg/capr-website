@@ -62,12 +62,8 @@ class UserInventories extends Component {
     }
     const year = startDate.year();
 
-    console.log('From user inventories--data: ', inventory.chartData.timelineData.data);
-
-
     return (
       <div  className="my-inventories">
-        <Header as="h3">Home Area: {inventory.homeArea}</Header>
         <Components.EditModal component={Components.InventoryEditForm} collection={Inventories}
           trigger={null}
           open={this.state.inventoryEditModalOpen}
@@ -117,13 +113,17 @@ class UserInventories extends Component {
 
         {inventory?
           <div>
-            <Components.InventoryTimeline inventory={inventory} width="100%" height={200} />
+            <Components.ActivityTimeline inventory={inventory} width="100%" height={200} />
 
             <div className="add-to-inventory-wrapper">
               <Divider hidden />
               <Header as="h1" textAlign="center">What do you want to add?</Header>
               <Components.AddToInventoryForm activityRecords={recordsForPeriod} inventory={inventory} />
             </div>
+
+            <Divider hidden />
+            <Header as="h1" textAlign="center">Your Results</Header>
+            <Components.EmissionsTimeline inventory={inventory} width="100%" height={500} />
           </div>
         :
           <Container textAlign="center">
@@ -136,6 +136,7 @@ class UserInventories extends Component {
               title={`Update Your ${year} Home Details`}
               showDelete={false}
               buttonAttrs={{content: `Start Your ${year} Footprint`, icon: 'plus', color: 'green', size: 'massive' }} />
+
           </Container>
         }
 

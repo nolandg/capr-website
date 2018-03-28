@@ -150,6 +150,7 @@ export const activityToColor = (activity, type) => {
   if(type === 'active') return colors(color).lighten(.2).rgb().string();
   if(type === 'faded') return colors(color).fade(.5).rgb().string();
   if(type === 'faded-stroke') return colors(color).fade(.4).rgb().string();
+  if(type === 'stroke') return colors(color).darken(.4).rgb().string();
 
   return color;
 }

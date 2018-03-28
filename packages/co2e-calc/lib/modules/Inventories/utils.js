@@ -27,8 +27,7 @@ export const updateInventoryData = async (record, modifier, currentUser, remove 
     });
 
     const chartData = calcChartData(inventory, records);
-    await Inventories.update(inventory._id, {$set: {chartData, homeArea: Math.random()}});
-    console.log('From utils--data: ', chartData.timelineData.data);
+    await Inventories.update(inventory._id, {$set: {chartData}});
   }
 }
 
@@ -36,6 +35,7 @@ const calcChartData = (inventory, records) => {
   const chartData = {
     debug: Math.random(),
     timelineData: massageTimelineData(inventory, records),
+    totals: massageTotals(inventory, records),
   };
   return chartData;
 }
@@ -48,19 +48,49 @@ const findRecordsIncludingDate = (date, records) => {
 
 const calcTotalCo2eForEachActivityOnDate = (records, date) => {
   const simultaneousRecords = findRecordsIncludingDate(date, records);
-  const co2eTotals = {};
+  const activityTotals = {};
+  const activityPercents = {};
+  let allActivities = 0
 
   simultaneousRecords.forEach((record) => {
     const co2ePerDay = record.co2e/record.dayCount;
 
     // Add a new entry to data point if needed
-    if(!co2eTotals[record.activity]) co2eTotals[record.activity] = 0;
+    if(!activityTotals[record.activity]) activityTotals[record.activity] = 0;
 
     // Add to total emissions for this activity on this date
-    co2eTotals[record.activity] += co2ePerDay;
+    activityTotals[record.activity] += co2ePerDay;
+
+    // Add to total for all activities
+    allActivities += co2ePerDay;
   });
 
-  return co2eTotals;
+  for(const key in activityTotals){
+    activityPercents[key] = activityTotals[key] / allActivities * 100;
+  }
+
+  return {activityTotals, allActivities, activityPercents };
+}
+
+const massageTotals = (inventory, records) => {
+  let seriesNames = [];
+  const activityTotals = {};
+  const activityPercents = {};
+  let total = 0;
+
+  records.forEach((record) => {
+    const activity = record.activity;
+    seriesNames = _.union(seriesNames, [activity]);
+    if(!activityTotals[activity]) activityTotals[activity] = 0;
+    activityTotals[activity] += record.co2e;
+    total += record.co2e;
+  });
+
+  for(const key in activityTotals){
+    activityPercents[key] = activityTotals[key]/total*100;
+  }
+
+  return {seriesNames, activityTotals, activityPercents, total};
 }
 
 const massageTimelineData = (inventory, records) => {
@@ -118,8 +148,8 @@ const massageTimelineData = (inventory, records) => {
   // Add extra dates before and after each start and end date of these records
   // Emissions will also be calculated on these dates to smooth the interpolation
   dates.forEach((date) => {
-    dates.push(moment(date).subtract(5, 'days').toISOString())
-    dates.push(moment(date).add(5, 'days').toISOString());
+    dates.push(moment(date).subtract(1, 'days').toISOString())
+    dates.push(moment(date).add(1, 'days').toISOString());
   });
 
   // Sort all the start and end dates for all records from earliest to latest
@@ -131,20 +161,22 @@ const massageTimelineData = (inventory, records) => {
 
   // Create a stacked area data point for each date
   // 'date' is the x value
+  const dailyTotals = {}; // track daily totals for each day
   dates.forEach((date) => {
-    const co2eTotals = calcTotalCo2eForEachActivityOnDate(records, date);
+    const thisDayTotals = calcTotalCo2eForEachActivityOnDate(records, date);
+    dailyTotals[moment(date).valueOf()] = thisDayTotals;
 
     data.push({
       date: moment(date).valueOf(),
-      ...co2eTotals,
+      ...thisDayTotals.activityTotals,
     });
 
     // Track all the series names created so we can make areas for them later
-    emissionsSeriesNames = [...new Set([...emissionsSeriesNames, ...Object.keys(co2eTotals)])];
+    emissionsSeriesNames = [...new Set([...emissionsSeriesNames, ...Object.keys(thisDayTotals.activityTotals)])];
   });
 
   return {
-    data, activitySeriesNames, emissionsSeriesNames, activityYValues,
+    data, activitySeriesNames, emissionsSeriesNames, activityYValues, dailyTotals,
     monthlyXTickValues: generateMonthlyXTickValues(inventory, records),
   };
 }

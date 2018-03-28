@@ -21,7 +21,8 @@ import '../components/ActivityRecords/ActivityRecordsSingle.jsx';
 import '../components/Inventories/UserInventories.jsx';
 import '../components/Inventories/MyInventories.jsx';
 import '../components/Inventories/AddToInventoryForm.jsx';
-import '../components/Inventories/InventoryTimeline.jsx';
+import '../components/Inventories/EmissionsTimeline.jsx';
+import '../components/Inventories/ActivityTimeline.jsx';
 import '../components/Inventories/AddRecordButton.jsx';
 
 import '../components/Inventories/InventoryGenericActivity.jsx';

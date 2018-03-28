@@ -22,7 +22,7 @@ class ElectricityActivityRecordEditForm extends EditForm {
     const { values, errors } = this.state;
     const fieldProps = { values, errors, onChange: this.handleChange };
     const { inventory } = this.props;
-    const initialMonth = inventory?getMidpointMoment(inventory.startDate, inventory.endDate):moment();
+    const initialMonth = inventory?getMidpointMoment(inventory.startDate, inventory.endDate):null;
 
     const helpItems = [
       {

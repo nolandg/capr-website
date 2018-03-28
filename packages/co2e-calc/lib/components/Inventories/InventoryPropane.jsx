@@ -1,7 +1,6 @@
 import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { ActivityRecords } from '../../modules/ActivityRecords';
 
 class InventoryPropane extends Component {
 
@@ -16,7 +15,7 @@ class InventoryPropane extends Component {
   renderEditArea = () => {
     return (
       <Components.AddRecordButton component={Components.PropaneActivityRecordEditForm} activity="propane"
-        title="Add Propane" content="Add a Propane"/>
+        title="Add Propane" content="Add a Propane" inventory={this.props.inventory}/>
     );
   }
 

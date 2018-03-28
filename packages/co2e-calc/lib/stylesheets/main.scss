@@ -25,13 +25,24 @@
   }
 }
 
-.timeline-tooltip{
-  width: 200px;
-  background: rgba(255, 255, 255, 0.7);
+.custom-tooltip{
+  width: 300px;
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, .2);
   box-shadow: 0 1px 3px rgba(0,0,0,.2);
   padding: 1em;
+  z-index: 100;
+  visibility: visible;
+
+  .labeled-value{
+    .ui.label{
+      min-width: 12em;
+      margin: 10px 10px 0 0;
+      display: inline-flex;
+      justify-content: space-between;
+    }
+  }
 }
 
 .my-inventories{

@@ -31,5 +31,6 @@ const listOptions = {
   collection: Inventories,
   queryName: 'Inventory',
   fragmentName: 'Inventory',
+  pollInterval: 5000,
 };
 registerComponent('MyInventories', MyInventories, withCurrentUser, [withList, listOptions]);

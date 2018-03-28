@@ -5,6 +5,7 @@ import { Form } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
+import { getMidpointMoment } from '../../modules/utils.js';
 
 class HeatingOilActivityRecordEditForm extends EditForm {
   constructor(props) {
@@ -20,6 +21,8 @@ class HeatingOilActivityRecordEditForm extends EditForm {
     const { values, errors } = this.state;
     const fieldProps = { values, errors, onChange: this.handleChange };
     const units = ActivityRecords.Utils.getUnitsForContext('heating-oil');
+    const { inventory } = this.props;
+    const initialMonth = inventory?getMidpointMoment(inventory.startDate, inventory.endDate):null;
 
     return (
       <Form error={!!this.state.errors}>

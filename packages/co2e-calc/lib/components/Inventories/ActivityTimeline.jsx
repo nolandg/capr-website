@@ -2,9 +2,8 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
-import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Tooltip, Line, ReferenceLine, Area, CartesianGrid, Label } from 'recharts';
-// import { Item, Icon } from 'semantic-ui-react';
-import ChartTooltip from './ChartTooltip';
+import { ResponsiveContainer, ComposedChart, XAxis, YAxis, Line, ReferenceLine, Tooltip } from 'recharts';
+import { RecordTooltip } from './Tooltips';
 import moment from 'moment';
 
 /**********************************************************************************/
@@ -25,7 +24,7 @@ function CustomActivityTick(props){
 /**********************************************************************************/
 /* InventoryTimeline
 /**********************************************************************************/
-class InventoryTimeline extends Component {
+class ActivityTimeline extends Component {
   constructor(props) {
     super(props);
 
@@ -38,7 +37,7 @@ class InventoryTimeline extends Component {
   componentDidMount = () => {
     setTimeout(() => {
       this.setState({responsiveContainerWorkaround: 0});
-    }, 2000);
+    }, 3000);
   }
 
   renderReferenceLines = () => {
@@ -84,24 +83,9 @@ class InventoryTimeline extends Component {
     return lines;
   }
 
-  renderAreas = () => {
-    return this.props.inventory.chartData.timelineData.emissionsSeriesNames.map((seriesName) => {
-      const fill = ActivityRecords.Utils.activityToColor(seriesName, 'faded');
-      const stroke = ActivityRecords.Utils.activityToColor(seriesName, 'faded-stroke');
-
-      return (
-        <Area dataKey={seriesName} stackId="1" yAxisId="emissions" type="monotone" key={seriesName}
-          activeDot={false}
-          stroke={stroke} strokeWidth="0"
-          fill={fill}
-          connectNulls={true}
-        />
-      );
-    });
-  }
-
   render(){
     const { width, height, inventory } = this.props;
+    const { activeRecord } = this.state;
     if(!inventory || !inventory.chartData || !inventory.chartData.timelineData) return null;
     const domain = [ moment(inventory.startDate).valueOf(), moment(inventory.endDate).valueOf() ];
     const { monthlyXTickValues, data } = inventory.chartData.timelineData;
@@ -109,13 +93,6 @@ class InventoryTimeline extends Component {
     return (
       <ResponsiveContainer width={width} height={height-this.state.responsiveContainerWorkaround} debounce={0}>
         <ComposedChart data={data} margin={{ top: 5, right: 10, left: 20, bottom: 5 }}>
-          <CartesianGrid
-            vertical={false}
-            stroke="#DDD"
-            strokeWidth={1}
-            strokeDasharray="3 6"
-            yAxisId="emissions" // does not work, relies instead on order that y-axes appear in this component
-          />
           {this.renderReferenceLines()}
 
           <XAxis
@@ -132,19 +109,6 @@ class InventoryTimeline extends Component {
           />
 
           <YAxis
-            type="number"
-            yAxisId="emissions"
-            orientation="right"
-            axisLine={{strokeWidth: 1, stroke: '#DDD'}}
-            tickLine={{strokeWidth: 1, stroke: '#DDD'}}
-            tick={{fill: '#888'}}
-          >
-            <Label angle={270} position='insideLeft' fill="#888" style={{ textAnchor: 'middle' }} offset={60}>
-              Emissions kg/day
-            </Label>
-          </YAxis>
-
-          <YAxis
             type="category"
             padding={{ top: 20, bottom: 20 }}
             scale="point" // workaround for vertical offset from lines
@@ -155,19 +119,19 @@ class InventoryTimeline extends Component {
             width={80}
           />
 
-          <Tooltip cursor={false} active={!!this.state.activeRecord} content={<ChartTooltip record={this.state.activeRecord}/>}/>
 
-          {this.renderAreas()}
           {this.renderLines()}
+
+          <Tooltip cursor={false} content={<RecordTooltip record={activeRecord} />}/>
         </ComposedChart>
       </ResponsiveContainer>
     )
   }
 }
 
-InventoryTimeline.defaultProps = {
+ActivityTimeline.defaultProps = {
   width: '100%',
   height: 200,
 }
 
-registerComponent('InventoryTimeline', InventoryTimeline);
+registerComponent('ActivityTimeline', ActivityTimeline);

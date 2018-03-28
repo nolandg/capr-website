@@ -5,6 +5,7 @@ import { Form, Header, Icon, Divider } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
+import { getMidpointMoment } from '../../modules/utils.js';
 
 /*************************************************************************************************/
 /* VehicleActivityRecordEditForm
@@ -29,6 +30,8 @@ class VehicleActivityRecordEditForm extends EditForm {
     const { FormField, CheckboxField, SelectField, DateRangeField } = Components;
     const fieldProps = { values, errors, onChange: this.handleChange };
     const vehicleTypes = ActivityRecords.Utils.getVehicleTypeOptions();
+    const { inventory } = this.props;
+    const initialMonth = inventory?getMidpointMoment(inventory.startDate, inventory.endDate):null;
 
     let dataHeader = 'Information';
     if(data.type === 'fuel-volume') dataHeader = 'Fuel Consumed';
@@ -69,7 +72,7 @@ class VehicleActivityRecordEditForm extends EditForm {
           <Icon name="calendar" />
           <Header.Content>For What Period is this Information For?</Header.Content>
         </Header>
-        <DateRangeField label="" startName="startDate" endName="endDate" {...fieldProps} />
+        <DateRangeField label="" startName="startDate" endName="endDate" initialMonth={initialMonth} {...fieldProps} />
 
         {data.type ?
           <Divider hidden />

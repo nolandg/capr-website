@@ -5,6 +5,7 @@ import { Form } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
+import { getMidpointMoment } from '../../modules/utils.js';
 
 class NaturalGasActivityRecordEditForm extends EditForm {
   constructor(props) {
@@ -19,6 +20,8 @@ class NaturalGasActivityRecordEditForm extends EditForm {
     const { FormField, DateRangeField } = Components;
     const { values, errors } = this.state;
     const fieldProps = { values, errors, onChange: this.handleChange };
+    const { inventory } = this.props;
+    const initialMonth = inventory?getMidpointMoment(inventory.startDate, inventory.endDate):null;
 
     const helpItems = [
       {
@@ -49,7 +52,7 @@ class NaturalGasActivityRecordEditForm extends EditForm {
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
 
-        <DateRangeField label="For what period is this bill for?" startName="startDate" endName="endDate" {...fieldProps} />
+        <DateRangeField label="For what period is this bill for?" startName="startDate" endName="endDate" initialMonth={initialMonth} {...fieldProps} />
 
         <FormField label="How many gigajoules are on this bill?" name="data.energy" widthEm={9} {...fieldProps} />
 
