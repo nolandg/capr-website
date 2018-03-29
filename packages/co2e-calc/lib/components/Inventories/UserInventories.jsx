@@ -121,9 +121,22 @@ class UserInventories extends Component {
               <Components.AddToInventoryForm activityRecords={recordsForPeriod} inventory={inventory} />
             </div>
 
-            <Divider hidden />
-            <Header as="h1" textAlign="center">Your Results</Header>
-            <Components.EmissionsTimeline inventory={inventory} width="100%" height={500} />
+            {inventory.chartData && inventory.chartData.totals.total?
+              <div>
+                <Divider />
+                <Header as="h1" textAlign="center">Your Results</Header>
+                <Divider hidden />
+                <Components.InventoryResults inventory={inventory} />
+                <Divider hidden />
+
+                <Container text>
+                  <Header as="h1" textAlign="center">What You Can Do!</Header>
+                  <Divider hidden />
+                  <Components.WhatYouCanDo inventory={inventory} />
+                </Container>
+              </div>
+            :null}
+
           </div>
         :
           <Container textAlign="center">

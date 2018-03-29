@@ -1,7 +1,7 @@
 import { Components, registerComponent, withCurrentUser, withList } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Loader, Container, Divider } from 'semantic-ui-react';
+import { Loader, Container } from 'semantic-ui-react';
 import { Inventories } from '../../modules/Inventories';
 import { Link } from 'react-router';
 

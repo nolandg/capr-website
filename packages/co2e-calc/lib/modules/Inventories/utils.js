@@ -78,6 +78,7 @@ const massageTotals = (inventory, records) => {
   let seriesNames = [];
   const activityTotals = {};
   const activityPercents = {};
+  const data = [];
   let total = 0;
 
   records.forEach((record) => {
@@ -108,9 +109,10 @@ const massageTotals = (inventory, records) => {
 
   for(const key in activityTotals){
     activityPercents[key] = activityTotals[key]/total*100;
+    data.push({name: key, value: activityTotals[key], percent: activityPercents[key]});
   }
 
-  return {seriesNames, activityTotals, activityPercents, total};
+  return {seriesNames, activityTotals, activityPercents, total, data};
 }
 
 const massageTimelineData = (inventory, records) => {

@@ -18,6 +18,8 @@ Package.onUse(function (api) {
     'lib/assets/images/bc-hydro-bill.png',
     'lib/assets/images/bc-hydro-bill-kwh.png',
     'lib/assets/images/bc-hydro-bill-dates.png',
+    'lib/assets/images/offsets.png',
+    'lib/assets/images/logo.png',
   ], ['client']);
 
   api.addAssets([

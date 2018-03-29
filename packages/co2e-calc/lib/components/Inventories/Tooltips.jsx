@@ -2,7 +2,7 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
-import { Item, Icon, Label } from 'semantic-ui-react';
+import { Item, Icon, Label, Statistic } from 'semantic-ui-react';
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -10,6 +10,47 @@ function LabeledValue({content, icon, value}){
   return (
     <div className="labeled-value">
       <Label icon={icon} content={content} size="large" pointing="right"/>{value}
+    </div>
+  );
+}
+
+/******************************************************************************************************/
+/* Activity Pie Tooltip
+/******************************************************************************************************/
+export function ActivityPieTooltip({dataPoint, inventory}){
+  if(dataPoint === null) return null;
+
+  const activity = dataPoint.name;
+  const activityText =  ActivityRecords.Utils.activityValueToText(activity);
+  const color = ActivityRecords.Utils.activityToColor(activity);
+  const iconClass = ActivityRecords.Utils.activityToIconClass(activity);
+  const value = Math.round(dataPoint.value);
+  const percent = Math.round(dataPoint.percent);
+  const year = moment(inventory.startDate).year();
+
+  return (
+    <div className="custom-tooltip activity-pie">
+      <Item.Group>
+        <Item>
+          <Item.Content>
+            <Item.Header>
+              <Icon className={iconClass} style={{color: color}}/>{activityText}
+            </Item.Header>
+            <Item.Meta>For your {year} footprint</Item.Meta>
+            <Item.Description style={{textAlign: 'center'}}>
+              <Statistic size="small">
+                <Statistic.Value>{percent} <Icon name="percent" /></Statistic.Value>
+                <Statistic.Label>of {year} emissions</Statistic.Label>
+              </Statistic>
+              <br />
+              <Statistic>
+                <Statistic.Value>{value} <Icon name="cloud" /></Statistic.Value>
+                <Statistic.Label>kg of CO<sub>2</sub>e</Statistic.Label>
+              </Statistic>
+            </Item.Description>
+          </Item.Content>
+        </Item>
+      </Item.Group>
     </div>
   );
 }

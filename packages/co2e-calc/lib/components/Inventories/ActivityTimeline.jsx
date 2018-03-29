@@ -92,7 +92,7 @@ class ActivityTimeline extends Component {
 
     return (
       <ResponsiveContainer width={width} height={height-this.state.responsiveContainerWorkaround} debounce={0}>
-        <ComposedChart data={data} margin={{ top: 5, right: 10, left: 20, bottom: 5 }}>
+        <ComposedChart data={data} margin={{ top: 5, right: 5, left: 20, bottom: 5 }}>
           {this.renderReferenceLines()}
 
           <XAxis
