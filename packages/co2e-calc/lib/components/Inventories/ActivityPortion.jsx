@@ -5,7 +5,7 @@ import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { ActivityPieTooltip } from './Tooltips';
 
-class InventoryPieChart extends Component {
+class ActivityPortion extends Component {
   constructor(props) {
     super(props);
 
@@ -74,9 +74,9 @@ class InventoryPieChart extends Component {
   }
 }
 
-InventoryPieChart.defaultProps = {
+ActivityPortion.defaultProps = {
   width: '100%',
   height: 500,
 }
 
-registerComponent('InventoryPieChart', InventoryPieChart);
+registerComponent('ActivityPortion', ActivityPortion);

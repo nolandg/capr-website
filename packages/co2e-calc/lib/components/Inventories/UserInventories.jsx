@@ -46,7 +46,7 @@ class UserInventories extends Component {
   render(){
     if(this.props.loading) return (
       <Loader />
-    )
+    );
 
     const { startDate, endDate } = this.state;
     const inventory = this.props.inventories.find(i => {

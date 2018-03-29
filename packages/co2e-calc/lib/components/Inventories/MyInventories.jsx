@@ -1,20 +1,30 @@
 import { Components, registerComponent, withCurrentUser, withList } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Loader, Container } from 'semantic-ui-react';
+import { Loader, Container, Divider, Dimmer } from 'semantic-ui-react';
 import { Inventories } from '../../modules/Inventories';
 import { Link } from 'react-router';
 
 class MyInventories extends Component {
+  state = { initialDelay: true }
+
+  componentDidMount = () => {
+    setTimeout(() => this.setState({initialDelay: false}), 3000);
+  }
 
   render(){
-    if(this.props.currentUserLoading || this.props.loading) return (
-      <Container><Loader /></Container>
-    )
+    if(this.props.currentUserLoading || this.props.loading || this.state.initialDelay) return (
+      <Dimmer active style={{height: '100vh'}}>
+        <Loader content="Loading..." size="massive"/>
+      </Dimmer>
+    );
+
     if(!this.props.currentUser) return (
-      <Container>
+      <Container textAlign="center">
+        <Divider hidden />
         It looks like you're not logged in.<br />
         Go <Link to="/">back</Link> to the main page to login.
+        <Divider hidden />
       </Container>
     );
 
