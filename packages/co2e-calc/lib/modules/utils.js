@@ -61,6 +61,7 @@ export const getRecordsAffectingInventory = async (inventory) => {
         endDate
         co2e
         dayCount
+        data
         # users
         userId
         user {

@@ -54,8 +54,7 @@ class EmissionsTimeline extends Component {
       <ResponsiveContainer width={width} height={height-this.state.responsiveContainerWorkaround} debounce={0}>
         <ComposedChart data={data} margin={{ top: 5, right: 10, left: 20, bottom: 5 }}>
           <CartesianGrid
-            vertical={false}
-            stroke="#DDD"
+            stroke="#AAA"
             strokeWidth={1}
             strokeDasharray="3 6"
           />
@@ -67,7 +66,7 @@ class EmissionsTimeline extends Component {
             ticks={monthlyXTickValues}
             domain={domain}
             tickFormatter={t => moment(t).format('MMM')}
-            padding={{ left: 10, right: 0 }}
+            padding={{ left: 0, right: 0 }}
             axisLine={false}
             tickLine={false}
             allowDataOverflow={true}

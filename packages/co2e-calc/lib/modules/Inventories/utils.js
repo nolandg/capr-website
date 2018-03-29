@@ -73,17 +73,37 @@ const calcTotalCo2eForEachActivityOnDate = (records, date) => {
 }
 
 const massageTotals = (inventory, records) => {
+  const inventoryStartDate = moment(inventory.startDate);
+  const inventoryEndDate = moment(inventory.endDate);
   let seriesNames = [];
   const activityTotals = {};
   const activityPercents = {};
   let total = 0;
 
   records.forEach((record) => {
+    const recordStartDate = moment(record.startDate);
+    const recordEndDate = moment(record.endDate);
     const activity = record.activity;
+    let valueToAdd = 0;
+
+    // Check if this record falls completely within the inventory period
+    if(recordStartDate.isSameOrAfter(inventoryStartDate) && recordEndDate.isSameOrBefore(inventoryEndDate)){
+      // Entire record is within inventory, add the entire record's CO2e
+      valueToAdd = record.co2e;
+    }else{
+      // Add only the days within this inventory
+      const intersectStartDate = moment.max(inventoryStartDate, recordStartDate);
+      const intersectEndDate = moment.min(inventoryEndDate, recordEndDate);
+      const intersectLength = intersectEndDate.diff(intersectStartDate, 'days');
+      const co2ePerDay = record.co2e/record.dayCount;
+      valueToAdd = intersectLength * co2ePerDay;
+    }
+
+    // Add to this activity's total and to all activities total
     seriesNames = _.union(seriesNames, [activity]);
     if(!activityTotals[activity]) activityTotals[activity] = 0;
-    activityTotals[activity] += record.co2e;
-    total += record.co2e;
+    activityTotals[activity] += valueToAdd;
+    total += valueToAdd;
   });
 
   for(const key in activityTotals){
@@ -106,7 +126,7 @@ const massageTimelineData = (inventory, records) => {
 
   // Sort records from longest duration to shortest to ensure short ones
   // show up on top
-  const recordsSortedByDuration = [...records].sort((a, b) => {
+  records.sort((a, b) => {
     return b.dayCount - a.dayCount;
   });
 
@@ -114,9 +134,9 @@ const massageTimelineData = (inventory, records) => {
   // Create short lines representing time spans covered by each record
   // Lines of for the same activity value have the same y (category) value
   // 'date' is the x value
-  recordsSortedByDuration.forEach((record) => {
+  records.forEach((record) => {
     // Name this series based on its record id which should be unique
-    const seriesName = record._id || `new__${record.activity}__${Math.ceil(record.co2e)}`;
+    const seriesName = record._id;
     // The y value is on a category axis. The activity name will be translated to text by the tick formatter
     const yValue = record.activity;
 
@@ -134,7 +154,7 @@ const massageTimelineData = (inventory, records) => {
     });
 
     // Keep track of all the unique y values so we can add grid lines etc. later
-    activityYValues = [...new Set([...activityYValues, yValue])];
+    activityYValues = _.union(activityYValues, [yValue]);
 
     // Keep track of each start and end date for emissions to use below
     dates.push(record.startDate);
@@ -172,7 +192,7 @@ const massageTimelineData = (inventory, records) => {
     });
 
     // Track all the series names created so we can make areas for them later
-    emissionsSeriesNames = [...new Set([...emissionsSeriesNames, ...Object.keys(thisDayTotals.activityTotals)])];
+    emissionsSeriesNames = _.union(emissionsSeriesNames, Object.keys(thisDayTotals.activityTotals));
   });
 
   return {

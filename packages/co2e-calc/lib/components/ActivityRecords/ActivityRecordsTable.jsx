@@ -19,31 +19,9 @@ class VehicleActivityRecordsTable extends Component {
   }
 
   renderActivitySpecificCells = (record) => {
-    const data = record.data;
-    let str = '';
-
-    if(!data){
-      str = '';
-    }else{
-      const fuel = ActivityRecords.Utils.fuelTypeValueToText(data.fuelType);
-
-      if(data.type === 'electric'){
-        str = 'Yay for electric vehicles!';
-      }else if(data.type === 'fuel-volume'){
-        str = `${data.fuelVolume} ${data.units} of ${fuel} burned`;
-      }else if(data.type === 'distance'){
-        if(data.knownEfficiency === 'true'){
-          str = `${data.distance} ${data.units} at ${data.efficiency} ${data.efficiencyUnits} of ${fuel}`;
-        }else{
-          const vehicleType = ActivityRecords.Utils.vehicleTypeValueToEfficiencyString(data.vehicleType);
-          str = `${data.distance} ${data.units} in a ${vehicleType} of ${fuel}`;
-        }
-      }
-    }
-
     return ([
       <Table.Cell key="label">{record.label}</Table.Cell>,
-      <Table.Cell key="data">{str}</Table.Cell>,
+      <Table.Cell key="data">{ActivityRecords.Utils.getDescription(record)}</Table.Cell>,
     ]);
   }
 

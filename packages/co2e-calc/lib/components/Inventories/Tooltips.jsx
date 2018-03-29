@@ -26,10 +26,10 @@ export function ActivityTooltip({seriesName, label, inventory}){
   const iconClass = ActivityRecords.Utils.activityToIconClass(seriesName);
 
   const dailyTotals = inventory.chartData.timelineData.dailyTotals;
-  const dayEmissions = Math.round(_.get(dailyTotals, label + '.activityTotals.' + seriesName, 0));
+  const dayEmissions = _.get(dailyTotals, label + '.activityTotals.' + seriesName, 0).toFixed(1);
   const dayPercent = Math.round(_.get(dailyTotals, label + '.activityPercents.' + seriesName, 0));
   const totals = inventory.chartData.totals;
-  const totalEmissions = Math.round(_.get(totals, 'activityTotals.' + seriesName, 0));
+  const totalEmissions = _.get(totals, 'activityTotals.' + seriesName, 0).toFixed(1);
   const totalPercent = Math.round(_.get(totals, 'activityPercents.' + seriesName, 0));
 
   return (
@@ -44,7 +44,7 @@ export function ActivityTooltip({seriesName, label, inventory}){
             <Item.Meta>For {date.format('MMM D')}</Item.Meta>
             <Item.Description>
               <LabeledValue icon="calendar" content="Emissions this day" value={dayEmissions + ' kg'} />
-              <LabeledValue icon="pie chart" content="Portion of total" value={dayPercent + ' %'} />
+              <LabeledValue icon="pie chart" content="Portion this day" value={dayPercent + ' %'} />
               <LabeledValue icon="plus" content="Total for year" value={totalEmissions + ' kg'} />
               <LabeledValue icon="pie chart" content="Portion of year" value={totalPercent + ' %'} />
             </Item.Description>
@@ -78,7 +78,7 @@ export function RecordTooltip({record}){
             </Item.Header>
             <Item.Meta><Icon name="calendar" />&nbsp;for {startDate} to {endDate}</Item.Meta>
             <Item.Description>
-              More info here
+              {ActivityRecords.Utils.getDescription(record)}
             </Item.Description>
           </Item.Content>
         </Item>
