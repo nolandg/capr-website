@@ -9,7 +9,7 @@ class MyInventories extends Component {
   state = { initialDelay: true }
 
   componentDidMount = () => {
-    setTimeout(() => this.setState({initialDelay: false}), 3000);
+    setTimeout(() => this.setState({initialDelay: false}), 2000);
   }
 
   render(){
