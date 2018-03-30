@@ -5,7 +5,6 @@ import { Form } from 'semantic-ui-react'
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import  { EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
-import moment from 'moment';
 import { getMidpointMoment } from '../../modules/utils.js';
 
 class ElectricityActivityRecordEditForm extends EditForm {
