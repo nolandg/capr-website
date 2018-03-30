@@ -19,7 +19,9 @@ Package.onUse(function (api) {
     'lib/assets/images/bc-hydro-bill-kwh.png',
     'lib/assets/images/bc-hydro-bill-dates.png',
     'lib/assets/images/offsets.png',
+    'lib/assets/images/offsets2.png',
     'lib/assets/images/logo.png',
+    'lib/assets/images/bike.jpg',
   ], ['client']);
 
   api.addAssets([

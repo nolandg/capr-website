@@ -14,7 +14,7 @@ class InventoryPropane extends Component {
 
   renderEditArea = () => {
     return (
-      <Components.AddRecordButton component={Components.PropaneActivityRecordEditForm} activity="propane"
+      <Components.EditRecordButton component={Components.PropaneActivityRecordEditForm} activity="propane"
         title="Add Propane" content="Add a Propane" inventory={this.props.inventory}/>
     );
   }

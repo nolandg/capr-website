@@ -18,7 +18,7 @@ class InventoryElectricity extends Component {
 
   renderEditArea = () => {
     return (
-      <Components.AddRecordButton component={Components.ElectricityActivityRecordEditForm} activity="electricity"
+      <Components.EditRecordButton component={Components.ElectricityActivityRecordEditForm} activity="electricity"
         title="Add a BC Hydro bill" content="Add another BC Hydro bill" inventory={this.props.inventory}/>
     );
   }

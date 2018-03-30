@@ -38,6 +38,14 @@ class VehicleActivityRecordEditForm extends EditForm {
     if(data.type === 'distance') dataHeader = 'Distance Driven';
     if(data.type === 'electric') dataHeader = 'You\'re Done!';
 
+    console.log('--------------------------VehicleActivityRecordEditForm.render()----------------------------');
+    console.log('VehicleActivityRecordEditForm.render() props: ', this.props);
+    console.log('VehicleActivityRecordEditForm.render() values: ', values);
+    console.log('VehicleActivityRecordEditForm.render() fieldProps: ', fieldProps);
+    console.log('VehicleActivityRecordEditForm.render() CheckboxField: ', CheckboxField);
+    console.log('VehicleActivityRecordEditForm.render() inventory: ', inventory);
+    console.log('--------------------------------------------------------------------------------------------');
+
     return (
       <Form error={!!errors.count}>
         {this.renderMessages()}

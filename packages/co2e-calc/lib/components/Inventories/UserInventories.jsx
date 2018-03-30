@@ -40,7 +40,8 @@ class UserInventories extends Component {
   }
 
   handleBackClick = () => {
-    this.props.router.transitionTo(this.props.router.createLocation('/'));
+    console.log(this.props.router);
+    this.props.router.push('/');
   }
 
   render(){
@@ -125,17 +126,36 @@ class UserInventories extends Component {
 
             {inventory.chartData && inventory.chartData.totals.total?
               <div>
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
                 <Divider />
+                <Divider hidden />
+                <Divider hidden />
                 <Header as="h1" textAlign="center">Your Results</Header>
                 <Divider hidden />
-                <Components.InventoryResults inventory={inventory} />
                 <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+                <Components.InventoryResults inventory={inventory} />
 
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+                <Divider />
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
+                <Divider hidden />
                 <Container text>
                   <Header as="h1" textAlign="center">What You Can Do!</Header>
                   <Divider hidden />
                   <Components.WhatYouCanDo inventory={inventory} />
                 </Container>
+
+                <Divider hidden />
+                <Divider hidden />
               </div>
             :null}
 
@@ -155,6 +175,8 @@ class UserInventories extends Component {
           </Container>
         }
 
+        <Divider hidden />
+        <Divider hidden />
         <Divider hidden />
         <Divider hidden />
       </div>

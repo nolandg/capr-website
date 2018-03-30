@@ -243,14 +243,10 @@ class ActivityRecordsTable extends Component {
           {record.co2e?(record.co2e).toFixed(0):'?'}
         </Table.Cell>
         <Table.Cell textAlign="center">
-          <Components.EditModal document={record} component={editFormComponent} collection={ActivityRecords}
-            title={editTitle}
-            showDelete={true} deleteTitle={deleteTitle} deleteQuestion={deleteQuestion}
-            buttonAttrs={{content: 'Edit', icon: 'pencil', color: 'blue', size: 'mini', basic: true, compact: true, }} />
+          <Components.EditRecordButton component={editFormComponent}
+            record={record} title={editTitle} deleteTitle={deleteTitle} deleteQuestion={deleteQuestion}
+            size="mini" content="Edit" buttonAttrs={{size: 'mini', basic: true, compact: true, }}/>
         </Table.Cell>
-        {/* <Table.Cell>
-          <Link to={'/activity-records/' + record._id}>Debug</Link>
-        </Table.Cell> */}
       </Table.Row>
     );
   }

@@ -124,7 +124,7 @@ const massageTimelineData = (inventory, records) => {
   const data = [];
   const activitySeriesNames = [];
   let activityYValues = [];
-  let dates = [];
+  // let dates = [];
 
   // Sort records from longest duration to shortest to ensure short ones
   // show up on top
@@ -159,43 +159,45 @@ const massageTimelineData = (inventory, records) => {
     activityYValues = _.union(activityYValues, [yValue]);
 
     // Keep track of each start and end date for emissions to use below
-    dates.push(record.startDate);
-    dates.push(record.endDate);
+    // dates.push(record.startDate);
+    // dates.push(record.endDate);
   });
 
   //***** Emissions *****//
   // Create a stacked area chart for emissions per day for each activity
   let emissionsSeriesNames = [];
 
-  // Add extra dates before and after each start and end date of these records
-  // Emissions will also be calculated on these dates to smooth the interpolation
-  dates.forEach((date) => {
-    dates.push(moment(date).subtract(1, 'days').toISOString())
-    dates.push(moment(date).add(1, 'days').toISOString());
-  });
-
-  // Sort all the start and end dates for all records from earliest to latest
-  dates.sort((a, b) => {
-    if(moment(a).isBefore(b)) return -1;
-    if(moment(a).isSame(b)) return 0;
-    else return 1;
-  });
+  // // Add extra dates before and after each start and end date of these records
+  // // Emissions will also be calculated on these dates to smooth the interpolation
+  // dates.forEach((date) => {
+  //   dates.push(moment(date).subtract(1, 'days').toISOString())
+  //   dates.push(moment(date).add(1, 'days').toISOString());
+  // });
+  //
+  // // Sort all the start and end dates for all records from earliest to latest
+  // dates.sort((a, b) => {
+  //   if(moment(a).isBefore(b)) return -1;
+  //   if(moment(a).isSame(b)) return 0;
+  //   else return 1;
+  // });
 
   // Create a stacked area data point for each date
   // 'date' is the x value
+  const start = moment(inventory.startDate);
+  const end = moment(inventory.endDate);
   const dailyTotals = {}; // track daily totals for each day
-  dates.forEach((date) => {
+  for(const date = start; date.isSameOrBefore(end); date.add(1, 'days')){
     const thisDayTotals = calcTotalCo2eForEachActivityOnDate(records, date);
     dailyTotals[moment(date).valueOf()] = thisDayTotals;
 
     data.push({
-      date: moment(date).valueOf(),
+      date: date.valueOf(),
       ...thisDayTotals.activityTotals,
     });
 
     // Track all the series names created so we can make areas for them later
     emissionsSeriesNames = _.union(emissionsSeriesNames, Object.keys(thisDayTotals.activityTotals));
-  });
+  }
 
   return {
     data, activitySeriesNames, emissionsSeriesNames, activityYValues, dailyTotals,

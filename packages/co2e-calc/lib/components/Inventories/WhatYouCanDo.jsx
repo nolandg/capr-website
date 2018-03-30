@@ -2,7 +2,7 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
-import { Item, Button, Header } from 'semantic-ui-react';
+import { Item, Button, Header, Divider } from 'semantic-ui-react';
 import moment from 'moment';
 
 class WhatYouCanDo extends Component {
@@ -16,9 +16,27 @@ class WhatYouCanDo extends Component {
 
     return (
       <div>
-        <Item.Group>
+        <Item.Group divided>
           <Item>
-            <Item.Image src='/packages/co2e-calc/lib/assets/images/offsets.png' />
+            <Item.Image src='/packages/co2e-calc/lib/assets/images/bike.jpg' />
+            <Item.Content>
+              <Item.Header as={Link} to="/">Reduce</Item.Header>
+              <Item.Description>
+                Let's write something about reduce
+              </Item.Description>
+              <Item.Extra>
+                <Button as={Link} href="/" floated="right" color="green" size="large">
+                  Show Me How
+                </Button>
+              </Item.Extra>
+            </Item.Content>
+          </Item>
+
+          <Divider hidden />
+          <Divider hidden />
+
+          <Item>
+            <Item.Image src='/packages/co2e-calc/lib/assets/images/offsets2.png' />
             <Item.Content>
               <Item.Header as='a' href="https://www.less.ca/en-ca/tonnes.cfm">Offset Your Emissions</Item.Header>
               <Item.Description>
@@ -33,6 +51,9 @@ class WhatYouCanDo extends Component {
               </Item.Extra>
             </Item.Content>
           </Item>
+
+          <Divider hidden />
+          <Divider hidden />
 
           <Item>
             <Item.Image src='/packages/co2e-calc/lib/assets/images/logo.png' />

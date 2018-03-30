@@ -1,6 +1,5 @@
 import React, { Component, PureComponent } from 'react';
 import { Components, registerComponent } from 'meteor/vulcan:core';
-import { DateRangePicker as ReactDateRangePicker } from 'react-dates';
 import { Segment, Header, Image, Divider, Icon } from 'semantic-ui-react'
 
 class HelpAccordion extends Component {

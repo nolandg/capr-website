@@ -85,7 +85,7 @@ class EmissionsTimeline extends Component {
             </Label>
           </YAxis>
 
-          <Tooltip cursor={true} content={<ActivityTooltip seriesName={this.state.activeSeries} inventory={inventory} />}/>
+          <Tooltip cursor={{stroke: "#F00"}} content={<ActivityTooltip seriesName={this.state.activeSeries} inventory={inventory} />}/>
 
           {this.renderAreas()}
         </ComposedChart>

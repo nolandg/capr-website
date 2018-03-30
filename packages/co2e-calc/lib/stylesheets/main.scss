@@ -1,6 +1,4 @@
-@import '../../../node_modules/react-dates/lib/css/_datepicker.css';
 @import 'fontello.scss';
-// @import '../../../packages/co2e-calc/lib/stylesheets/fontello.css';
 
 .DateRangePicker{
   .DateRangePickerInput_clearDates{
@@ -12,9 +10,20 @@
   }
 }
 
+.inventory-results{
+  margin: 0 20px 0 20px;
+}
+
 .inventory-stats{
   .column{
     text-align: center;
+  }
+
+  .ui.statistic .value{
+    margin-bottom: 5px;
+    i{
+      margin-right: 5px;
+    }
   }
 }
 
@@ -43,10 +52,19 @@
 
   .labeled-value{
     .ui.label{
-      min-width: 12em;
+      min-width: 8em;
       margin: 10px 10px 0 0;
       display: inline-flex;
       justify-content: space-between;
+    }
+  }
+
+  &.emissions{
+    .content > .header{
+      margin-bottom: 10px !important;
+    }
+    .description > .header{
+      margin-bottom: 0;
     }
   }
 }

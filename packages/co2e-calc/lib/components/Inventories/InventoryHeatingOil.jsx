@@ -14,7 +14,7 @@ class InventoryHeatingOil extends Component {
 
   renderEditArea = () => {
     return (
-      <Components.AddRecordButton component={Components.HeatingOilActivityRecordEditForm} activity="heating-oil"
+      <Components.EditRecordButton component={Components.HeatingOilActivityRecordEditForm} activity="heating-oil"
         title="Add Heating Oil" content="Add Heating Oil" inventory={this.props.inventory}/>
     );
   }

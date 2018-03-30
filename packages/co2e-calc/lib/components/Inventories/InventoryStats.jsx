@@ -22,7 +22,7 @@ class InventoryStats extends Component {
     const offsetCostPerKg = .030;
     const offsetCost = Math.round(total * offsetCostPerKg);
 
-    // icons needed: swimming pool, justice scales to offset
+    // icons needed: swimming pool, justice scales to offset, co2 cloud
 
     return (
       <div className="inventory-stats">
@@ -48,19 +48,19 @@ class InventoryStats extends Component {
           <Grid.Column>
             <Statistic>
               <Statistic.Value><Icon name="dollar" /> {offsetCost}</Statistic.Value>
-              <Statistic.Label>approx. cost to offset</Statistic.Label>
+              <Statistic.Label>Cost to offset</Statistic.Label>
             </Statistic>
           </Grid.Column>
           <Grid.Column>
             <Statistic>
               <Statistic.Value><Icon name="users" /> {kgPerPerson}</Statistic.Value>
-              <Statistic.Label>kilograms of CO<sub>2</sub> per person</Statistic.Label>
+              <Statistic.Label>Kilograms of CO<sub>2</sub> per person</Statistic.Label>
             </Statistic>
           </Grid.Column>
           <Grid.Column>
             <Statistic>
               <Statistic.Value><Icon name="home" /> {kgPerHomeArea}</Statistic.Value>
-              <Statistic.Label>kilograms of CO<sub>2</sub> per {inventory.homeAreaUnits}</Statistic.Label>
+              <Statistic.Label>Kilograms of CO<sub>2</sub> per {inventory.homeAreaUnits}</Statistic.Label>
             </Statistic>
           </Grid.Column>
         </Grid>

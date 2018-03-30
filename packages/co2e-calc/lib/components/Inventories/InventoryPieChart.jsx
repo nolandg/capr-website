@@ -61,7 +61,7 @@ class InventoryPieChart extends Component {
     return (
       <ResponsiveContainer width={width} height={height-this.state.responsiveContainerWorkaround} debounce={0}>
         <PieChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-          <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius="100%" innerRadius="30%"
+          <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius="100%" innerRadius="40%"
             activeIndex={activeIndex} onMouseEnter={this.onPieEnter} onMouseLeave={this.onPieLeave}
             label={this.renderLabel} labelLine={false}>
             {data.map(this.renderCell)}

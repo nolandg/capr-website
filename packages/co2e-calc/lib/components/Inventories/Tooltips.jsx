@@ -2,7 +2,7 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
-import { Item, Icon, Label, Statistic } from 'semantic-ui-react';
+import { Item, Icon, Label, Statistic, Header } from 'semantic-ui-react';
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -39,11 +39,11 @@ export function ActivityPieTooltip({dataPoint, inventory}){
             <Item.Meta>For your {year} footprint</Item.Meta>
             <Item.Description style={{textAlign: 'center'}}>
               <Statistic size="small">
-                <Statistic.Value>{percent} <Icon name="percent" /></Statistic.Value>
+                <Statistic.Value>{percent} %</Statistic.Value>
                 <Statistic.Label>of {year} emissions</Statistic.Label>
               </Statistic>
               <br />
-              <Statistic>
+              <Statistic  size="small">
                 <Statistic.Value>{value} <Icon name="cloud" /></Statistic.Value>
                 <Statistic.Label>kg of CO<sub>2</sub>e</Statistic.Label>
               </Statistic>
@@ -61,7 +61,8 @@ export function ActivityPieTooltip({dataPoint, inventory}){
 export function ActivityTooltip({seriesName, label, inventory}){
   if(!seriesName) return null;
 
-  const date = moment(label);
+  const date = moment(label).format('MMM D');
+  const year = moment(label).year();
   const activityText =  ActivityRecords.Utils.activityValueToText(seriesName);
   const color = ActivityRecords.Utils.activityToColor(seriesName);
   const iconClass = ActivityRecords.Utils.activityToIconClass(seriesName);
@@ -80,14 +81,16 @@ export function ActivityTooltip({seriesName, label, inventory}){
           <Item.Content>
             <Item.Header>
               <Icon className={iconClass} style={{color: color}}/>
-              {activityText} CO<sub>2</sub>e Emissions
+              {activityText} CO<sub>2</sub> Emissions
             </Item.Header>
-            <Item.Meta>For {date.format('MMM D')}</Item.Meta>
+            {/* <Item.Meta></Item.Meta> */}
             <Item.Description>
-              <LabeledValue icon="calendar" content="Emissions this day" value={dayEmissions + ' kg'} />
-              <LabeledValue icon="pie chart" content="Portion this day" value={dayPercent + ' %'} />
-              <LabeledValue icon="plus" content="Total for year" value={totalEmissions + ' kg'} />
-              <LabeledValue icon="pie chart" content="Portion of year" value={totalPercent + ' %'} />
+              <Header as="h4">For {date}:</Header>
+              <LabeledValue icon="calendar" content="Emissions" value={dayEmissions + ' kg'} />
+              <LabeledValue icon="pie chart" content="Percentage" value={dayPercent + ' %'} />
+              <Header as="h4">For All of {year}:</Header>
+              <LabeledValue icon="plus" content="Emissions" value={totalEmissions + ' kg'} />
+              <LabeledValue icon="pie chart" content="Percentage" value={totalPercent + ' %'} />
             </Item.Description>
           </Item.Content>
         </Item>

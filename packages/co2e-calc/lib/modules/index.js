@@ -1,5 +1,3 @@
-import 'react-dates/initialize';
-
 import './components.js';
 import './config.js';
 import './i18n.js';

@@ -27,7 +27,7 @@ import '../components/Inventories/InventoryPieChart.jsx';
 import '../components/Inventories/InventoryResults.jsx';
 import '../components/Inventories/InventoryStats.jsx';
 import '../components/Inventories/WhatYouCanDo.jsx';
-import '../components/Inventories/AddRecordButton.jsx';
+import '../components/Inventories/EditRecordButton.jsx';
 
 import '../components/Inventories/InventoryGenericActivity.jsx';
 import '../components/Inventories/InventoryElectricity.jsx';
