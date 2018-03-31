@@ -4,25 +4,23 @@ import PropTypes from 'prop-types';
 import { Posts } from '../../modules/posts/index.js';
 import { Form } from 'semantic-ui-react'
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
+import _ from 'lodash';
 
 class PostsEditForm extends EditForm {
   constructor(props) {
-    const defaultNewDocument = {
-      title: 'Article Title',
-      body: 'Type your article body here',
-    }
-
-    super(props, defaultNewDocument);
+    const fields = ['title', 'body'];
+    super(props, fields);
   }
 
   render(){
+    const { FormField, RichTextField } = Components;
+    const { values, errors } = this.state;
+    const fieldProps = { values, errors, onChange: this.handleChange };
+
     return (
-      <Form>
-        <Form.Input label="Title" name="title" value={this.state.title} onChange={this.handleChange} />
-        <Form.Field>
-          <label>Article Body</label>
-          <Components.RichTextEditor name="body" value={this.state.body} onChange={this.handleChange} />
-        </Form.Field>
+      <Form error={!!this.state.errors}>
+        <FormField label="Title" name="title" placeholder="Type Article Title Here" {...fieldProps} />
+        <RichTextField label="Article Body" name="body" placeholder="Type the body of the article here" {...fieldProps} />
       </Form>
     )
   }

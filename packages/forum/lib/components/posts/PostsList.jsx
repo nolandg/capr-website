@@ -2,10 +2,8 @@ import { Components, registerComponent, withList, withCurrentUser } from 'meteor
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Posts } from '../../modules/posts/index.js';
-import classNames from 'classnames';
-import { Loader, Item } from 'semantic-ui-react';
+import { Item } from 'semantic-ui-react';
 import moment from 'moment';
-import Users from 'meteor/vulcan:users';
 import { Link } from 'react-router';
 
 class PostsList extends PureComponent{
@@ -16,7 +14,7 @@ class PostsList extends PureComponent{
         <Item.Image />
         <Item.Content>
           <Item.Header>{post.title}</Item.Header>
-          <Item.Meta>by <Components.UsersName user={post.user} /> {moment(new Date(post.postedAt)).fromNow()}</Item.Meta>
+          <Item.Meta>by <Components.UsersName user={post.user} /> {moment(post.postedAt).fromNow()}</Item.Meta>
           <Item.Description>{post.excerpt}</Item.Description>
           <Item.Extra><Link to={Posts.getLink(post)} style={{}}>Read More</Link></Item.Extra>
         </Item.Content>
@@ -25,37 +23,28 @@ class PostsList extends PureComponent{
   }
 
   render() {
-    let {className, results, loading, count, totalCount, loadMore, networkStatus} = this.props;
-
-    const loadingMore = networkStatus === 2;
+    let {results, loading} = this.props;
 
     if (results && results.length) {
-
-      const hasMore = totalCount > results.length;
-
       return (
         <div>
           <Item.Group divided>
             {results.map(post => this.renderPostItem(post))}
           </Item.Group>
-          {hasMore ?
-            <Components.PostsLoadMore loading={loadingMore} loadMore={loadMore} count={count} totalCount={totalCount} /> :
-            <div></div>
-          }
         </div>
-      )
+      );
     } else if (loading) {
       return (
-        <div className={classNames(className, 'posts-list')}>
-          <Loader />
+        <div>
+          Loading...
         </div>
-      )
+      );
     } else {
       return (
         <div>
           Nothing to show :-(
         </div>
-      )
+      );
     }
 
   }
@@ -78,6 +67,7 @@ const options = {
   collection: Posts,
   queryName: 'postsListQuery',
   fragmentName: 'PostsList',
+  limit: 100,
 };
 
 registerComponent('PostsList', PostsList, withCurrentUser, [withList, options]);

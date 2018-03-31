@@ -7,12 +7,10 @@ registerFragment(`
     title
     url
     slug
-    postedAt
     createdAt
     excerpt
     # users
     userId
-    author
     user {
       ...UsersMinimumInfo
     }

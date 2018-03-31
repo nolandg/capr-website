@@ -1,32 +1,13 @@
 import Users from 'meteor/vulcan:users';
-import { Utils, getSetting, registerSetting } from 'meteor/vulcan:core';
+import { Utils, getSetting } from 'meteor/vulcan:core';
 import { RichTextEditor } from 'meteor/noland:vulcan-semantic-ui';
 
-registerSetting('forum.postExcerptLength', 30, 'Length of posts excerpts in words');
-
-const formGroups = {
-  admin: {
-    name: 'admin',
-    order: 2
-  }
-};
-
-/**
- * @summary Posts schema
- * @type {Object}
- */
 const schema = {
-  /**
-    ID
-  */
   _id: {
     type: String,
     optional: true,
     viewableBy: ['guests'],
   },
-  /**
-    Timetstamp of post creation
-  */
   createdAt: {
     type: Date,
     optional: true,
@@ -35,24 +16,6 @@ const schema = {
       return new Date();
     }
   },
-  /**
-    Timestamp of post first appearing on the site (i.e. being approved)
-  */
-  postedAt: {
-    type: Date,
-    optional: true,
-    viewableBy: ['guests'],
-    insertableBy: ['admins'],
-    editableBy: ['admins'],
-    control: 'datetime',
-    group: formGroups.admin,
-    onInsert: (post, currentUser) => {
-      return new Date();
-    }
-  },
-  /**
-    URL
-  */
   url: {
     type: String,
     optional: true,
@@ -72,9 +35,6 @@ const schema = {
       `,
     },
   },
-  /**
-    Title
-  */
   title: {
     type: String,
     optional: false,
@@ -84,11 +44,8 @@ const schema = {
     editableBy: ['members'],
     control: 'text',
     order: 20,
-    searchable: true
+    searchable: true,
   },
-  /**
-    Slug
-  */
   slug: {
     type: String,
     optional: true,
@@ -102,9 +59,7 @@ const schema = {
       }
     }
   },
-  /**
-    Post body (markdown)
-  */
+  // Body is in React Draft format
   body: {
     type: String,
     optional: true,
@@ -113,11 +68,9 @@ const schema = {
     insertableBy: ['members'],
     editableBy: ['members'],
     control: 'textarea',
-    order: 30
+    order: 30,
   },
-  /**
-    HTML version of the post body
-  */
+  // HTML version of the post body
   htmlBody: {
     type: String,
     optional: true,
@@ -133,9 +86,6 @@ const schema = {
       }
     }
   },
-  /**
-   Post Excerpt
-   */
   excerpt: {
     type: String,
     optional: true,
@@ -143,8 +93,7 @@ const schema = {
     searchable: true,
     onInsert: (post) => {
       if (post.body) {
-        // excerpt length is configurable via the settings (30 words by default, ~255 characters)
-        const excerptLength = getSetting('forum.postExcerptLength', 30);
+        const excerptLength = 30;
         return Utils.trimHTML(post.htmlBody, excerptLength);
       }
     },
@@ -156,41 +105,6 @@ const schema = {
     }
   },
 
-  /**
-    Save info for later spam checking on a post. We will use this for the akismet package
-  */
-  userIP: {
-    type: String,
-    optional: true,
-    viewableBy: ['admins'],
-  },
-  userAgent: {
-    type: String,
-    optional: true,
-    viewableBy: ['admins'],
-  },
-  referrer: {
-    type: String,
-    optional: true,
-    viewableBy: ['admins'],
-  },
-  /**
-    The post author's name
-  */
-  author: {
-    type: String,
-    optional: true,
-    viewableBy: ['guests'],
-    onEdit: (modifier, document, currentUser) => {
-      // if userId is changing, change the author name too
-      if (modifier.$set && modifier.$set.userId) {
-        return Users.getDisplayNameById(modifier.$set.userId)
-      }
-    }
-  },
-  /**
-    The post author's `_id`.
-  */
   userId: {
     type: String,
     optional: true,
@@ -208,20 +122,6 @@ const schema = {
       },
       addOriginalField: true
     },
-  },
-
-  // GraphQL-only fields
-
-  domain: {
-    type: String,
-    optional: true,
-    viewableBy: ['guests'],
-    resolveAs: {
-      type: 'String',
-      resolver: (post, args, context) => {
-        return Utils.getDomain(post.url);
-      },
-    }
   },
 
   pageUrl: {
@@ -247,43 +147,6 @@ const schema = {
       },
     }
   },
-
-  emailShareUrl: {
-    type: String,
-    optional: true,
-    viewableBy: ['guests'],
-    resolveAs: {
-      type: 'String',
-      resolver: (post, args, { Posts }) => {
-        return Posts.getEmailShareUrl(post);
-      }
-    }
-  },
-
-  twitterShareUrl: {
-    type: String,
-    optional: true,
-    viewableBy: ['guests'],
-    resolveAs: {
-      type: 'String',
-      resolver: (post, args, { Posts }) => {
-        return Posts.getTwitterShareUrl(post);
-      }
-    }
-  },
-
-  facebookShareUrl: {
-    type: String,
-    optional: true,
-    viewableBy: ['guests'],
-    resolveAs: {
-      type: 'String',
-      resolver: (post, args, { Posts }) => {
-        return Posts.getFacebookShareUrl(post);
-      }
-    }
-  },
-
 };
 
 export default schema;

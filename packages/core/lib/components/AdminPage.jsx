@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Header, Divider, Container, Menu, Segment, Grid } from 'semantic-ui-react'
+import { Divider, Menu, Grid } from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 import { Utils } from 'meteor/vulcan:lib';
 
@@ -12,8 +12,8 @@ class AdminPage extends PureComponent {
   renderArticles = () =>{
     return (
       <div>
-        <Components.EditModal title="New Article" component={Components.PostsEditForm}
-          buttonAttrs={{icon: 'add', content: 'New Article'}} />
+        <Components.EditModal component={Components.PostsEditForm} collection='Posts'
+          title="New Article" buttonAttrs={{icon: 'plus', content: 'Add New Article'}} />
       </div>
     )
   }

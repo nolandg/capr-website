@@ -3,8 +3,9 @@ import Users from 'meteor/vulcan:users';
 import { Posts } from '../../modules/posts/index.js';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Divider, Container, Segment, Item, Header } from 'semantic-ui-react';
+import { Divider, Container, Comment, Header } from 'semantic-ui-react';
 import moment from 'moment';
+import { Link } from 'react-router';
 
 class PostsPageView extends PureComponent {
 
@@ -12,6 +13,10 @@ class PostsPageView extends PureComponent {
     if (this.props.loading) return <div className="posts-page"><Components.Loading/></div>
 
     const post = this.props.document;
+    const userName = Users.getDisplayName(post.user);
+    const link = Posts.getLink(post);
+    const avatarUrl = post.user.avatarUrl;
+    const date = moment(post.postedAt).fromNow();
 
     return (
       <div className="posts-page">
@@ -23,19 +28,24 @@ class PostsPageView extends PureComponent {
           <Header as="h1">{post.title}</Header>
           <div className="posts-page-body" dangerouslySetInnerHTML={{__html: post.htmlBody}} />
 
-          <Item.Group><Item>
-            <Item.Image size="tiny" src={post.user.avatarUrl} />
-            <Item.Content>
-              <Item.Meta>Posted {moment(new Date(post.postedAt)).fromNow()} by</Item.Meta>
-              <Item.Header>{Users.getDisplayName(post.user)}</Item.Header>
-              <Item.Extra>
-                <Components.EditModal document={post} component={Components.PostsEditForm}
-                  title="Edit Article"
-                  redirectOnDelete="/posts"
-                  buttonAttrs={{floated: 'right', size: 'tiny', content: 'Edit Article'}} />
-              </Item.Extra>
-            </Item.Content>
-          </Item></Item.Group>
+          <Comment.Group>
+            <Comment>
+              <Comment.Avatar src={avatarUrl} />
+              <Comment.Content>
+                <Comment.Author as={Components.UsersName} user={post.user} />
+                <Comment.Metadata>
+                  <div>{date}</div>
+                </Comment.Metadata>
+                <Comment.Actions>
+                  <Components.EditModal document={post} component={Components.PostsEditForm} collection="Posts"
+                    title="Edit Article" redirectOnDelete="/posts"
+                    deleteQuestion="Are you sure you want to delete this article?"
+                    deleteTitle="Delete Article?"
+                    buttonAttrs={{size: 'mini', content: 'Edit Article', compact: true}} />
+                </Comment.Actions>
+              </Comment.Content>
+            </Comment>
+          </Comment.Group>
         </Container>
 
       </div>
