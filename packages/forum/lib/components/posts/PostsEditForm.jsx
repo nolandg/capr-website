@@ -19,6 +19,8 @@ class PostsEditForm extends EditForm {
 
     return (
       <Form error={!!this.state.errors}>
+        {this.renderMessages()}
+
         <FormField label="Title" name="title" placeholder="Type Article Title Here" {...fieldProps} />
         <RichTextField label="Article Body" name="body" placeholder="Type the body of the article here" {...fieldProps} />
       </Form>

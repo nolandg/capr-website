@@ -1,11 +1,9 @@
 import { Components, registerComponent, withDocument, withCurrentUser } from 'meteor/vulcan:core';
-import Users from 'meteor/vulcan:users';
 import { Posts } from '../../modules/posts/index.js';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Divider, Container, Comment, Header } from 'semantic-ui-react';
 import moment from 'moment';
-import { Link } from 'react-router';
 
 class PostsPageView extends PureComponent {
 
@@ -13,10 +11,9 @@ class PostsPageView extends PureComponent {
     if (this.props.loading) return <div className="posts-page"><Components.Loading/></div>
 
     const post = this.props.document;
-    const userName = Users.getDisplayName(post.user);
-    const link = Posts.getLink(post);
     const avatarUrl = post.user.avatarUrl;
     const date = moment(post.postedAt).fromNow();
+    const canEdit = Posts.options.mutations.edit.check(this.props.currentUser, post);
 
     return (
       <div className="posts-page">
@@ -36,13 +33,15 @@ class PostsPageView extends PureComponent {
                 <Comment.Metadata>
                   <div>{date}</div>
                 </Comment.Metadata>
-                <Comment.Actions>
-                  <Components.EditModal document={post} component={Components.PostsEditForm} collection="Posts"
-                    title="Edit Article" redirectOnDelete="/posts"
-                    deleteQuestion="Are you sure you want to delete this article?"
-                    deleteTitle="Delete Article?"
-                    buttonAttrs={{size: 'mini', content: 'Edit Article', compact: true}} />
-                </Comment.Actions>
+                {canEdit?
+                  <Comment.Actions>
+                    <Components.EditModal document={post} component={Components.PostsEditForm} collection="Posts"
+                      title="Edit Article" redirectOnDelete="/posts"
+                      deleteQuestion="Are you sure you want to delete this article?"
+                      deleteTitle="Delete Article?"
+                      buttonAttrs={{size: 'mini', content: 'Edit Article', compact: true}} />
+                  </Comment.Actions>
+                :null}
               </Comment.Content>
             </Comment>
           </Comment.Group>

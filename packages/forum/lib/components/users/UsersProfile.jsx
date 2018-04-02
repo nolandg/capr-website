@@ -14,6 +14,7 @@ const UsersProfile = (props) => {
 
   const user = props.document;
   const thisUser = props.currentUser && (user._id === props.currentUser._id);
+  const isAdmin = Users.getGroups(user).indexOf('adminTier2') > -1;
 
   return (
     <Container>
@@ -33,7 +34,7 @@ const UsersProfile = (props) => {
       <Header as="h3">About Me</Header>
       {user.htmlBio ? <div dangerouslySetInnerHTML={{__html: user.htmlBio}}></div> : null }
 
-      {user.isAdmin?(
+      {isAdmin?(
         <Segment inverted textAlign="center">
           <Icon name="key" color="yellow" size="large" />
           &nbsp;&nbsp;<em>{user.displayName}</em> is an administrator
@@ -42,7 +43,7 @@ const UsersProfile = (props) => {
 
       <Components.ShowIf check={Users.options.mutations.edit.check} document={user}>
         <Divider />
-        <Components.EditModal document={user} title="Edit Profile" component={Components.UsersEditForm}
+        <Components.EditModal document={user} title="Edit Profile" component={Components.UsersEditForm} collection="Users"
           showDelete={false} buttonAttrs={{floated: 'right', content: 'Edit Profile', icon: 'pencil'}} />
       </Components.ShowIf>
     </Container>

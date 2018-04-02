@@ -18,14 +18,11 @@ registerFragment(`
     # vulcan:users
     ...UsersMinimumInfo
     createdAt
+    displayName
+    email
     isAdmin
     bio
     htmlBio
-    twitterUsername
-    website
     groups
-    karma
-    # vulcan:posts
-    postCount
   }
 `);

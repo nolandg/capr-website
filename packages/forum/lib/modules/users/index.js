@@ -13,10 +13,22 @@ Users.addField({
       }
     },
     onEdit: (modifier, user) => {
-      console.log('onEdit');
       if (modifier.$set.bio) {
         return RichTextEditor.stringToHtml(modifier.$set.bio);
       }
     }
+  }
+});
+
+Users.createGroup('adminTier2');
+
+Users.addField({
+  fieldName: 'groups',
+  fieldSchema: {
+    type: Array,
+    optional: true,
+    viewableBy: ['guests'],
+    insertableBy: ['adminTier2'],
+    editableBy: ['adminTier2'],
   }
 });

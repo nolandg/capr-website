@@ -6,23 +6,22 @@ import { Utils } from 'meteor/vulcan:lib';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 
 class CO2eCalcAdmin extends PureComponent {
-  state = { activeItem: 'records' }
+  state = { activeItem: 'dashboard' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-  renderActions = () => {
+  renderDashboard = () => {
     return (
       <div>
-        <Components.EditModal title="New Activity Record" component={Components.ActivityRecordsEditForm} collection={ActivityRecords}
-          buttonAttrs={{content: 'Add new activity record', icon: 'plus'}} />
+        <Components.InventoriesDashboard />
       </div>
     )
   }
 
-  renderRecords = () => {
+  renderInventoriesList = () => {
     return (
       <div>
-        <Components.ActivityRecordsList />
+        <Components.InventoriesList />
       </div>
     )
   }
@@ -33,8 +32,8 @@ class CO2eCalcAdmin extends PureComponent {
     return (
       <div>
         <Menu attached='top' tabular>
-          <Menu.Item content="Actions" icon="lightning" name='actions' active={activeItem === 'actions'} onClick={this.handleItemClick} />
-          <Menu.Item content="Records" icon="copy" name='records' active={activeItem === 'records'} onClick={this.handleItemClick} />
+          <Menu.Item content="Dashboard" icon="dashboard" name='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
+          <Menu.Item content="Footprints" icon="copy" name='inventories-list' active={activeItem === 'inventories-list'} onClick={this.handleItemClick} />
         </Menu>
 
         <Segment attached="bottom">

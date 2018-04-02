@@ -30,8 +30,7 @@ class AdminPage extends PureComponent {
     const { activeItem } = this.state;
 
     return (
-      <div>
-        <Divider hidden />
+      <div style={{margin: '30px 10px 30px 10px'}}>
         <Grid>
           <Grid.Column width={4}>
             <Menu fluid vertical tabular>

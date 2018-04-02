@@ -28,6 +28,8 @@ import '../components/Inventories/InventoryResults.jsx';
 import '../components/Inventories/InventoryStats.jsx';
 import '../components/Inventories/WhatYouCanDo.jsx';
 import '../components/Inventories/EditRecordButton.jsx';
+import '../components/Inventories/InventoriesDashboard.jsx';
+import '../components/Inventories/InventoriesList.jsx';
 
 import '../components/Inventories/InventoryGenericActivity.jsx';
 import '../components/Inventories/InventoryElectricity.jsx';
