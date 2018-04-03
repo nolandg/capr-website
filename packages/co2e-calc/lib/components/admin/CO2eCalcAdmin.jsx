@@ -40,7 +40,7 @@ class CO2eCalcAdmin extends PureComponent {
       <div>
         <Menu attached='top' tabular size="huge">
           <Menu.Item content="Dashboard" icon="dashboard" name='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
-          <Menu.Item content="Footprints" icon="copy" name='inventories-list' active={activeItem === 'inventories-list'} onClick={this.handleItemClick} />
+          <Menu.Item content="Footprints" icon={{className: 'footprint'}} name='inventories-list' active={activeItem === 'inventories-list'} onClick={this.handleItemClick} />
           <Menu.Item content="Data" icon="pie chart" name='inventories-results' active={activeItem === 'inventories-results'} onClick={this.handleItemClick} />
         </Menu>
 
