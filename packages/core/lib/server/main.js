@@ -19,7 +19,17 @@ ServiceConfiguration.configurations.upsert(
     $set: {
       loginStyle: 'popup',
       appId: getSetting('facebookOAuthAppId'),
-      secret: getSetting('googleOAuthSecret'),
+      secret: getSetting('facebookOAuthSecret'),
+    }
+  }
+);
+ServiceConfiguration.configurations.upsert(
+  { service: 'twitter' },
+  {
+    $set: {
+      loginStyle: 'popup',
+      consumerKey: getSetting('twitterOAuthConsumerKey'),
+      secret: getSetting('twitterOAuthSecret'),
     }
   }
 );
