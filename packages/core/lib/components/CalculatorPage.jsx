@@ -4,8 +4,10 @@ import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:co
 
 class CalculatorPage extends PureComponent {
   render (){
+    if(this.props.currentUserLoading) return 'Loading...';
+    
     return (
-      <Components.MyInventories />
+      <Components.MyInventories terms={{view: 'userInventoriesRecords', userId: this.props.currentUser._id}}/>
     )
   }
 }

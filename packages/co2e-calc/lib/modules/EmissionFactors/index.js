@@ -68,7 +68,7 @@ const calcCo2eVehicle = (record) => {
   let efficiency;
   if(type === 'distance'){
     if(knownEfficiency === 'true'){
-      efficiency = convertToBaseUnits(efficiency, efficiencyUnits);
+      efficiency = convertToBaseUnits(data.efficiency, efficiencyUnits);
     }else{
       efficiency = vehicleType.efficiency;
     }

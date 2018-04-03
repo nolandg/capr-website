@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router';
 import { Button, Icon, Menu, Image } from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 import withUI from './withUI.js';
+import Users from 'meteor/vulcan:users';
 
 class SiteMenu extends PureComponent {
   renderCalculatorItem = (path) => {
@@ -17,7 +18,7 @@ class SiteMenu extends PureComponent {
   render (){
     const isSidebar = this.props.isSidebar;
     const path = this.props.router.location.pathname;
-    const isAdmin = this.props.currentUser && this.props.currentUser.isAdmin;
+    const isAdmin = this.props.currentUser && Users.canDo(this.props.currentUser, 'core.admin');
 
     return (
       <Menu

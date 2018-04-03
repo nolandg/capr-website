@@ -77,7 +77,7 @@ const schema = {
     type: String,
     optional: true,
     control: 'select',
-    viewableBy: ['members'],
+    viewableBy: ['adminTier2'],
     insertableBy: ['members'],
     hidden: true,
     resolveAs: {

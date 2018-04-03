@@ -15,3 +15,4 @@ import '../components/AboutUsPage.jsx';
 import '../components/PostsPage.jsx';
 import '../components/ProjectsPage.jsx';
 import '../components/AdminPage.jsx';
+import '../components/UsersList.jsx';

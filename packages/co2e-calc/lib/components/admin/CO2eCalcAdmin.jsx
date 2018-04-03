@@ -3,7 +3,6 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Segment} from 'semantic-ui-react';
 import { Utils } from 'meteor/vulcan:lib';
-import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 
 class CO2eCalcAdmin extends PureComponent {
   state = { activeItem: 'dashboard' }
@@ -26,14 +25,23 @@ class CO2eCalcAdmin extends PureComponent {
     )
   }
 
+  renderInventoriesResults = () => {
+    return (
+      <div>
+        <Components.InventoriesResults />
+      </div>
+    )
+  }
+
   render(){
     const { activeItem } = this.state;
 
     return (
       <div>
-        <Menu attached='top' tabular>
+        <Menu attached='top' tabular size="huge">
           <Menu.Item content="Dashboard" icon="dashboard" name='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
           <Menu.Item content="Footprints" icon="copy" name='inventories-list' active={activeItem === 'inventories-list'} onClick={this.handleItemClick} />
+          <Menu.Item content="Data" icon="pie chart" name='inventories-results' active={activeItem === 'inventories-results'} onClick={this.handleItemClick} />
         </Menu>
 
         <Segment attached="bottom">

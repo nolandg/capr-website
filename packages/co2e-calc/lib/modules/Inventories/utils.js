@@ -31,7 +31,7 @@ export const updateInventoryData = async (record, modifier, currentUser, remove 
   }
 }
 
-const calcChartData = (inventory, records) => {
+export const calcChartData = (inventory, records) => {
   const chartData = {
     debug: Math.random(),
     timelineData: massageTimelineData(inventory, records),
@@ -40,13 +40,13 @@ const calcChartData = (inventory, records) => {
   return chartData;
 }
 
-const findRecordsIncludingDate = (date, records) => {
+export const findRecordsIncludingDate = (date, records) => {
   return records.filter((record) => {
     return moment(date).isBetween(record.startDate, record.endDate, null, '[]');
   });
 }
 
-const calcTotalCo2eForEachActivityOnDate = (records, date) => {
+export const calcTotalCo2eForEachActivityOnDate = (records, date) => {
   const simultaneousRecords = findRecordsIncludingDate(date, records);
   const activityTotals = {};
   const activityPercents = {};
@@ -72,7 +72,7 @@ const calcTotalCo2eForEachActivityOnDate = (records, date) => {
   return {activityTotals, allActivities, activityPercents };
 }
 
-const massageTotals = (inventory, records) => {
+export const massageTotals = (inventory, records) => {
   const inventoryStartDate = moment(inventory.startDate);
   const inventoryEndDate = moment(inventory.endDate);
   let seriesNames = [];
@@ -115,7 +115,7 @@ const massageTotals = (inventory, records) => {
   return {seriesNames, activityTotals, activityPercents, total, data};
 }
 
-const massageTimelineData = (inventory, records) => {
+export const massageTimelineData = (inventory, records) => {
   // records = records.filter((record) => {
   //   return moment(record.startDate).isBetween(inventory.startDate, inventory.endDate, null, '[]') ||
   //          moment(record.endDate).isBetween(inventory.startDate, inventory.endDate, null, '[]');
@@ -205,7 +205,7 @@ const massageTimelineData = (inventory, records) => {
   };
 }
 
-const generateMonthlyXTickValues = (inventory, records) => {
+export const generateMonthlyXTickValues = (inventory, records) => {
   const year = moment(inventory.startDate).year();
 
   return [0,1,2,3,4,5,6,7,8,9,10,11].map((m)=>{

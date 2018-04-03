@@ -86,10 +86,10 @@ export function ActivityTooltip({seriesName, label, inventory}){
             {/* <Item.Meta></Item.Meta> */}
             <Item.Description>
               <Header as="h4">For {date}:</Header>
-              <LabeledValue icon="calendar" content="Emissions" value={dayEmissions + ' kg'} />
+              <LabeledValue icon="cloud" content="Emissions" value={dayEmissions + ' kg'} />
               <LabeledValue icon="pie chart" content="Percentage" value={dayPercent + ' %'} />
               <Header as="h4">For All of {year}:</Header>
-              <LabeledValue icon="plus" content="Emissions" value={totalEmissions + ' kg'} />
+              <LabeledValue icon="cloud" content="Emissions" value={totalEmissions + ' kg'} />
               <LabeledValue icon="pie chart" content="Percentage" value={totalPercent + ' %'} />
             </Item.Description>
           </Item.Content>

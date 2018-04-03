@@ -181,3 +181,17 @@ h1.ui.header{
     background-position: 50%;
   }
 }
+
+/***** Admin Page *****/
+.admin-page-left{
+  padding-right: 0 !important;
+  margin-top: 70px;
+  margin-right: -1px;
+  > .menu > .item.active {
+    border-right: solid 1px white;
+    z-index: 100;
+  }
+}
+.admin-page-right{
+  padding-left: 0 !important;
+}

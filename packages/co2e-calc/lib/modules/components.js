@@ -20,6 +20,8 @@ import '../components/ActivityRecords/ActivityRecordsSingle.jsx';
 // Inventories
 import '../components/Inventories/UserInventories.jsx';
 import '../components/Inventories/MyInventories.jsx';
+import '../components/Inventories/OtherUsersInventories.jsx';
+import '../components/Inventories/InventoriesResults.jsx';
 import '../components/Inventories/AddToInventoryForm.jsx';
 import '../components/Inventories/EmissionsTimeline.jsx';
 import '../components/Inventories/ActivityTimeline.jsx';

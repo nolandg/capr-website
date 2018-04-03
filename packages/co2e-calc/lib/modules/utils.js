@@ -8,7 +8,7 @@ export const getMidpointMoment = (startDate, endDate) => {
 export const getInventoriesAffectedByRecord = async (record) => {
   const terms = {
     view: 'userDateRange',
-    userId: record.user_id,
+    userId: record.userId,
     startDate: record.startDate,
     endDate: record.endDate,
   };
@@ -46,7 +46,7 @@ export const getInventoryIdsAffectedByRecord = async (record) => {
 export const getRecordsAffectingInventory = async (inventory) => {
   const terms = {
     view: 'userDateRange',
-    userId: inventory.user_id,
+    userId: inventory.userId,
     startDate: inventory.startDate,
     endDate: inventory.endDate,
   };

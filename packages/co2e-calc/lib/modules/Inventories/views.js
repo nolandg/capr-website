@@ -1,15 +1,21 @@
 import { Inventories } from './collection.js'
-import moment from 'moment';
 
-Inventories.addView('inventoriesList', terms => ({
-  selector: {
-  },
-  options: {
-    sort: {
-      createdAt: -1
+Inventories.addView('inventoriesList', terms => {
+  const ret = {
+    selector: {
+      userId: terms.userId,
+      startDate: terms.startDate?{$lte: new Date(terms.endDate)}:undefined,
+      endDate: terms.endDate?{$gte: new Date(terms.startDate)}:undefined,
+    },
+    options: {
+      sort: {
+        createdAt: -1
+      }
     }
-  }
-}));
+  };
+
+  return ret;
+});
 
 Inventories.addView('userInventoriesRecords', terms => ({
   selector: {

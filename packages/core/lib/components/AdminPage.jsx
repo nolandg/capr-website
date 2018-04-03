@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Divider, Menu, Grid } from 'semantic-ui-react'
+import { Segment, Menu, Grid } from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 import { Utils } from 'meteor/vulcan:lib';
 
@@ -11,10 +11,10 @@ class AdminPage extends PureComponent {
 
   renderArticles = () =>{
     return (
-      <div>
+      <Segment>
         <Components.EditModal component={Components.PostsEditForm} collection='Posts'
-          title="New Article" buttonAttrs={{icon: 'plus', content: 'Add New Article'}} />
-      </div>
+          title="New Article" buttonAttrs={{icon: 'plus', content: 'Add New Article', color: 'blue'}} />
+      </Segment>
     )
   }
 
@@ -26,20 +26,29 @@ class AdminPage extends PureComponent {
     )
   }
 
+  renderUsers = () =>{
+    return (
+      <div>
+        <Components.UsersList />
+      </div>
+    )
+  }
+
   render (){
     const { activeItem } = this.state;
 
     return (
       <div style={{margin: '30px 10px 30px 10px'}}>
         <Grid>
-          <Grid.Column width={4}>
-            <Menu fluid vertical tabular>
-              <Menu.Item content="Articles" icon="newspaper" name='articles' active={activeItem === 'articles'} onClick={this.handleItemClick} />
+          <Grid.Column width={4} className="admin-page-left">
+            <Menu fluid vertical tabular size="huge">
               <Menu.Item content="Calculator" icon="calculator" name='calculator' active={activeItem === 'calculator'} onClick={this.handleItemClick} />
+              <Menu.Item content="Articles" icon="newspaper" name='articles' active={activeItem === 'articles'} onClick={this.handleItemClick} />
+              <Menu.Item content="Users" icon="users" name='users' active={activeItem === 'users'} onClick={this.handleItemClick} />
             </Menu>
           </Grid.Column>
 
-          <Grid.Column stretched width={12}>
+          <Grid.Column stretched width={12} className="admin-page-right">
             {this[Utils.dashToCamel('render-' + activeItem)]()}
           </Grid.Column>
         </Grid>

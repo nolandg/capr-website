@@ -1,7 +1,7 @@
 import { Components, registerComponent, withCurrentUser, withList } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Loader, Container, Divider, Dimmer } from 'semantic-ui-react';
+import { Loader, Container, Divider, Dimmer, Header, Icon, Segment } from 'semantic-ui-react';
 import { Inventories } from '../../modules/Inventories';
 import { Link } from 'react-router';
 
@@ -13,13 +13,17 @@ class MyInventories extends Component {
   }
 
   render(){
-    if(this.props.currentUserLoading || this.props.loading || this.state.initialDelay) return (
+    const otherUsersInventory = !!this.props.userId;
+
+    if(!otherUsersInventory && this.props.currentUserLoading || this.props.loading || this.state.initialDelay) return (
       <Dimmer active style={{height: '100vh'}}>
         <Loader content="Loading..." size="massive"/>
       </Dimmer>
     );
 
-    if(!this.props.currentUser) return (
+    const userId = otherUsersInventory?this.props.userId:this.props.currentUser._id;
+
+    if(!otherUsersInventory && !this.props.currentUser) return (
       <Container textAlign="center">
         <Divider hidden />
         It looks like you're not logged in.<br />
@@ -30,10 +34,20 @@ class MyInventories extends Component {
 
     const inventories = this.props.results;
 
-    return <Components.UserInventories
-              terms={{view: 'userActivityRecords', userId: this.props.currentUser._id}}
-              inventories={inventories}
-            />
+    const innerElement = <Components.UserInventories terms={{view: 'userActivityRecords', userId}} inventories={inventories} />;
+
+    if(otherUsersInventory) return (
+      <Container>
+        <Divider hidden />
+        <Header as="h1" textAlign="center"><Icon name="search" />Reviewing Footprint:</Header>
+        <Divider hidden />
+        <Divider hidden />
+        <Segment>
+          {innerElement}
+        </Segment>
+      </Container>
+    );
+    else return innerElement;
   }
 }
 

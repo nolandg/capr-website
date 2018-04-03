@@ -55,6 +55,7 @@ class InventoryPieChart extends Component {
   render(){
     const { activeIndex } = this.state;
     const { width, height, inventory } = this.props;
+
     if(!inventory || !inventory.chartData || !inventory.chartData.totals) return null;
     const data = inventory.chartData.totals.data;
 

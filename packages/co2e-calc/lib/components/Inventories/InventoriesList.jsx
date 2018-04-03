@@ -26,27 +26,30 @@ registerComponent('InventoriesList', InventoriesList);
 class InventoriesListInner extends Component {
 
   renderRow = (inventory) => {
+    const canViewUser = !!Users.getViewableFields(this.props.currentUser, Inventories).userId;
     const recordsCount = _.get(inventory, 'chartData.timelineData.activitySeriesNames', []).length;
     const totalKg = Math.round(_.get(inventory, 'chartData.totals.total', 0));
 
     return (
       <Table.Row key={inventory._id}>
-        {this.canViewUser?<Table.Cell>{inventory.user.username}</Table.Cell>:null}
+        {canViewUser?<Table.Cell>{inventory.user.username}</Table.Cell>:null}
         <Table.Cell>{moment(inventory.startDate).year()}</Table.Cell>
         <Table.Cell>{inventory.postalCode}</Table.Cell>
         <Table.Cell>{inventory.homeArea} {inventory.homeAreaUnits}</Table.Cell>
         <Table.Cell>{inventory.homeOccupantCount}</Table.Cell>
         <Table.Cell>{recordsCount}</Table.Cell>
         <Table.Cell>{totalKg} kg</Table.Cell>
-        <Table.Cell><Link to={`/inventories/${inventory._id}`}>view</Link></Table.Cell>
+        <Table.Cell><Link to={`/inventories/user/${inventory.userId}`}>view</Link></Table.Cell>
       </Table.Row>
     );
   }
 
   renderHeader = () => {
+    const canViewUser = !!Users.getViewableFields(this.props.currentUser, Inventories).userId;
+
     return (
       <Table.Header><Table.Row>
-        {this.canViewUser?<Table.HeaderCell><Icon name="user" />User</Table.HeaderCell>:null}
+        {canViewUser?<Table.HeaderCell><Icon name="user" />User</Table.HeaderCell>:null}
         <Table.HeaderCell><Icon name="calendar" />Year</Table.HeaderCell>
         <Table.HeaderCell><Icon name="marker" />Postal Code</Table.HeaderCell>
         <Table.HeaderCell><Icon name="maximize" />Home Area</Table.HeaderCell>
@@ -69,8 +72,6 @@ class InventoriesListInner extends Component {
     if(!results.length) return (
       <Container><Divider hidden />No footprints :-(</Container>
     );
-    const viewableFields = Users.restrictViewableFields(this.props.currentUser, Inventories, results[0]);
-    this.canViewUser = viewableFields.userId !== undefined;
 
     return (
       <Table>
@@ -87,5 +88,6 @@ const listOptions = {
   collection: Inventories,
   queryName: 'Inventory',
   fragmentName: 'Inventory',
+  limit: 100,
 };
 registerComponent('InventoriesListInner', InventoriesListInner, withCurrentUser, [withList, listOptions]);
