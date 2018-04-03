@@ -21,6 +21,7 @@ class CalculatorLayout extends PureComponent {
 
         <Helmet>
           <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css" rel="stylesheet" type="text/css"/>
+          <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400" rel="stylesheet" />
         </Helmet>
 
         {/* <header className="calculator-header">

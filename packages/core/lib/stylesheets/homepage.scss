@@ -1,3 +1,104 @@
-.wrapper-home{
+.homepage{
+  .grid{
+    display: flex;
+    height: calc(100vh - 110px);
+    min-height: 600px;
+    flex-wrap: wrap;
+    @media screen and (max-width: 800px) {
+      height: 1200px;
+    }
 
+    > .cell{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+
+      width: 50%;
+      height: 50%;
+      padding: 0px;
+
+      @media screen and (max-width: 800px) {
+        width: 100%;
+        height: 25%;
+      }
+
+      &:hover{
+        box-shadow: 0 0 2px 0px rgba(0,0,0,.5) inset;
+      }
+
+      .image{
+        flex-grow: 1;
+        margin: 10px 10px 0 10px;
+
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+      }
+      .header{
+        padding: 10px 20px;
+        text-align: center;
+        font-weight: 300;
+        font-size: 30px;
+        font-family: "Roboto Slab", serif;
+      }
+    }
+
+    > .homes {
+      .image{
+        background-image: url(/packages/core/lib/assets/images/home.jpg);
+      }
+    }
+
+    > .roadmap {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
+      background-image: url(/packages/core/lib/assets/images/roadmap_x.jpg);
+      background-repeat: no-repeat;
+      background-position: 100% 100%;
+      background-size: cover;
+      background-color: #cbdf7c;
+
+      .header{
+        text-align: left;
+        color: rgba(0, 0, 0, 0.60);
+        // color: rgba(255,255,255,0.60);
+        .first-letter{
+          font-size: 60px;
+          font-weight: bold;
+          color: rgba(0, 0, 0, 0.87);
+          // color: rgba(255,255,255,.87);
+        }
+      }
+    }
+
+    > .footprint {
+      &:hover{
+        box-shadow: 0 0 2px 3px rgba(255,255,255,.5) inset;
+      }
+      .image{
+        background-image: url(/packages/core/lib/assets/images/footprint.png);
+      }
+      .header{
+        color: #FFF;
+      }
+      background-color: $orange;
+    }
+
+    > .question {
+      &:hover{
+        box-shadow: 0 0 2px 3px rgba(255,255,255,.5) inset;
+      }
+      .image{
+        background-image: url(/packages/core/lib/assets/images/question.png);
+      }
+      .header{
+        color: #FFF;
+      }
+      background-color: $blue;
+    }
+
+  }
 }

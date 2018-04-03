@@ -23,6 +23,13 @@ Package.onUse(function (api) {
   ]);
 
   api.addAssets([
+    'lib/assets/images/home.jpg',
+    'lib/assets/images/footprint.jpg',
+    'lib/assets/images/footprint.png',
+    'lib/assets/images/question.jpg',
+    'lib/assets/images/question.png',
+    'lib/assets/images/roadmap_x.jpg',
+    'lib/assets/images/roadmap.jpg',
   ], ['client']);
 
   api.addAssets([

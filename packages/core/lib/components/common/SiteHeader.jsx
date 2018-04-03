@@ -18,7 +18,6 @@ class SiteHeader extends PureComponent {
                   <Components.UserMenuItems />
                 </Menu>
                 Climate Action Powell River
-                <Header.Subheader>A clever statement here</Header.Subheader>
               </Header>
 
             </Grid.Column>
