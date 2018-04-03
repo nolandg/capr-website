@@ -1,7 +1,7 @@
 import { Components, registerComponent, withList } from 'meteor/vulcan:core';
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Divider, Dimmer, Header, Loader, Menu, Icon, Container, Dropdown } from 'semantic-ui-react';
+import { Divider, Dimmer, Header, Loader, Menu, Icon, Container, Dropdown, Modal, Image, Button } from 'semantic-ui-react';
 import { ActivityRecords } from '../../modules/ActivityRecords/index.js';
 import moment from 'moment';
 import { Inventories } from '../../modules/Inventories';
@@ -13,6 +13,7 @@ class UserInventories extends Component {
     endDate: moment().endOf('year'),
     interval: 'year',
     inventoryEditModalOpen: false,
+    aboutOpen: false,
   }
 
   incrementYear = () => {
@@ -77,6 +78,8 @@ class UserInventories extends Component {
           deleteTitle="Delete Footprint Info?"
         />
 
+        <Components.AboutModal trigger={null} onClose={() => this.setState({aboutOpen: false})} open={this.state.aboutOpen} />
+
         <div  className="heading">
           <Menu icon compact attached="top">
             <Dropdown item icon="bars">
@@ -87,11 +90,16 @@ class UserInventories extends Component {
                   Update your {year} home details
                 </Dropdown.Item>
 
-                <Dropdown.Divider />
-
                 <Dropdown.Item onClick={this.handleBackClick}>
                   <Icon name="chevron left" />
                   Back to CAPR website
+                </Dropdown.Item>
+
+                <Dropdown.Divider />
+
+                <Dropdown.Item onClick={() => this.setState({aboutOpen: true})}>
+                  <Icon name="info circle" />
+                  About this carbon accounting software
                 </Dropdown.Item>
 
               </Dropdown.Menu>

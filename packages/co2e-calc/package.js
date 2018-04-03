@@ -22,6 +22,7 @@ Package.onUse(function (api) {
     'lib/assets/images/offsets2.png',
     'lib/assets/images/logo.png',
     'lib/assets/images/bike.jpg',
+    'lib/assets/images/colibri.jpg',
   ], ['client']);
 
   api.addAssets([

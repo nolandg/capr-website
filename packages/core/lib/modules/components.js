@@ -6,6 +6,7 @@ import '../components/common/SiteMenu.jsx';
 import '../components/common/UserMenuItems.jsx';
 import '../components/common/SiteFooter.jsx';
 import '../components/common/UnderConstruction.jsx';
+import '../components/common/AboutModal.jsx';
 
 // pages
 import '../components/LoginPage.jsx';
