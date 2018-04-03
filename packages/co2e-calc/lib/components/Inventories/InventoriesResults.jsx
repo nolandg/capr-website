@@ -47,7 +47,6 @@ class InventoriesResultsInner extends Component {
     let total = 0;
 
     inventories.forEach((inventory) => {
-      console.log(inventory);
       if(!inventory.chartData || !inventory.chartData.totals) return;
       const totals = inventory.chartData.totals.activityTotals;
       for(const activity in totals){

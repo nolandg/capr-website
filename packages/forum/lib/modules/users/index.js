@@ -29,6 +29,6 @@ Users.addField({
     optional: true,
     viewableBy: ['guests'],
     insertableBy: ['adminTier2'],
-    editableBy: ['adminTier2'],
+    editableBy: ['admins', 'adminTier2'],
   }
 });
