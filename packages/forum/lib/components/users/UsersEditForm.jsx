@@ -15,6 +15,7 @@ class UsersEditForm extends EditForm {
     super(props, fields);
 
     this.state.isAdminTier2 = props.document?Users.getGroups(props.document).indexOf('adminTier2') > -1:false;
+    this.handleAdminChange(null, {checked: this.state.isAdminTier2});
   }
 
   handleAdminChange = (e, {checked}) => {

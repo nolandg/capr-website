@@ -40,7 +40,6 @@ class UserInventories extends Component {
   }
 
   handleBackClick = () => {
-    console.log(this.props.router);
     this.props.router.push('/');
   }
 
