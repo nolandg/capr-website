@@ -2,6 +2,8 @@
 @import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 @import "homepage.scss";
 @import "roadmap.scss";
+@import "carbon-wise.scss";
+@import "wrong-with-carbon.scss";
 
 /***** Typography *****/
 h1.ui.header, h2.ui.header, h3.ui.header, h4.ui.header, h5.ui.header{
@@ -62,8 +64,9 @@ h1.ui.header{
   }
 
   .site-title-computer{
-    padding-top: 20px !important;
+    padding-top: 25px !important;
     padding-bottom: 0px !important;
+    margin-bottom: -15px;
 
     .user-menu{
       margin-bottom: 20px !important;

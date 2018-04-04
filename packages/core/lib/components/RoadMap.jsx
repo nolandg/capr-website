@@ -1,46 +1,105 @@
-import { Components, registerComponent, withCurrentUser } from 'meteor/vulcan:core';
-import { Embed, Grid, Item, Segment, Button, Icon, Header, Container, Divider } from 'semantic-ui-react'
-import ImageGallery from 'react-image-gallery';
+import { Components, registerComponent } from 'meteor/vulcan:core';
+import { Header } from 'semantic-ui-react'
 import React, { PropTypes, PureComponent } from 'react';
-import { Link } from 'react-router';
+import { withRouter } from 'react-router';
 
 class RoadMap extends PureComponent {
-  state = {
-    category: null,
+  selectCategory = (category) => {
+    this.props.router.push('/roadmap/' + category);
+  }
+
+  imageUrls = {
+    reduce: '/packages/core/lib/assets/images/reduce.jpg',
+    offset: '/packages/core/lib/assets/images/offset.jpg',
+    adapt: '/packages/core/lib/assets/images/adaptation.jpg',
+    drawdown: '/packages/core/lib/assets/images/drawdown.jpg',
+  }
+
+  titles = {
+    reduce: 'How to Reduce Your Emissions',
+    offset: 'How to Offset Your Emissions',
+    adapt: 'How to Adapt',
+    drawdown: 'How to Drawdown',
+  }
+
+  content = {
+    reduce:
+      <div>
+        This is content about how to reduce.
+      </div>,
+    offset:
+      <div>
+        This is content about how to offset.
+      </div>,
+    adapt:
+      <div>
+        This is content about how to adapt.
+      </div>,
+    drawdown:
+      <div>
+        This is content about how to drawdown.
+      </div>,
   }
 
   renderTopLevel = () => {
     return (
       <div className="top-level">
-        <div className="reduce">
-          <img src="/packages/core/lib/assets/images/reduce.jpg" />
+        <div className="reduce" onClick={() => this.selectCategory('offset')}>
+          <img src={this.imageUrls.reduce} />
           <h2><span className="first-letter">R</span>educe</h2>
         </div>
-        <div className="offset">
-          <img src="/packages/core/lib/assets/images/offset.jpg" />
+        <div className="offset" onClick={() => this.selectCategory('offset')}>
+          <img src={this.imageUrls.offset} />
           <h2><span className="first-letter">O</span>ffset</h2>
         </div>
-        <div className="adapt">
-          <img src="/packages/core/lib/assets/images/adaptation.jpg" />
+        <div className="adapt" onClick={() => this.selectCategory('adapt')}>
+          <img src={this.imageUrls.adapt} />
           <h2><span className="first-letter">A</span>dapt</h2>
         </div>
-        <div className="drawdown">
-          <img src="/packages/core/lib/assets/images/drawdown.jpg" />
+        <div className="drawdown" onClick={() => this.selectCategory('drawdown')}>
+          <img src={this.imageUrls.drawdown} />
           <h2><span className="first-letter">D</span>rawdown</h2>
         </div>
       </div>
     );
   }
 
-  renderCategory = () => {
+  renderBreadCrumbs = () => {
+    return (
+      null
+    );
+  }
 
+  renderCategory = () => {
+    const category = this.props.params.category;
+
+    return(
+      <div className="category">
+        <img src={this.imageUrls[category]} />
+        <h1>{this.titles[category]}</h1>
+        {this.content[category]}
+      </div>
+    );
   }
 
   render(){
-    const { category } = this.state;
+    const category = this.props.params.category;
 
     return (
-      <div className="roadmap">
+      <div className="roadmap-page">
+        {this.renderBreadCrumbs()}
+        {!category?
+          <div className="intro">
+            <div>
+              <Header as="h1">
+                The ROAD Map
+                <Header.Subheader>
+                  I think we should put an introduction here explaining what the road map is.
+                </Header.Subheader>
+              </Header>
+            </div>
+          </div>
+        :null}
         {!category?this.renderTopLevel():this.renderCategory(category)}
       </div>
     )
@@ -48,4 +107,4 @@ class RoadMap extends PureComponent {
 
 }
 
-registerComponent('RoadMap', RoadMap);
+registerComponent('RoadMap', RoadMap, withRouter);

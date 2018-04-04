@@ -17,7 +17,7 @@ class HomePage extends PureComponent {
     return (
       <div className="homepage">
         <div className="grid">
-          <Link to="#" className="cell homes">
+          <Link to="carbon-wise-homes" className="cell homes">
             <div className="image" />
             <Header as="h2">Carbon Wise Homes</Header>
           </Link>
@@ -37,7 +37,7 @@ class HomePage extends PureComponent {
           </Link>
           <Link to="#" className="cell question">
             <div className="image" />
-            <Header as="h2">What's the Big Deal with Carbon?</Header>
+            <Header as="h2">What's wrong with Carbon?</Header>
           </Link>
         </div>
         <Divider section hidden />

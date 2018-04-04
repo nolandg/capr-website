@@ -23,6 +23,7 @@ Package.onUse(function (api) {
   ]);
 
   api.addAssets([
+    'lib/assets/images/logo.png',
     'lib/assets/images/home.jpg',
     'lib/assets/images/footprint.jpg',
     'lib/assets/images/footprint.png',
@@ -30,8 +31,6 @@ Package.onUse(function (api) {
     'lib/assets/images/question.png',
     'lib/assets/images/roadmap_x.jpg',
     'lib/assets/images/roadmap.jpg',
-
-
     'lib/assets/images/adaptation.jpg',
     'lib/assets/images/drawdown.jpg',
     'lib/assets/images/food.jpg',
@@ -39,6 +38,9 @@ Package.onUse(function (api) {
     'lib/assets/images/offset.jpg',
     'lib/assets/images/reduce.jpg',
     'lib/assets/images/transporter.png',
+    'lib/assets/images/bike.jpg',
+    'lib/assets/images/stove.png',
+    'lib/assets/images/sushi.png',
   ], ['client']);
 
   api.addAssets([

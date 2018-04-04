@@ -39,7 +39,6 @@ class SiteHeader extends PureComponent {
               <Image src='/logo.png' size='small' inline className="site-logo"/>
               <Header as="h1" textAlign="left">
                 Climate Action Powell River
-                <Header.Subheader>A clever statement here</Header.Subheader>
               </Header>
             </Grid.Column>
           </Grid.Row>
