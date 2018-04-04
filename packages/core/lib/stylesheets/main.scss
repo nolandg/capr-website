@@ -1,11 +1,19 @@
 @import "globals.scss";
 @import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 @import "homepage.scss";
+@import "roadmap.scss";
 
 /***** Typography *****/
+h1.ui.header, h2.ui.header, h3.ui.header, h4.ui.header, h5.ui.header{
+  font-family: "Roboto Slab", serif !important;
+  font-weight: 400;
+}
 h1.ui.header{
-  font-weight: 100;
   font-size: 2.5rem;
+  font-weight: 300;
+}
+.ui.statistic .value{
+  font-family: "Roboto Slab", serif !important;
 }
 
 /***** Structure and Layout *****/
@@ -21,6 +29,11 @@ h1.ui.header{
 
   .site-logo{
     width: auto !important;
+  }
+
+  .site-title-mobile .ui.header, .site-title-computer .ui.header{
+    font-family: "Roboto Slab", serif !important;
+    font-weight: 300;
   }
 
   .site-title-mobile{

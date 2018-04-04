@@ -30,6 +30,15 @@ Package.onUse(function (api) {
     'lib/assets/images/question.png',
     'lib/assets/images/roadmap_x.jpg',
     'lib/assets/images/roadmap.jpg',
+
+
+    'lib/assets/images/adaptation.jpg',
+    'lib/assets/images/drawdown.jpg',
+    'lib/assets/images/food.jpg',
+    'lib/assets/images/homeheating.png',
+    'lib/assets/images/offset.jpg',
+    'lib/assets/images/reduce.jpg',
+    'lib/assets/images/transporter.png',
   ], ['client']);
 
   api.addAssets([

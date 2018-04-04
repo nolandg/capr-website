@@ -1,6 +1,5 @@
 import { Components, registerComponent, withCurrentUser } from 'meteor/vulcan:core';
-import { Embed, Grid, Item, Segment, Button, Icon, Header, Container, Divider } from 'semantic-ui-react'
-import ImageGallery from 'react-image-gallery';
+import { Embed, Header, Divider } from 'semantic-ui-react'
 import React, { PropTypes, PureComponent } from 'react';
 import { Link } from 'react-router';
 
@@ -18,26 +17,28 @@ class HomePage extends PureComponent {
     return (
       <div className="homepage">
         <div className="grid">
-          <a href="#" className="cell homes">
+          <Link to="#" className="cell homes">
             <div className="image" />
             <Header as="h2">Carbon Wise Homes</Header>
-          </a>
-          <a href="#" className="cell roadmap">
-            <Header as="h2">
-              <div className="row"><span className="first-letter">R</span>educe</div>
-              <div className="row"><span className="first-letter">O</span>ffset</div>
-              <div className="row"><span className="first-letter">A</span>dapt</div>
-              <div className="row"><span className="first-letter">D</span>rawdown</div>
-            </Header>
-          </a>
-          <a href="#" className="cell footprint">
+          </Link>
+          <Link to="/roadmap" className="cell roadmap">
+            <div className="wrapper">
+              <Header as="h2">
+                <div className="row"><span className="first-letter">R</span>educe</div>
+                <div className="row"><span className="first-letter">O</span>ffset</div>
+                <div className="row"><span className="first-letter">A</span>dapt</div>
+                <div className="row"><span className="first-letter">D</span>rawdown</div>
+              </Header>
+            </div>
+          </Link>
+          <Link to="/carbon-wise-footprint-calculator" className="cell footprint">
             <div className="image" />
             <Header as="h2">What's Your Footprint?</Header>
-          </a>
-          <a href="#" className="cell question">
+          </Link>
+          <Link to="#" className="cell question">
             <div className="image" />
             <Header as="h2">What's the Big Deal with Carbon?</Header>
-          </a>
+          </Link>
         </div>
         <Divider section hidden />
       </div>

@@ -1,0 +1,54 @@
+.roadmap{
+  margin: 20px 20px;
+
+  h2, h3{
+    font-family: "Roboto Slab", serif;
+    font-weight: 300;
+    font-size: 30px;
+  }
+
+  .top-level{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    height: calc(100vh - 110px);
+    min-height: 600px;
+    @media screen and (max-width: 1000px) {
+      height: auto;
+    }
+
+    > *{
+      width: 25%;
+      text-align: center;
+      padding: 10px 10px;
+      border-radius: 20px;
+
+      border: solid 2px transparent;
+      &:hover{
+        border-color: rgba(0,0,0,.5);
+        cursor: pointer;
+      }
+
+      @media screen and (max-width: 1000px) {
+        width: 50%;
+      }
+
+      h2{
+        color: rgba(0, 0, 0, 0.70);
+        .first-letter{
+          font-size: 60px;
+          color: rgba(0, 0, 0, 0.87);
+        }
+      }
+
+      img{
+        min-height: 150px;
+        height: 15vw;
+        border-radius: 20px;
+      }
+    }
+
+  }
+}

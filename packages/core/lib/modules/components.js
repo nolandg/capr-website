@@ -9,6 +9,7 @@ import '../components/common/UnderConstruction.jsx';
 import '../components/common/AboutModal.jsx';
 
 // pages
+import '../components/RoadMap.jsx';
 import '../components/LoginPage.jsx';
 import '../components/HomePage.jsx';
 import '../components/CalculatorPage.jsx';

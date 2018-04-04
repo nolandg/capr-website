@@ -10,7 +10,7 @@ class SiteMenu extends PureComponent {
   renderCalculatorItem = (path) => {
     return (
       <Menu.Item as={Link} to="/carbon-wise-footprint-calculator" name="calculator" active={path==='/carbon-footprint-calculator'}>
-        <Button color="green"><Icon name="calculator" />Carbon Wise</Button>
+        <Button color="green"><Icon name="calculator" />Your Footprint</Button>
       </Menu.Item>
     )
   }

@@ -24,19 +24,19 @@
       }
 
       &:hover{
-        box-shadow: 0 0 2px 0px rgba(0,0,0,.5) inset;
+        box-shadow: 0 0 2px 3px rgba(255,255,255,.5) inset;
       }
 
       .image{
         flex-grow: 1;
-        margin: 10px 10px 0 10px;
+        margin: 20px 10px 0 10px;
 
         background-size: contain;
         background-repeat: no-repeat;
         background-position: 50% 50%;
       }
       .header{
-        padding: 10px 20px;
+        margin: 0px 20px 30px 20px;
         text-align: center;
         font-weight: 300;
         font-size: 30px;
@@ -45,6 +45,9 @@
     }
 
     > .homes {
+      &:hover{
+        box-shadow: 0 0 2px 0px rgba(0,0,0,.5) inset;
+      }
       .image{
         background-image: url(/packages/core/lib/assets/images/home.jpg);
       }
@@ -61,6 +64,13 @@
       background-size: cover;
       background-color: #cbdf7c;
 
+      .wrapper{
+        width: 50%;
+        min-width: 190px;
+        display: flex;
+        justify-content: center;
+      }
+
       .header{
         text-align: left;
         color: rgba(0, 0, 0, 0.60);
@@ -75,9 +85,6 @@
     }
 
     > .footprint {
-      &:hover{
-        box-shadow: 0 0 2px 3px rgba(255,255,255,.5) inset;
-      }
       .image{
         background-image: url(/packages/core/lib/assets/images/footprint.png);
       }
@@ -88,9 +95,6 @@
     }
 
     > .question {
-      &:hover{
-        box-shadow: 0 0 2px 3px rgba(255,255,255,.5) inset;
-      }
       .image{
         background-image: url(/packages/core/lib/assets/images/question.png);
       }
