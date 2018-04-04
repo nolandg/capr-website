@@ -35,7 +35,7 @@ class HomePage extends PureComponent {
             <div className="image" />
             <Header as="h2">What's Your Footprint?</Header>
           </Link>
-          <Link to="#" className="cell question">
+          <Link to="/whats-wrong-with-carbon" className="cell question">
             <div className="image" />
             <Header as="h2">What's wrong with Carbon?</Header>
           </Link>

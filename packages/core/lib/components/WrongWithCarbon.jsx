@@ -12,8 +12,9 @@ class WrongWithCarbon extends PureComponent {
     // const category = this.props.params.category;
 
     return (
-      <div className="roadmap-page">
-        i
+      <div className="wrong-with-carbon-page">
+        <img src="/packages/core/lib/assets/images/ghgdiagram.png" />
+        <img src="/packages/core/lib/assets/images/yvon.jpg" />
       </div>
     )
   }

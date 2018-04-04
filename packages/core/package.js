@@ -41,6 +41,8 @@ Package.onUse(function (api) {
     'lib/assets/images/bike.jpg',
     'lib/assets/images/stove.png',
     'lib/assets/images/sushi.png',
+    'lib/assets/images/yvon.jpg',
+    'lib/assets/images/ghgdiagram.png',
   ], ['client']);
 
   api.addAssets([

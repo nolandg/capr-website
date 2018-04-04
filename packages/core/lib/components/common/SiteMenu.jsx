@@ -27,10 +27,7 @@ class SiteMenu extends PureComponent {
         secondary={!isSidebar} inverted={isSidebar} vertical={isSidebar} size={isSidebar?'large':'large'}
         onClick={this.props.hideSidebar}
         >
-        <Image src='/logo.png' size='small' inline className="site-logo"/>
-        <Menu.Item as={Link} to="/" name="home" active={path==='/'}>
-          Home
-        </Menu.Item>
+        <Link to="/"><Image src='/logo.png' size='small' inline className="site-logo"/></Link>
         <Menu.Item as={Link} to="/projects" name="projects" active={path==='/projects'}>
           Projects
         </Menu.Item>
