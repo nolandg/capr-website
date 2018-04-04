@@ -9,6 +9,8 @@ import '../components/common/UnderConstruction.jsx';
 import '../components/common/AboutModal.jsx';
 
 // pages
+import '../components/ContactUs.jsx';
+import '../components/OurPartners.jsx';
 import '../components/WrongWithCarbon.jsx';
 import '../components/CarbonWise.jsx';
 import '../components/RoadMap.jsx';

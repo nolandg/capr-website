@@ -95,6 +95,8 @@ h1.ui.header{
 }
 
 .site-sidebar{
+  overflow: visible !important;
+  
   .site-menu{
     border-top: 0 !important;
     border-bottom: 0 !important;

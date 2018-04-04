@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router';
-import { Button, Icon, Menu, Image } from 'semantic-ui-react'
+import { Button, Icon, Menu, Image, Dropdown } from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 import withUI from './withUI.js';
 import Users from 'meteor/vulcan:users';
@@ -19,6 +19,7 @@ class SiteMenu extends PureComponent {
     const isSidebar = this.props.isSidebar;
     const path = this.props.router.location.pathname;
     const isAdmin = this.props.currentUser && Users.canDo(this.props.currentUser, 'core.admin');
+    const hideSidebar = this.props.hideSidebar;
 
     return (
       <Menu
@@ -34,9 +35,22 @@ class SiteMenu extends PureComponent {
         <Menu.Item as={Link} to="/posts" name="resource" active={path==='/resource'}>
           Articles
         </Menu.Item>
-        <Menu.Item as={Link} to="/about-us" name="about-us" active={path==='/about-us'}>
-          About Us
-        </Menu.Item>
+
+        <Dropdown item text="About Us" pointing={isSidebar?'left':'top'} icon={null}>
+          <Dropdown.Menu onClick={this.props.hideSidebar}>
+            <Dropdown.Item as={Link} to="/about-us" text="About CAPR" />
+            <Dropdown.Item as={Link} to="/contact-us" text="Contact Us"/>
+            <Dropdown.Item as={Link} to="/our-partners" text="Our Partners"/>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <Dropdown item text="Fun Stuff" pointing={isSidebar?'left':'top'} icon={null}>
+          <Dropdown.Menu onClick={this.props.hideSidebar}>
+            <Dropdown.Item as={Link} to="/song-for-the-earth-video" text="Pop Quizz!"/>
+            <Dropdown.Item as={Link} to="/quizz" text="Song for the Earth"/>
+          </Dropdown.Menu>
+        </Dropdown>
+
         {isAdmin?
           <Menu.Item as={Link} to="/admin" name="Admin" active={path==='/admin'}>
             Admin

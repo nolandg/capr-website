@@ -4,6 +4,8 @@ addRoute([
   {name:'home', path: '/', componentName: 'HomePage'},
   {name:'login', path: '/login', componentName: 'LoginPage'},
   {name:'aboutUs', path: '/about-us', componentName: 'AboutUsPage'},
+  {name:'ourPartners', path: '/our-partners', componentName: 'OurPartners'},
+  {name:'contactUs', path: '/contact-us', componentName: 'ContactUs'},
   {name:'posts', path: '/posts', componentName: 'PostsPage'},
   {name:'projects', path: '/projects', componentName: 'ProjectsPage'},
   {name:'roadmap', path: '/roadmap(/:category)', componentName: 'RoadMap'},
