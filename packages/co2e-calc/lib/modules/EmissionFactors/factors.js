@@ -33,7 +33,7 @@ module.exports = [
   {
     activity: 'vehicle.vegtable-oil',
     units: 'L',
-    factor: 0,
+    factor: .1,
     startDate: moment('1970', 'YYYY'),
     endDate: moment('2050', 'YYYY'),
   },
