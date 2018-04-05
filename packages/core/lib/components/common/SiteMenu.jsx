@@ -8,9 +8,13 @@ import Users from 'meteor/vulcan:users';
 
 class SiteMenu extends PureComponent {
   renderCalculatorItem = (path) => {
+    const isSidebar = this.props.isSidebar;
+
     return (
       <Menu.Item as={Link} to="/carbon-wise-footprint-calculator" name="calculator" active={path==='/carbon-footprint-calculator'}>
-        <Button color="green"><Icon name="calculator" />Your Footprint</Button>
+        <Button color="green" compact={isSidebar?true:false} size={isSidebar?'small':undefined} >
+          <Icon name="calculator" />{isSidebar?<span><br /><br /></span>:null}Your Footprint
+        </Button>
       </Menu.Item>
     )
   }

@@ -15,7 +15,8 @@ class SiteFooter extends PureComponent {
           <Container>
             &copy;&nbsp;Copyright 2017: Climate Action Powell River and:<br /><br />
 
-            <Components.AboutModal onClose={() => this.setState({aboutOpen: false})} open={this.state.aboutOpen}
+            <Components.AboutModal onClose={() => this.setState({aboutOpen: false})} onOpen={() => this.setState({aboutOpen: true})} 
+              open={this.state.aboutOpen}
               trigger={<Button color="green" size="tiny" inverted content="Colibri Carbon: Carbon Accounting Software Solutions" />} />
           </Container>
         </Segment>

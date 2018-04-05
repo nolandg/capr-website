@@ -29,7 +29,7 @@ class Layout extends PureComponent {
         <Sidebar.Pushable>
 
           <Sidebar className="site-sidebar" animation='overlay' visible={this.props.ui.showSidebar} icon='labeled'
-            style={{overflow: 'visible !important'}}>
+            style={{overflow: 'visible !important'}} width="thin">
             <Segment basic inverted>
               <Components.SiteMenu isSidebar />
             </Segment>
