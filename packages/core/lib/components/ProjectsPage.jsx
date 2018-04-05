@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Header, Divider } from 'semantic-ui-react'
+import { Header, Divider, Container } from 'semantic-ui-react'
 import { withCurrentUser, Components, registerComponent } from 'meteor/vulcan:core';
 
 class ProjectsPage extends PureComponent {
   render (){
     return (
-      <div>
+      <Container text>
         <Divider hidden />
         <Header as="h1" textAlign="center">Projects</Header>
         Give Noland a list of projects with at least a description and photo for each one!
         <Divider hidden />
-      </div>
+      </Container>
     )
   }
 }
