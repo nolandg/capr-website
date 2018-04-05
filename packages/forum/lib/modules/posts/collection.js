@@ -28,6 +28,6 @@ Posts.checkAccess = (currentUser, post) => {
     // admins can always see everything, users can always see their own posts
     return true;
   }  else {
-    return Users.canDo(currentUser, `posts.view.approved`);
+    return Users.canDo(currentUser, `posts.view`);
   }
 }

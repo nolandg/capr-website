@@ -37,7 +37,7 @@ class SiteMenu extends PureComponent {
         </Menu.Item>
 
         <Dropdown item text="About Us" pointing={isSidebar?'left':'top'} icon={null}>
-          <Dropdown.Menu onClick={this.props.hideSidebar}>
+          <Dropdown.Menu onClick={hideSidebar}>
             <Dropdown.Item as={Link} to="/about-us" text="About CAPR" />
             <Dropdown.Item as={Link} to="/contact-us" text="Contact Us"/>
             <Dropdown.Item as={Link} to="/our-partners" text="Our Partners"/>
@@ -45,9 +45,9 @@ class SiteMenu extends PureComponent {
         </Dropdown>
 
         <Dropdown item text="Fun Stuff" pointing={isSidebar?'left':'top'} icon={null}>
-          <Dropdown.Menu onClick={this.props.hideSidebar}>
-            <Dropdown.Item as={Link} to="/song-for-the-earth-video" text="Pop Quizz!"/>
-            <Dropdown.Item as={Link} to="/quizz" text="Song for the Earth"/>
+          <Dropdown.Menu onClick={hideSidebar}>
+            <Dropdown.Item as={Link} to="/quizz" text="Pop Quizz!"/>
+            <Dropdown.Item as={Link} to="/song-for-the-earth-video" text="Song for the Earth"/>
           </Dropdown.Menu>
         </Dropdown>
 

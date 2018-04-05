@@ -5,6 +5,7 @@ import { Posts } from '../../modules/posts/index.js';
 import { Item } from 'semantic-ui-react';
 import moment from 'moment';
 import { Link } from 'react-router';
+import Users from 'meteor/vulcan:users';
 
 class PostsList extends PureComponent{
 
@@ -25,12 +26,17 @@ class PostsList extends PureComponent{
   render() {
     let {results, loading} = this.props;
 
+    const addPostButton = Users.canDo(this.props.currentUser, 'posts.new') ?
+      <Components.EditModal component={Components.PostsEditForm} collection='Posts'
+        title="New Article" buttonAttrs={{icon: 'plus', content: 'Add New Article', color: 'blue'}} />:null;
+
     if (results && results.length) {
       return (
         <div>
           <Item.Group divided>
             {results.map(post => this.renderPostItem(post))}
           </Item.Group>
+          {addPostButton}
         </div>
       );
     } else if (loading) {
@@ -42,7 +48,8 @@ class PostsList extends PureComponent{
     } else {
       return (
         <div>
-          Nothing to show :-(
+          No articles yet :-( <br /><br />
+          {addPostButton}
         </div>
       );
     }

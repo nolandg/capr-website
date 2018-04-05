@@ -4,14 +4,6 @@ import React, { PropTypes, PureComponent } from 'react';
 import { Link } from 'react-router';
 
 class HomePage extends PureComponent {
-  renderSong = () => {
-    return (
-      <div className="embed-wrapper">
-        <Embed id='y0vBlXrW0RU' placeholder='/song_thumb.jpg' source='youtube'/>
-      </div>
-    );
-  }
-
   render(){
 
     return (

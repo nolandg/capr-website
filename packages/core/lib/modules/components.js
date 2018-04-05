@@ -9,6 +9,8 @@ import '../components/common/UnderConstruction.jsx';
 import '../components/common/AboutModal.jsx';
 
 // pages
+import '../components/Quizz.jsx';
+import '../components/SongForTheEarth.jsx';
 import '../components/ContactUs.jsx';
 import '../components/OurPartners.jsx';
 import '../components/WrongWithCarbon.jsx';
