@@ -1,1 +1,1 @@
-mongodump --db capr --archive=$1 --drop
+mongodump --db capr --archive=$1
