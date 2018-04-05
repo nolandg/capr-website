@@ -45,6 +45,8 @@ class PostsPageView extends PureComponent {
               </Comment.Content>
             </Comment>
           </Comment.Group>
+          <Divider hidden />
+          <Divider hidden />
         </Container>
 
       </div>

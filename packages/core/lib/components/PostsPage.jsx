@@ -10,7 +10,9 @@ class PostsPage extends PureComponent {
         <Divider hidden />
         <Container text>
           <Header as="h1" textAlign="center">Articles</Header>
+          <Divider hidden />
           <Components.PostsList />
+          <Divider hidden />
         </Container>
       </div>
     )

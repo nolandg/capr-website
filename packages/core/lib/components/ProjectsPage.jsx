@@ -9,7 +9,8 @@ class ProjectsPage extends PureComponent {
       <div>
         <Divider hidden />
         <Header as="h1" textAlign="center">Projects</Header>
-        <Components.UnderConstruction />
+        Give Noland a list of projects with at least a description and photo for each one!
+        <Divider hidden />
       </div>
     )
   }
