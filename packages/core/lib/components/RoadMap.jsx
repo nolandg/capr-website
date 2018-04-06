@@ -44,7 +44,7 @@ class RoadMap extends PureComponent {
   renderTopLevel = () => {
     return (
       <div className="top-level">
-        <div className="reduce" onClick={() => this.selectCategory('offset')}>
+        <div className="reduce" onClick={() => this.selectCategory('reduce')}>
           <img src={this.imageUrls.reduce} />
           <h2><span className="first-letter">R</span>educe</h2>
         </div>
