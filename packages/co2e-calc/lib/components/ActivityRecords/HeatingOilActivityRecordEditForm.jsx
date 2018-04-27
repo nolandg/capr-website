@@ -28,7 +28,7 @@ class HeatingOilActivityRecordEditForm extends EditForm {
       <Form error={!!this.state.errors}>
         {this.renderMessages()}
 
-        <DateRangeField label="For what period is this information for?" startName="startDate" endName="endDate" {...fieldProps} />
+        <DateRangeField label="For what period is this information for?" startName="startDate" endName="endDate" initialMonth={initialMonth} {...fieldProps} />
 
         <Form.Group widths="equal">
           <FormField label="How much oil did you buy?" name="data.amount" {...fieldProps} />
