@@ -34,7 +34,7 @@ class MyInventories extends Component {
 
     const inventories = this.props.results;
 
-    const innerElement = <Components.UserInventories terms={{view: 'userActivityRecords', userId}} inventories={inventories} />;
+    const innerElement = <Components.UserInventories limit={512} terms={{view: 'userActivityRecords', userId}} inventories={inventories} />;
 
     if(otherUsersInventory) return (
       <Container>
