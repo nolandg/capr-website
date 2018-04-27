@@ -195,5 +195,6 @@ const withListOptions = {
   collection: ActivityRecords,
   queryName: 'activityRecordsList',
   fragmentName: 'ActivityRecord',
+  limit: 500,
 };
 registerComponent('UserInventories', UserInventories, withRouter, [withList, withListOptions]);
