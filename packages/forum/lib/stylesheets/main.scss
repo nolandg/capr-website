@@ -15,3 +15,21 @@
   line-height: 1.2857;
   resize: vertical;
 }
+
+.posts-edit-form{
+  .history{
+    > .header{
+      display: block !important;
+    }
+    width: 100%;
+
+    .versions{
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      > *{
+        margin: 10px 10px !important;
+      }
+    }
+  }
+}

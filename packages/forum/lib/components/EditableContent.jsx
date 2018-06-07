@@ -8,16 +8,12 @@ class EditableContentInner extends Component {
     super(props);
     this.state = {
       value: 'Default content',
+      historicalVersion: null,
     }
   }
 
-  handleChange = (e, { value }) => {
-    this.setState({value});
-    console.log('set value to: ', value);
-  }
-
   render() {
-    const {results, loading, contentKey} = this.props;
+    const {results, loading, contentKey, contentType} = this.props;
     if(loading) return 'Loading...';
     let document, body;
     if(results && results.length){
@@ -27,18 +23,18 @@ class EditableContentInner extends Component {
       body = 'Default body';
     }
 
-    console.log('Results: ', results);
+    if(this.state.historicalVersion){
+      document = this.state.historicalVersion;
+    }
 
     return (
       <div className="editable-content">
         <Components.EditModal document={document} saveAsNew={true} component={Components.PostsEditForm} collection="Posts"
-          title="Edit Content" buttonAttrs={{size: 'mini', content: 'Edit', compact: true}} contentKey={contentKey}
+          title="Edit Content" buttonAttrs={{size: 'mini', content: 'Edit', compact: true, className: 'edit-content', icon: 'pencil'}} contentKey={contentKey}
+          hideBody={contentType === 'plain-text'} hideTitle={contentType === 'rich-text'}
+          bodyLabel={null} titleLabel={null} showHistory={true} documents={results}
           onSuccess={() => this.props.refetch()}/>
         {body}
-        <div>
-          Desired Key: {contentKey}<br />
-          Document Content Key: {document?document.contentKey:'none'}
-        </div>
       </div>
     );
   }

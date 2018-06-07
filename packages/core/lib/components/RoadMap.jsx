@@ -33,7 +33,7 @@ class RoadMap extends PureComponent {
       </div>,
     adapt:
       <div>
-        <Components.EditableContent contentKey="roadmap-adapt-body" />
+        <Components.EditableContent contentKey="roadmap-adapt-body" contentType="rich-text"/>
       </div>,
     drawdown:
       <div>

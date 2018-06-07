@@ -44,7 +44,7 @@ const schema = {
   },
   title: {
     type: String,
-    optional: false,
+    optional: true,
     max: 500,
     viewableBy: ['guests'],
     insertableBy: ['members'],
@@ -70,7 +70,6 @@ const schema = {
   body: {
     type: String,
     optional: true,
-    // max: 100000,
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],
