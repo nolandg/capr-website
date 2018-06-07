@@ -3,7 +3,7 @@ import { Posts } from './collection.js'
 Posts.addView('keyHistory', terms => {
   const ret = {
     selector: {
-      key: terms.key,
+      contentKey: terms.contentKey,
     },
     options: {
       sort: {

@@ -8,7 +8,7 @@ import _ from 'lodash';
 
 class PostsEditForm extends EditForm {
   constructor(props) {
-    const fields = ['title', 'body', 'key'];
+    const fields = ['title', 'body', 'contentKey'];
     super(props, fields);
     _.set(this.state, 'values.contentKey', props.contentKey);
   }

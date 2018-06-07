@@ -17,7 +17,7 @@ class EditableContentInner extends Component {
   }
 
   render() {
-    const {results, loading, key} = this.props;
+    const {results, loading, contentKey} = this.props;
     if(loading) return 'Loading...';
     let document, body;
     if(results && results.length){
@@ -31,9 +31,14 @@ class EditableContentInner extends Component {
 
     return (
       <div className="editable-content">
-        <Components.EditModal document={document} component={Components.PostsEditForm} collection="Posts"
-          title="Edit Content" buttonAttrs={{size: 'mini', content: 'Edit', compact: true}} key={key} />
+        <Components.EditModal document={document} saveAsNew={true} component={Components.PostsEditForm} collection="Posts"
+          title="Edit Content" buttonAttrs={{size: 'mini', content: 'Edit', compact: true}} contentKey={contentKey}
+          onSuccess={() => this.props.refetch()}/>
         {body}
+        <div>
+          Desired Key: {contentKey}<br />
+          Document Content Key: {document?document.contentKey:'none'}
+        </div>
       </div>
     );
   }
@@ -41,7 +46,7 @@ class EditableContentInner extends Component {
 const queryOptions = {
   collection: Posts,
   queryName: 'postsListQuery',
-  fragmentName: 'PostsList',
+  fragmentName: 'EditableContentList',
   limit: 100,
 };
 registerComponent('EditableContentInner', EditableContentInner, [withList, queryOptions]);
@@ -49,8 +54,7 @@ registerComponent('EditableContentInner', EditableContentInner, [withList, query
 class EditableContent extends Component {
   render() {
     const { contentKey, ...rest } = this.props;
-//terms={{view: 'keyHistory', contentKey}}
-    return <EditableContentInner  {...rest} contentKey={contentKey} />
+    return <Components.EditableContentInner terms={{view: 'keyHistory', contentKey}} {...rest} contentKey={contentKey} />
   }
 }
 registerComponent('EditableContent', EditableContent);
