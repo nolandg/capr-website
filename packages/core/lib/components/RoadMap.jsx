@@ -15,32 +15,6 @@ class RoadMap extends PureComponent {
     drawdown: '/packages/core/lib/assets/images/drawdown.jpg',
   }
 
-  titles = {
-    reduce: 'How to Reduce Your Emissions',
-    offset: 'How to Offset Your Emissions',
-    adapt: 'How to Adapt',
-    drawdown: 'How to Drawdown',
-  }
-
-  content = {
-    reduce:
-      <div>
-        This is content about how to reduce.
-      </div>,
-    offset:
-      <div>
-        This is content about how to offset.
-      </div>,
-    adapt:
-      <div>
-        <Components.EditableContent contentKey="roadmap-adapt-body" contentType="rich-text"/>
-      </div>,
-    drawdown:
-      <div>
-        This is content about how to drawdown.
-      </div>,
-  }
-
   renderTopLevel = () => {
     return (
       <div className="top-level">
@@ -75,9 +49,12 @@ class RoadMap extends PureComponent {
 
     return(
       <div className="category">
-        <img src={this.imageUrls[category]} />
-        <h1>{this.titles[category]}</h1>
-        <Container text>{this.content[category]}</Container>
+        {/* <img src={this.imageUrls[category]} /> */}
+        <Components.EditableRichText contentKey={`roadmap-${category}-image`} className="category-image"/>
+        <h1><Components.EditablePlainText contentKey={`roadmap-${category}-title`} /></h1>
+        <Container text>
+          <Components.EditableRichText contentKey={`roadmap-${category}-body`} />
+        </Container>
       </div>
     );
   }
