@@ -1,5 +1,5 @@
 import { Components, registerComponent } from 'meteor/vulcan:core';
-import { Header } from 'semantic-ui-react'
+import { Header, Container } from 'semantic-ui-react'
 import React, { PropTypes, PureComponent } from 'react';
 import { withRouter } from 'react-router';
 
@@ -33,7 +33,7 @@ class RoadMap extends PureComponent {
       </div>,
     adapt:
       <div>
-        This is content about how to adapt.
+        <Components.EditableContent contentKey="roadmap-adapt-body" />
       </div>,
     drawdown:
       <div>
@@ -77,7 +77,7 @@ class RoadMap extends PureComponent {
       <div className="category">
         <img src={this.imageUrls[category]} />
         <h1>{this.titles[category]}</h1>
-        {this.content[category]}
+        <Container text>{this.content[category]}</Container>
       </div>
     );
   }

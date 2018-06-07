@@ -6,6 +6,8 @@ import '../components/posts/PostsList.jsx';
 import '../components/posts/PostsPageView.jsx';
 import '../components/posts/PostsEditForm.jsx';
 
+import '../components/EditableContent.jsx';
+
 // users
 
 import '../components/users/UsersSingle.jsx';

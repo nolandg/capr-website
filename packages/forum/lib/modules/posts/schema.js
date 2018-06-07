@@ -11,10 +11,17 @@ const schema = {
   createdAt: {
     type: Date,
     optional: true,
-    viewableBy: ['admins'],
+    viewableBy: ['guests'],
     onInsert: () => {
       return new Date();
     }
+  },
+  contentKey: {
+    type: String,
+    optional: true,
+    viewableBy: ['guests'],
+    insertableBy: ['guests'],
+    editableBy: ['guests'],
   },
   url: {
     type: String,
@@ -63,7 +70,7 @@ const schema = {
   body: {
     type: String,
     optional: true,
-    max: 3000,
+    // max: 100000,
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],

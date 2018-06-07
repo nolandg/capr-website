@@ -26,3 +26,12 @@ registerFragment(`
     htmlBody
   }
 `);
+
+registerFragment(`
+  fragment EditableContentList on Post {
+    ...PostsList
+    body
+    htmlBody
+    contentKey
+  }
+`);
