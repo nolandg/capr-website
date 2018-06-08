@@ -5,15 +5,7 @@ import PropTypes from 'prop-types';
 class InventoryElectricity extends Component {
 
   renderIntro = () => {
-    return (
-      <p>
-        Your carbon footprint due to electricity is calculated by the ammount of electricity you consume
-        in kilowatt-hours. This information can be found on your BC Hydro bill. Simply add all your bills
-        for the year and your CO<sub>2</sub>e will automatically be calculated.
-        <br/><br/>
-        Instructions on how to find this information on your bill will be shown when you add a bill below.
-      </p>
-    );
+    return <Components.EditableRichText contentKey={`inventory-intro-electricity`} />;
   }
 
   renderEditArea = () => {

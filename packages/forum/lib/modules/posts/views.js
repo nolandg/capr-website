@@ -14,3 +14,18 @@ Posts.addView('keyHistory', terms => {
 
   return ret;
 });
+
+Posts.addView('tagged', terms => {
+  const ret = {
+    selector: {
+      tag: terms.tag,
+    },
+    options: {
+      sort: {
+        createdAt: -1
+      }
+    }
+  };
+
+  return ret;
+});

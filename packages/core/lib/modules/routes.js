@@ -2,7 +2,24 @@ import { addRoute } from 'meteor/vulcan:core';
 
 addRoute([
   {name:'home', path: '/', componentName: 'HomePage'},
+
+  {name:'media', path: '/media-reports', componentName: 'MediaPage'},
+  {name:'localIssues', path: '/local-issues', componentName: 'LocalIssuesPage'},
+  {name:'analysis', path: '/analysis-opinion', componentName: 'AnalysisPage'},
+  {name:'climateScience', path: '/climate-science', componentName: 'ClimateSciencePage'},
+
+  {name:'books', path: '/books-on-climate-change', componentName: 'BooksPage'},
+  {name:'movies', path: '/movies-on-climate-change', componentName: 'MoviesPage'},
+  {name:'links', path: '/links', componentName: 'LinksPage'},
+  {name:'coolApps', path: '/cool-apps', componentName: 'CoolAppsPage'},
+
   {name:'login', path: '/login', componentName: 'LoginPage'},
+  {name:'whatsNew', path: '/whats-new', componentName: 'WhatsNewPage'},
+  {name:'calendar', path: '/calendar', componentName: 'CalendarPage'},
+  {name:'newsletter', path: '/newsletter', componentName: 'NewsletterPage'},
+  {name:'newsReleases', path: '/news-releases', componentName: 'NewsReleases'},
+  {name:'history', path: '/history', componentName: 'HistoryPage'},
+  {name:'directors', path: '/directors', componentName: 'DirectorsPage'},
   {name:'aboutUs', path: '/about-us', componentName: 'AboutUsPage'},
   {name:'ourPartners', path: '/our-partners', componentName: 'OurPartners'},
   {name:'contactUs', path: '/contact-us', componentName: 'ContactUs'},

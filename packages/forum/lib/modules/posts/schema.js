@@ -23,6 +23,13 @@ const schema = {
     insertableBy: ['guests'],
     editableBy: ['guests'],
   },
+  tag: {
+    type: String,
+    optional: true,
+    viewableBy: ['guests'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+  },
   url: {
     type: String,
     optional: true,

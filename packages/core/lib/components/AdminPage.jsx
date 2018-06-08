@@ -43,7 +43,7 @@ class AdminPage extends PureComponent {
           <Grid.Column width={4} className="admin-page-left">
             <Menu fluid vertical tabular size="huge">
               <Menu.Item content="Calculator" icon="calculator" name='calculator' active={activeItem === 'calculator'} onClick={this.handleItemClick} />
-              <Menu.Item content="Articles" icon="newspaper" name='articles' active={activeItem === 'articles'} onClick={this.handleItemClick} />
+              {/* <Menu.Item content="Articles" icon="newspaper" name='articles' active={activeItem === 'articles'} onClick={this.handleItemClick} /> */}
               <Menu.Item content="Users" icon="users" name='users' active={activeItem === 'users'} onClick={this.handleItemClick} />
             </Menu>
           </Grid.Column>

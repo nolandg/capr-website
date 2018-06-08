@@ -5,11 +5,7 @@ import PropTypes from 'prop-types';
 class InventoryHeatingOil extends Component {
 
   renderIntro = () => {
-    return (
-      <p>
-        An introduction about heating oil.
-      </p>
-    );
+    return <Components.EditableRichText contentKey={`inventory-intro-heating-oil`} />;
   }
 
   renderEditArea = () => {

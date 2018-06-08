@@ -24,11 +24,11 @@ class PostsList extends PureComponent{
   }
 
   render() {
-    let {results, loading} = this.props;
+    let {results, loading, terms} = this.props;
 
     const addPostButton = Users.canDo(this.props.currentUser, 'posts.new') ?
-      <Components.EditModal component={Components.PostsEditForm} collection='Posts'
-        title="New Article" buttonAttrs={{icon: 'plus', content: 'Add New Article', color: 'blue'}} />:null;
+      <Components.EditModal component={Components.PostsEditForm} collection='Posts' tag={terms.tag}
+        title="New Content" buttonAttrs={{icon: 'plus', content: 'Add New Content', color: 'blue'}} />:null;
 
     if (results && results.length) {
       return (
@@ -48,7 +48,7 @@ class PostsList extends PureComponent{
     } else {
       return (
         <div>
-          No articles yet :-( <br /><br />
+          No content yet :-( <br /><br />
           {addPostButton}
         </div>
       );

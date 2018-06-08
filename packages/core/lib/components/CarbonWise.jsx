@@ -13,15 +13,15 @@ class CarbonWise extends PureComponent {
       <div className="top-level">
         <div className="transporation" onClick={() => this.selectCategory('transporation')}>
           <Components.EditableRichText contentKey={`carbon-wise-transporation-image`} className="category-image"/>
-          <h2><Components.EditablePlainText contentKey={`carbon-wise-transporation-title`} className="category-image"/></h2>
+          <h2><Components.EditablePlainText contentKey={`carbon-wise-transporation-title`}/></h2>
         </div>
         <div className="heating" onClick={() => this.selectCategory('heating')}>
           <Components.EditableRichText contentKey={`carbon-wise-heating-image`} className="category-image"/>
-          <h2><Components.EditablePlainText contentKey={`carbon-wise-heating-title`} className="category-image"/></h2>
+          <h2><Components.EditablePlainText contentKey={`carbon-wise-heating-title`}/></h2>
         </div>
         <div className="food" onClick={() => this.selectCategory('food')}>
           <Components.EditableRichText contentKey={`carbon-wise-food-image`} className="category-image"/>
-          <h2><Components.EditablePlainText contentKey={`carbon-wise-food-title`} className="category-image"/></h2>
+          <h2><Components.EditablePlainText contentKey={`carbon-wise-food-title`}/></h2>
         </div>
       </div>
     );
@@ -39,8 +39,8 @@ class CarbonWise extends PureComponent {
     return(
       <div className="category">
         <Components.EditableRichText contentKey={`carbon-wise-${category}-image`} className="category-image"/>
-        <h1><Components.EditablePlainText contentKey={`carbon-wise-${category}-title`} className="category-image"/></h1>
-        <Components.EditableRichText contentKey={`carbon-wise-${category}-body`} className="category-image"/>
+        <h1><Components.EditablePlainText contentKey={`carbon-wise-${category}-title`} /></h1>
+        <Components.EditableRichText contentKey={`carbon-wise-${category}-body`} />
       </div>
     );
   }

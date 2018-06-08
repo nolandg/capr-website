@@ -71,6 +71,11 @@ h1.ui.header{
     .user-menu{
       margin-bottom: 20px !important;
     }
+
+    .sub.header{
+      margin: -0px 0 10px !important;
+      font-size: 14px !important;
+    }
   }
 
   .site-menu{
@@ -96,7 +101,7 @@ h1.ui.header{
 
 .site-sidebar{
   overflow: visible !important;
-  
+
   .site-menu{
     border-top: 0 !important;
     border-bottom: 0 !important;

@@ -5,17 +5,13 @@ import PropTypes from 'prop-types';
 class InventoryPropane extends Component {
 
   renderIntro = () => {
-    return (
-      <p>
-        An introduction about propane.
-      </p>
-    );
+    return <Components.EditableRichText contentKey={`inventory-intro-propane`} />;
   }
 
   renderEditArea = () => {
     return (
       <Components.EditRecordButton component={Components.PropaneActivityRecordEditForm} activity="propane"
-        title="Add Propane" content="Add a Propane" inventory={this.props.inventory}/>
+        title="Add Propane" content="Add Propane" inventory={this.props.inventory}/>
     );
   }
 

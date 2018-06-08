@@ -9,6 +9,7 @@ registerFragment(`
     slug
     createdAt
     excerpt
+    tag
     # users
     userId
     user {

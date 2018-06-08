@@ -2,16 +2,17 @@ import { Components, registerComponent, withEdit, withRemove, withCurrentUser, w
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Posts } from '../../modules/posts/index.js';
-import { Form, Header, Button, Icon, Divider } from 'semantic-ui-react'
+import { Form, Header, Icon, Divider } from 'semantic-ui-react'
 import  {  EditForm } from 'meteor/noland:vulcan-semantic-ui';
 import _ from 'lodash';
 import moment from 'moment';
 
 class PostsEditForm extends EditForm {
   constructor(props) {
-    const fields = ['title', 'body', 'contentKey'];
+    const fields = ['title', 'body', 'contentKey', 'tag'];
     super(props, fields);
     _.set(this.state, 'values.contentKey', props.contentKey);
+    _.set(this.state, 'values.tag', props.tag);
   }
 
   renderRestoreVersion = (doc) => {

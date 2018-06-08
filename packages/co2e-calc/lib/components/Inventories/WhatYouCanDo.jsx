@@ -22,11 +22,11 @@ class WhatYouCanDo extends Component {
             <Item.Content>
               <Item.Header as={Link} to="/">Reduce</Item.Header>
               <Item.Description>
-                Let's write something about reduce
+                <Components.EditableRichText contentKey={`what-you-can-do-reduce`} />
               </Item.Description>
               <Item.Extra>
-                <Button as={Link} href="/" floated="right" color="green" size="large">
-                  Show Me How
+                <Button as={Link} href="/carbon-wise-homes" floated="right" color="green" size="large">
+                  How to be Carbon Wise!
                 </Button>
               </Item.Extra>
             </Item.Content>
@@ -60,7 +60,7 @@ class WhatYouCanDo extends Component {
             <Item.Content>
               <Item.Header as={Link} to="/">Donate to CAPR</Item.Header>
               <Item.Description>
-                I'm sure we can write something very convincing here.
+                <Components.EditableRichText contentKey={`what-you-can-do-donate`} />
               </Item.Description>
               <Item.Extra>
                 <Button as={Link} to="/" floated="right" color="green" size="large">

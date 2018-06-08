@@ -33,18 +33,48 @@ class SiteMenu extends PureComponent {
         onClick={this.props.hideSidebar}
         >
         <Link to="/"><Image src='/logo.png' size='small' inline className="site-logo"/></Link>
-        <Menu.Item as={Link} to="/projects" name="projects" active={path==='/projects'}>
+
+        {/* <Menu.Item as={Link} to="/projects" name="projects" active={path==='/projects'}>
           Projects
         </Menu.Item>
         <Menu.Item as={Link} to="/posts" name="resource" active={path==='/resource'}>
           Articles
-        </Menu.Item>
+        </Menu.Item> */}
 
-        <Dropdown item text="About Us" pointing={isSidebar?'left':'top'} icon={null}>
+        <Dropdown item text="CAPR" pointing={isSidebar?'left':'top'} icon={null}>
           <Dropdown.Menu onClick={hideSidebar}>
             <Dropdown.Item as={Link} to="/about-us" text="About CAPR" />
+            <Dropdown.Item as={Link} to="/roadmap" text="ROAD Map"/>
+            <Dropdown.Item as={Link} to="/history" text="History"/>
+            <Dropdown.Item as={Link} to="/directors" text="Directors"/>
             <Dropdown.Item as={Link} to="/contact-us" text="Contact Us"/>
-            <Dropdown.Item as={Link} to="/our-partners" text="Our Partners"/>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <Dropdown item text="News" pointing={isSidebar?'left':'top'} icon={null}>
+          <Dropdown.Menu onClick={hideSidebar}>
+            <Dropdown.Item as={Link} to="/whats-new" text="What's New" />
+            <Dropdown.Item as={Link} to="/calendar" text="Calendar"/>
+            <Dropdown.Item as={Link} to="/newsletter" text="Newsletter"/>
+            <Dropdown.Item as={Link} to="/news-releases" text="News Releases"/>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <Dropdown item text="Articles" pointing={isSidebar?'left':'top'} icon={null}>
+          <Dropdown.Menu onClick={hideSidebar}>
+            <Dropdown.Item as={Link} to="/media-reports" text="Media/Reports" />
+            <Dropdown.Item as={Link} to="/local-issues" text="Local Issues"/>
+            <Dropdown.Item as={Link} to="/analysis-opinion" text="Analysis/Opinion"/>
+            <Dropdown.Item as={Link} to="/climate-science" text="Climate Science"/>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <Dropdown item text="Resources" pointing={isSidebar?'left':'top'} icon={null}>
+          <Dropdown.Menu onClick={hideSidebar}>
+            <Dropdown.Item as={Link} to="/books-on-climate-change" text="Books on Climate Change" />
+            <Dropdown.Item as={Link} to="/movies-on-climate-change" text="Movies on Climate Change"/>
+            <Dropdown.Item as={Link} to="/links" text="Links"/>
+            <Dropdown.Item as={Link} to="/cool-apps" text="Cool Apps"/>
           </Dropdown.Menu>
         </Dropdown>
 

@@ -5,15 +5,7 @@ import PropTypes from 'prop-types';
 class InventoryNaturalGas extends Component {
 
   renderIntro = () => {
-    return (
-      <p>
-        Your carbon footprint due to natural gas is calculated by the ammount of gas you consume
-        in gigajoules. This information can be found on your Fortis BC bill. Simply add all your bills
-        for the year and your CO<sub>2</sub>e will automatically be calculated.
-        <br/><br/>
-        Instructions on how to find this information on your bill will be shown when you add a bill below.
-      </p>
-    );
+    return <Components.EditableRichText contentKey={`inventory-intro-natural-gas`} />;
   }
 
   renderEditArea = () => {
