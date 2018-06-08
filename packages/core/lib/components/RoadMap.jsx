@@ -8,30 +8,23 @@ class RoadMap extends PureComponent {
     this.props.router.push('/roadmap/' + category);
   }
 
-  imageUrls = {
-    reduce: '/packages/core/lib/assets/images/reduce.jpg',
-    offset: '/packages/core/lib/assets/images/offset.jpg',
-    adapt: '/packages/core/lib/assets/images/adaptation.jpg',
-    drawdown: '/packages/core/lib/assets/images/drawdown.jpg',
-  }
-
   renderTopLevel = () => {
     return (
       <div className="top-level">
         <div className="reduce" onClick={() => this.selectCategory('reduce')}>
-          <img src={this.imageUrls.reduce} />
+          <Components.EditableRichText contentKey={`roadmap-reduce-image`} className="category-image"/>
           <h2><span className="first-letter">R</span>educe</h2>
         </div>
         <div className="offset" onClick={() => this.selectCategory('offset')}>
-          <img src={this.imageUrls.offset} />
+          <Components.EditableRichText contentKey={`roadmap-offset-image`} className="category-image"/>
           <h2><span className="first-letter">O</span>ffset</h2>
         </div>
         <div className="adapt" onClick={() => this.selectCategory('adapt')}>
-          <img src={this.imageUrls.adapt} />
+          <Components.EditableRichText contentKey={`roadmap-adapt-image`} className="category-image"/>
           <h2><span className="first-letter">A</span>dapt</h2>
         </div>
         <div className="drawdown" onClick={() => this.selectCategory('drawdown')}>
-          <img src={this.imageUrls.drawdown} />
+          <Components.EditableRichText contentKey={`roadmap-drawdown-image`} className="category-image"/>
           <h2><span className="first-letter">D</span>rawdown</h2>
         </div>
       </div>
@@ -49,7 +42,6 @@ class RoadMap extends PureComponent {
 
     return(
       <div className="category">
-        {/* <img src={this.imageUrls[category]} /> */}
         <Components.EditableRichText contentKey={`roadmap-${category}-image`} className="category-image"/>
         <h1><Components.EditablePlainText contentKey={`roadmap-${category}-title`} /></h1>
         <Container text>

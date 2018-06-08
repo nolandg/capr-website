@@ -28,17 +28,17 @@ class EditableContentInner extends Component {
   }
 
   render() {
-    const {results, loading, contentKey, contentType} = this.props;
+    const {results, loading, contentKey, contentType, className} = this.props;
     if(loading) return 'Loading...';
     let document, body;
     if(results && results.length){
       document = results[0];
       if(contentType === 'rich-text')
-        body = <div className="body" dangerouslySetInnerHTML={{__html: document.htmlBody}} />;
+        body = <div className={className} dangerouslySetInnerHTML={{__html: document.htmlBody}} />;
       else if(contentType === 'plain-text')
-        body = document.title;
+        body = <span className={className}>{document.title}</span>;
     }else{
-      body = 'Default body';
+      body = <span className={className}>no content</span>;
     }
 
     if(this.state.historicalVersion){
@@ -68,17 +68,16 @@ registerComponent('EditableContentInner', EditableContentInner, [withList, inner
 
 class LockedEditableContent extends Component {
   render() {
-    const { loading, contentType, results } = this.props;
+    const { loading, contentType, results, className } = this.props;
 
     if(loading) return 'Loading...';
     else {
       if(!results || !results.length){
         return 'No content here yet';
       }else if(contentType === 'rich-text'){
-        // return 'hi';
-        return <div className="body" dangerouslySetInnerHTML={{__html: results[0].htmlBody}} />;
+        return <div className={className} dangerouslySetInnerHTML={{__html: results[0].htmlBody}} />;
       }else if(contentType === 'plain-text'){
-        return results[0].title;
+        return <span className={className}>{results[0].title}</span>;
       }
     }
   }
