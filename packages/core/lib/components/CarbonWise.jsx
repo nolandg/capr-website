@@ -8,47 +8,20 @@ class CarbonWise extends PureComponent {
     this.props.router.push('/carbon-wise-homes/' + category);
   }
 
-  imageUrls = {
-    transporation: '/packages/core/lib/assets/images/bike.jpg',
-    heating: '/packages/core/lib/assets/images/stove.png',
-    food: '/packages/core/lib/assets/images/sushi.png',
-  }
-
-  titles = {
-    transporation: 'Personal Transporation',
-    heating: 'Heating Your Home',
-    food: 'What You Eat',
-  }
-
-  content = {
-    transporation:
-      <div>
-        This is content about transporation.
-      </div>,
-    heating:
-      <div>
-        This is content about heating.
-      </div>,
-    food:
-      <div>
-        This is content about food.
-      </div>,
-  }
-
   renderTopLevel = () => {
     return (
       <div className="top-level">
         <div className="transporation" onClick={() => this.selectCategory('transporation')}>
-          <img src={this.imageUrls.transporation} />
-          <h2>Transporation</h2>
+          <Components.EditableRichText contentKey={`carbon-wise-transporation-image`} className="category-image"/>
+          <h2><Components.EditablePlainText contentKey={`carbon-wise-transporation-title`} className="category-image"/></h2>
         </div>
         <div className="heating" onClick={() => this.selectCategory('heating')}>
-          <img src={this.imageUrls.heating} />
-          <h2>Heating</h2>
+          <Components.EditableRichText contentKey={`carbon-wise-heating-image`} className="category-image"/>
+          <h2><Components.EditablePlainText contentKey={`carbon-wise-heating-title`} className="category-image"/></h2>
         </div>
         <div className="food" onClick={() => this.selectCategory('food')}>
-          <img src={this.imageUrls.food} />
-          <h2>Food</h2>
+          <Components.EditableRichText contentKey={`carbon-wise-food-image`} className="category-image"/>
+          <h2><Components.EditablePlainText contentKey={`carbon-wise-food-title`} className="category-image"/></h2>
         </div>
       </div>
     );
@@ -65,9 +38,9 @@ class CarbonWise extends PureComponent {
 
     return(
       <div className="category">
-        <img src={this.imageUrls[category]} />
-        <h1>{this.titles[category]}</h1>
-        {this.content[category]}
+        <Components.EditableRichText contentKey={`carbon-wise-${category}-image`} className="category-image"/>
+        <h1><Components.EditablePlainText contentKey={`carbon-wise-${category}-title`} className="category-image"/></h1>
+        <Components.EditableRichText contentKey={`carbon-wise-${category}-body`} className="category-image"/>
       </div>
     );
   }
