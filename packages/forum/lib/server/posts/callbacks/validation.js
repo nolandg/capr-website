@@ -17,24 +17,24 @@ registerSetting('forum.maxPostsPerDay', 5, 'Maximum number of posts a user can c
  */
 function PostsNewRateLimit (post, user) {
 
-  if(!Users.isAdmin(user)){
-
-    var timeSinceLastPost = Users.timeSinceLast(user, Posts),
-      numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts),
-      postInterval = Math.abs(parseInt(getSetting('forum.postInterval', 30))),
-      maxPostsPer24Hours = Math.abs(parseInt(getSetting('forum.maxPostsPerDay', 5)));
-
-    // check that user waits more than X seconds between posts
-    if(timeSinceLastPost < postInterval){
-      const RateLimitError = createError('posts.rate_limit_error', {message: 'posts.rate_limit_error'});
-      throw new RateLimitError({data: {break: true, value: postInterval-timeSinceLastPost}});
-    }
-    // check that the user doesn't post more than Y posts per day
-    if(numberOfPostsInPast24Hours >= maxPostsPer24Hours){
-      const RateLimitError = createError('posts.max_per_day', {message: 'posts.max_per_day'});
-      throw new RateLimitError({data: {break: true, value: maxPostsPer24Hours}});
-    }
-  }
+  // if(!Users.isAdmin(user)){
+  //
+  //   var timeSinceLastPost = Users.timeSinceLast(user, Posts),
+  //     numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts),
+  //     postInterval = Math.abs(parseInt(getSetting('forum.postInterval', 30))),
+  //     maxPostsPer24Hours = Math.abs(parseInt(getSetting('forum.maxPostsPerDay', 5)));
+  //
+  //   // check that user waits more than X seconds between posts
+  //   if(timeSinceLastPost < postInterval){
+  //     const RateLimitError = createError('posts.rate_limit_error', {message: 'posts.rate_limit_error'});
+  //     throw new RateLimitError({data: {break: true, value: postInterval-timeSinceLastPost}});
+  //   }
+  //   // check that the user doesn't post more than Y posts per day
+  //   if(numberOfPostsInPast24Hours >= maxPostsPer24Hours){
+  //     const RateLimitError = createError('posts.max_per_day', {message: 'posts.max_per_day'});
+  //     throw new RateLimitError({data: {break: true, value: maxPostsPer24Hours}});
+  //   }
+  // }
 
   return post;
 }
