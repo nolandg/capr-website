@@ -15,7 +15,9 @@ Inventories.checkAccess = (currentUser, document) => {
   if (Users.isAdmin(currentUser) || Users.owns(currentUser, document)) {
     // admins can always see everything, users can always see their own records
     return true;
-  }  else {
+  }  else if(Users.canDo(currentUser, 'core.admin')){
+    return true;
+  }else {
     return false;
   }
 }

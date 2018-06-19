@@ -29,7 +29,13 @@ class EditableContentInner extends Component {
 
   render() {
     const {results, loading, contentKey, contentType, className} = this.props;
-    if(loading) return 'Loading...';
+
+    if(loading){
+      console.log('Stil loading... ', this.props);
+      setTimeout(()=> this.props.refetch(), 1000);
+      return 'Loading...';
+    }
+
     let document, body;
     if(results && results.length){
       document = results[0];
@@ -38,7 +44,7 @@ class EditableContentInner extends Component {
       else if(contentType === 'plain-text')
         body = <span className={className}>{document.title}</span>;
     }else{
-      body = <span className={className}>no content</span>;
+      body = <span className={className}>hover over this text and click "Edit"</span>;
     }
 
     if(this.state.historicalVersion){
@@ -70,7 +76,11 @@ class LockedEditableContent extends Component {
   render() {
     const { loading, contentType, results, className } = this.props;
 
-    if(loading) return 'Loading...';
+    if(loading){
+      console.log('Stil loading... ', this.props);
+      return 'Loading...';
+    }
+
     else {
       if(!results || !results.length){
         return 'No content here yet';
