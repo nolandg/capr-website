@@ -22,7 +22,7 @@ addRoute([
   {name:'directors', path: '/directors', componentName: 'DirectorsPage'},
   {name:'aboutUs', path: '/about-us', componentName: 'AboutUsPage'},
   {name:'ourPartners', path: '/our-partners', componentName: 'OurPartners'},
-  {name:'contactUs', path: '/contact-us', componentName: 'ContactUs'},
+  {name:'contactUs', path: '/contact-us', componentName: 'ContactUsPage'},
   {name:'posts', path: '/posts', componentName: 'PostsPage'},
   {name:'quizz', path: '/quizz', componentName: 'Quizz'},
   {name:'songForTheEarth', path: '/song-for-the-earth-video', componentName: 'SongForTheEarth'},

@@ -1,5 +1,5 @@
 import { Components, registerComponent } from 'meteor/vulcan:core';
-import { Header } from 'semantic-ui-react'
+import { Header, Container } from 'semantic-ui-react'
 import React, { PropTypes, PureComponent } from 'react';
 import { withRouter } from 'react-router';
 
@@ -37,11 +37,11 @@ class CarbonWise extends PureComponent {
     const category = this.props.params.category;
 
     return(
-      <div className="category">
+      <Container text className="category">
         <Components.EditableRichText contentKey={`carbon-wise-${category}-image`} className="category-image"/>
         <h1><Components.EditablePlainText contentKey={`carbon-wise-${category}-title`} /></h1>
         <Components.EditableRichText contentKey={`carbon-wise-${category}-body`} />
-      </div>
+      </Container>
     );
   }
 

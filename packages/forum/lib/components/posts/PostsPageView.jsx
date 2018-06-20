@@ -12,7 +12,7 @@ class PostsPageView extends PureComponent {
 
     const post = this.props.document;
     const avatarUrl = post.user.avatarUrl;
-    const date = moment(post.postedAt).fromNow();
+    const date = moment(post.createdAt).fromNow();
     const canEdit = Posts.options.mutations.edit.check(this.props.currentUser, post);
 
     return (

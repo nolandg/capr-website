@@ -34,13 +34,6 @@ class SiteMenu extends PureComponent {
         >
         <Link to="/"><Image src='/logo.png' size='small' inline className="site-logo"/></Link>
 
-        {/* <Menu.Item as={Link} to="/projects" name="projects" active={path==='/projects'}>
-          Projects
-        </Menu.Item>
-        <Menu.Item as={Link} to="/posts" name="resource" active={path==='/resource'}>
-          Articles
-        </Menu.Item> */}
-
         <Dropdown item text="CAPR" pointing={isSidebar?'left':'top'} icon={null}>
           <Dropdown.Menu onClick={hideSidebar}>
             <Dropdown.Item as={Link} to="/about-us" text="About CAPR" />

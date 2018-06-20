@@ -41,13 +41,11 @@ class RoadMap extends PureComponent {
     const category = this.props.params.category;
 
     return(
-      <div className="category">
+      <Container text className="category">
         <Components.EditableRichText contentKey={`roadmap-${category}-image`} className="category-image"/>
         <h1><Components.EditablePlainText contentKey={`roadmap-${category}-title`} /></h1>
-        <Container text>
-          <Components.EditableRichText contentKey={`roadmap-${category}-body`} />
-        </Container>
-      </div>
+        <Components.EditableRichText contentKey={`roadmap-${category}-body`} />
+      </Container>
     );
   }
 
