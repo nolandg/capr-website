@@ -35,6 +35,8 @@ export const getInventoriesAffectedByRecord = async (record) => {
     }
   `;
   const results = await runQuery(query, {terms: terms});
+  // console.log('Record user: ', record.userId);
+  // console.log('Inventories affected by record: ', results.data.InventoriesList);
   return results.data.InventoriesList;
 }
 
@@ -74,6 +76,8 @@ export const getRecordsAffectingInventory = async (inventory) => {
   `;
 
   const results = await runQuery(query, {terms: terms});
+  // console.log('Inventory user: ', inventory.userId);
+  // console.log('Records affecting inventory: ', results.data.ActivityRecordsList);
   return results.data.ActivityRecordsList;
 }
 

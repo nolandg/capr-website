@@ -2,6 +2,7 @@ import { getAllowedActivityValues, getAllowedUnitsValues, getUnitValuesForContex
 import utils from './utils.js';
 import SimpleSchema from 'simpl-schema';
 import { getInventoryIdsAffectedByRecord } from '../utils.js';
+import Users from 'meteor/vulcan:users';
 
 const errorIfMissing = (name, message, context) => {
   const field = context.field(name);
@@ -143,7 +144,7 @@ const schema = {
     insertableBy: ['members'],
     editableBy: ['members'],
     onEdit: async (modifier, document, currentUser) => {
-      return await getInventoryIdsAffectedByRecord({document, ...modifier.$set});
+      return await getInventoryIdsAffectedByRecord({...document, ...modifier.$set});
     },
     onInsert: async (document, currentUser) => {
       return await getInventoryIdsAffectedByRecord(document);
@@ -379,7 +380,13 @@ const schema = {
     type: String,
     optional: true,
     control: 'select',
-    viewableBy: ['members'],
+    // viewableBy: ['members'],
+    viewableBy: function(currentUser, document){
+      if(Users.isMemberOf(currentUser, ['admin', 'adminTier2'])) return true;
+      if(Users.isAdmin(currentUser)) return true;
+      if(Users.owns(currentUser, document)) return true;
+      return false;
+    },
     insertableBy: ['members'],
     hidden: true,
     resolveAs: {

@@ -1,3 +1,5 @@
+import Users from 'meteor/vulcan:users';
+
 const schema = {
   _id: {
     type: String,
@@ -77,7 +79,13 @@ const schema = {
     type: String,
     optional: true,
     control: 'select',
-    viewableBy: ['adminTier2'],
+    // viewableBy: ['members'],
+    viewableBy: function(currentUser, document){
+      if(Users.isMemberOf(currentUser, ['admin', 'adminTier2'])) return true;
+      if(Users.isAdmin(currentUser)) return true;
+      if(Users.owns(currentUser, document)) return true;
+      return false;
+    },
     insertableBy: ['members'],
     hidden: true,
     resolveAs: {

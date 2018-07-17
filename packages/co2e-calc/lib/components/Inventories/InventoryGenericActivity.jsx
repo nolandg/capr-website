@@ -25,7 +25,7 @@ class InventoryGenericActivity extends Component {
         </Grid>
 
         <Divider hidden />
-        <RecordsTableComponent records={this.props.activityRecords} />
+        <RecordsTableComponent records={this.props.activityRecords} showUserColumn={true} showActivityColumn={true}/>
       </div>
     )
   }

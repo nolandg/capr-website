@@ -10,6 +10,7 @@ export const updateInventoryData = async (record, modifier, currentUser, remove 
   record = undefined;
 
   // Get inventories that might be affected by both the previous and new record
+  // console.log('Prev record: ', prevRecord);
   let inventories = await getInventoriesAffectedByRecord(prevRecord);
   if(modifier && modifier.$set){
     inventories = _.unionBy(inventories, await getInventoriesAffectedByRecord(newRecord), i => i._id);

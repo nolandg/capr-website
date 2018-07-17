@@ -224,15 +224,15 @@ class ActivityRecordsTable extends Component {
   }
 
   renderRecordRow = (record) => {
-    const { renderActivitySpecificCells, editFormComponent, showActivityColumn, deleteTitle, deleteQuestion, editTitle } = this.props;
+    const { renderActivitySpecificCells, editFormComponent, showActivityColumn, deleteTitle, deleteQuestion, editTitle, showUserColumn } = this.props;
 
     return (
       <Table.Row key={record._id}>
-        {showActivityColumn?
-          <Table.Cell>{ActivityRecords.Utils.activityValueToText(record.activity)}</Table.Cell>
+        {showUserColumn?
+          <Table.Cell>{record.user.username}</Table.Cell>
           :null}
         {showActivityColumn?
-          <Table.Cell>{record.user.username}</Table.Cell>
+          <Table.Cell>{ActivityRecords.Utils.activityValueToText(record.activity)}</Table.Cell>
           :null}
         <Table.Cell>
           {moment(record.startDate).format('MMM DD')} to {moment(record.endDate).format('MMM DD, YYYY')}
@@ -263,11 +263,11 @@ class ActivityRecordsTable extends Component {
       <Table celled className="activity-records-table">
         <Table.Header>
           <Table.Row>
-            {showActivityColumn?
-              <Table.HeaderCell><Icon name="bath" />Activity</Table.HeaderCell>
-              :null}
             {showUserColumn?
               <Table.HeaderCell><Icon name="user" />User</Table.HeaderCell>
+              :null}
+            {showActivityColumn?
+              <Table.HeaderCell><Icon name="bath" />Activity</Table.HeaderCell>
               :null}
             <Table.HeaderCell><Icon name="calendar" />Dates</Table.HeaderCell>
             {renderActivitySpecificHeaderCells?renderActivitySpecificHeaderCells():null}
