@@ -170,6 +170,9 @@ class UserInventories extends Component {
         :
           <Container textAlign="center">
             <Divider hidden />
+            <Components.EditableRichText contentKey={`calculator-intro`} />
+            <Divider hidden />
+            <Divider hidden />
             <Header as="h3" textAlign="center">
               It looks like you haven't started your {year} footprint yet
             </Header>

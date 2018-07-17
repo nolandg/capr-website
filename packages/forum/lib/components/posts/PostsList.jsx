@@ -15,7 +15,7 @@ class PostsList extends PureComponent{
         <Item.Image />
         <Item.Content>
           <Item.Header>{post.title}</Item.Header>
-          <Item.Meta>by <Components.UsersName user={post.user} /> {moment(post.createdAt).fromNow()}</Item.Meta>
+          <Item.Meta>posted by <Components.UsersName user={post.user} /> {moment(post.createdAt).fromNow()}</Item.Meta>
           <Item.Description>{post.excerpt.replace('&nbsp;', '')}</Item.Description>
           <Item.Extra><Link to={Posts.getLink(post)} style={{}}>Read More</Link></Item.Extra>
         </Item.Content>
@@ -33,6 +33,7 @@ class PostsList extends PureComponent{
     if (results && results.length) {
       return (
         <div>
+          {addPostButton}
           <Item.Group divided>
             {results.map(post => this.renderPostItem(post))}
           </Item.Group>

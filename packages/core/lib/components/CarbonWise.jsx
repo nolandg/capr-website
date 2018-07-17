@@ -23,6 +23,14 @@ class CarbonWise extends PureComponent {
           <Components.EditableRichText contentKey={`carbon-wise-food-image`} className="category-image"/>
           <h2><Components.EditablePlainText contentKey={`carbon-wise-food-title`}/></h2>
         </div>
+        <div className="other1" onClick={() => this.selectCategory('other1')}>
+          <Components.EditableRichText contentKey={`carbon-wise-other1-image`} className="category-image"/>
+          <h2><Components.EditablePlainText contentKey={`carbon-wise-other1-title`}/></h2>
+        </div>
+        <div className="other2" onClick={() => this.selectCategory('other2')}>
+          <Components.EditableRichText contentKey={`carbon-wise-other2-image`} className="category-image"/>
+          <h2><Components.EditablePlainText contentKey={`carbon-wise-other2-title`}/></h2>
+        </div>
       </div>
     );
   }
