@@ -81,7 +81,8 @@ const schema = {
     control: 'select',
     // viewableBy: ['members'],
     viewableBy: function(currentUser, document){
-      if(Users.isMemberOf(currentUser, ['admin', 'adminTier2'])) return true;
+      if(Users.isMemberOf(currentUser, 'adminTier2')) return true;
+      if(Users.isMemberOf(currentUser, 'admin')) return true;
       if(Users.isAdmin(currentUser)) return true;
       if(Users.owns(currentUser, document)) return true;
       return false;
