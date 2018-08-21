@@ -60,5 +60,6 @@ const listOptions = {
   collection: Inventories,
   queryName: 'Inventory',
   fragmentName: 'Inventory',
+  limit: 500,
 };
 registerComponent('InventoriesDashboard', InventoriesDashboard, withCurrentUser, [withList, listOptions]);

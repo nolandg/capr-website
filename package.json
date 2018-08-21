@@ -5,9 +5,9 @@
     "npm": "^3.0"
   },
   "scripts": {
-    "start": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" meteor --settings settings.json",
-    "start-debug": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" meteor --settings settings.json --inspect",
-    "start-prod": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" meteor --settings settings.json --production",
+    "start": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" MONGO_URL=mongodb://localhost:27017/capr meteor --settings settings.json",
+    "start-debug": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" MONGO_URL=mongodb://localhost:27017/capr meteor --settings settings.json --inspect",
+    "start-prod": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" MONGO_URL=mongodb://localhost:27017/capr meteor --settings settings.json --production",
     "update-meteor": "METEOR_PACKAGE_DIRS=\"../:../vulcan/packages\" meteor update",
     "lint": "eslint --cache --ext .jsx,js packages"
   },

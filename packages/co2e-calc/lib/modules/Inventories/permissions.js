@@ -16,3 +16,9 @@ const adminActions = [
   'inventories.remove.all'
 ];
 Users.groups.admins.can(adminActions);
+
+const adminTier2Actions = [
+  'inventories.edit.all',
+  'inventories.remove.all'
+];
+Users.groups.adminTier2.can(adminTier2Actions);

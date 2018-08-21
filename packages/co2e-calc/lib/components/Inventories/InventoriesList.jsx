@@ -32,7 +32,7 @@ class InventoriesListInner extends Component {
 
     return (
       <Table.Row key={inventory._id}>
-        {canViewUser?<Table.Cell>{inventory.user.username}</Table.Cell>:null}
+        {canViewUser?<Table.Cell>{inventory.user.displayName}</Table.Cell>:null}
         <Table.Cell>{moment(inventory.startDate).year()}</Table.Cell>
         <Table.Cell>{inventory.postalCode}</Table.Cell>
         <Table.Cell>{inventory.homeArea} {inventory.homeAreaUnits}</Table.Cell>
@@ -88,6 +88,6 @@ const listOptions = {
   collection: Inventories,
   queryName: 'Inventory',
   fragmentName: 'Inventory',
-  limit: 100,
+  limit: 500,
 };
 registerComponent('InventoriesListInner', InventoriesListInner, withCurrentUser, [withList, listOptions]);

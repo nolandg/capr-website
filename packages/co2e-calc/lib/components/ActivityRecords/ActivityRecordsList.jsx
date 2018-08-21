@@ -26,8 +26,8 @@ class ActivityRecordsList extends Component{
           editFormComponent={Components.ActivityRecordsEditForm}
           deleteTitle="Confirm Delete Record"
           deleteQuestion="Are you sure you want to delete this activity record?"
-          showActivityColumn={true}
-          showUserColumn={true}
+          showActivityColumn={false}
+          showUserColumn={false}
         />
       </div>
     );

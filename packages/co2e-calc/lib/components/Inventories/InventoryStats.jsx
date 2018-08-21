@@ -39,12 +39,12 @@ class InventoryStats extends Component {
               <Statistic.Label>Olympic swimming pools of CO<sub>2</sub></Statistic.Label>
             </Statistic>
           </Grid.Column>
-          <Grid.Column>
+          {/* <Grid.Column>
             <Statistic>
               <Statistic.Value><Icon name="globe" /> {earths}</Statistic.Value>
               <Statistic.Label>Earths required to support you</Statistic.Label>
             </Statistic>
-          </Grid.Column>
+          </Grid.Column> */}
           <Grid.Column>
             <Statistic>
               <Statistic.Value><Icon name="dollar" /> {offsetCost}</Statistic.Value>
