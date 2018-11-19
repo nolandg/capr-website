@@ -75,6 +75,8 @@ class SiteMenu extends PureComponent {
           <Dropdown.Menu onClick={hideSidebar}>
             <Dropdown.Item as={Link} to="/quizz" text="Pop Quizz!"/>
             <Dropdown.Item as={Link} to="/song-for-the-earth-video" text="Song for the Earth"/>
+            <Dropdown.Item as={Link} to="/photos" text="Photos"/>
+            <Dropdown.Item as={Link} to="/cartoons" text="Cartoons"/>
           </Dropdown.Menu>
         </Dropdown>
 

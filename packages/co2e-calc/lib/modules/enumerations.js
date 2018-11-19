@@ -22,7 +22,7 @@ export const getAllowedUnits = () => {
     {value: 'US gal', text: 'US Gallons', toBase: 0.264172, dimension: 'volume', contexts: ['vehicle.fuel-volume', 'propane', 'heating-oil'] },
 
     // Distance
-    {value: 'km', text: 'Killometers', toBase: 1, dimension: 'distance', contexts: ['vehicle.distance', 'flight.distance'] },
+    {value: 'km', text: 'Kilometers', toBase: 1, dimension: 'distance', contexts: ['vehicle.distance', 'flight.distance'] },
     {value: 'mi', text: 'Miles', toBase: 0.621371, dimension: 'distance', contexts: ['vehicle.distance'] },
 
     // Fuel efficiency
@@ -37,7 +37,7 @@ export const getAllowedUnits = () => {
 
 export const getVehicleTypes = () => {
   return [
-    {value: 'motorcycle', text: 'Motocycle', efficiency: 3, efficiencyUnits: 'L/100-km'},
+    {value: 'motorcycle', text: 'Motorcycle', efficiency: 3, efficiencyUnits: 'L/100-km'},
     {value: 'small-car', text: 'Small car', efficiency: 7, efficiencyUnits: 'L/100-km'},
     {value: 'large-car', text: 'Large car', efficiency: 10, efficiencyUnits: 'L/100-km'},
     {value: 'suv', text: 'SUV', efficiency: 15, efficiencyUnits: 'L/100-km'},
@@ -50,7 +50,7 @@ export const getFuelTypes = () => {
     {value: 'gasoline', text: 'Gasoline'},
     {value: 'diesel', text: 'Diesel'},
     {value: 'propane', text: 'Propane'},
-    {value: 'vegtable-oil', text: 'Vegtable oil'},
+    {value: 'vegetable-oil', text: 'Vegetable oil'},
     {value: 'electricity', text: 'Electricity'},
   ];
 }

@@ -31,7 +31,7 @@ module.exports = [
     endDate: moment('2050', 'YYYY'),
   },
   {
-    activity: 'vehicle.vegtable-oil',
+    activity: 'vehicle.vegetable-oil',
     units: 'L',
     factor: .1,
     startDate: moment('1970', 'YYYY'),

@@ -74,6 +74,34 @@ class MediaPage extends PureComponent {
 }
 registerComponent('MediaPage', MediaPage, withCurrentUser);
 
+class CartoonsPage extends PureComponent {
+  render (){
+    return (
+      <Container text>
+        <Divider hidden />
+        <Header as="h1" textAlign="center"><Components.EditablePlainText contentKey={`cartoons-title`} /></Header>
+        <Components.PostsList terms={{view: 'tagged', tag: 'cartoons'}}/>
+        <Divider hidden />
+      </Container>
+    )
+  }
+}
+registerComponent('CartoonsPage', CartoonsPage, withCurrentUser);
+
+class PhotosPage extends PureComponent {
+  render (){
+    return (
+      <Container text>
+        <Divider hidden />
+        <Header as="h1" textAlign="center"><Components.EditablePlainText contentKey={`photos-title`} /></Header>
+        <Components.PostsList terms={{view: 'tagged', tag: 'photos'}}/>
+        <Divider hidden />
+      </Container>
+    )
+  }
+}
+registerComponent('PhotosPage', PhotosPage, withCurrentUser);
+
 class LocalIssuesPage extends PureComponent {
   render (){
     return (
@@ -108,7 +136,7 @@ class ClimateSciencePage extends PureComponent {
       <Container text>
         <Divider hidden />
         <Header as="h1" textAlign="center"><Components.EditablePlainText contentKey={`climate-science-title`} /></Header>
-        <Components.EditableRichText contentKey={`climate-science-body`} />
+        <Components.PostsList terms={{view: 'tagged', tag: 'climate-science'}}/>
         <Divider hidden />
       </Container>
     )

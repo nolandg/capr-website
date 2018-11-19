@@ -12,6 +12,8 @@ addRoute([
   {name:'movies', path: '/movies-on-climate-change', componentName: 'MoviesPage'},
   {name:'links', path: '/links', componentName: 'LinksPage'},
   {name:'coolApps', path: '/cool-apps', componentName: 'CoolAppsPage'},
+  {name:'cartoons', path: '/cartoons', componentName: 'CartoonsPage'},
+  {name:'photos', path: '/photos', componentName: 'PhotosPage'},
 
   {name:'login', path: '/login', componentName: 'LoginPage'},
   {name:'whatsNew', path: '/whats-new', componentName: 'WhatsNewPage'},
